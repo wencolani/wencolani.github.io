@@ -5,7 +5,7 @@ welcome_message: <a href="" target="_blank">研究兴趣：知识图谱；知识
 description: 相会有时 后会有期
 creator: <a href="http://onev.cat">@onevcat</a>
 
-url: "http://vno.onevcat.com"
+url: "http://wencolani.github.io"
 
 permalink: /:year/:month/:title/
 
@@ -22,7 +22,7 @@ blog_button:
 
 # Navigation buttons in the front page.
 nav:
-    - {title: Projects, description: My Projects, url: 'http://project.onevcat.com'}
+    - {title: Projects, description: My Projects, url: '/'}
     # - {title: Another Button, description: A button, url: 'http://example.com'}
 
 # Pagination
@@ -37,11 +37,11 @@ comment:
     
 # Social
 social:
-    weibo: onevcat
-    github: onevcat
-    twitter: onevcat
-    gplus: 107108267983477358170
-    mail: onev@onevcat.com
+    weibo: 2834705480
+    github: wencolani
+    twitter: 
+    gplus: 
+    mail: wencolani@gmail.com
 
 # Google Analytics
 ga:

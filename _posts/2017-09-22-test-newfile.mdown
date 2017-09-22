@@ -1,0 +1,7 @@
+---
+layout: post
+title: Test new Text
+date: 2017-09-22 15:32:24.000000000 +09:00
+---
+
+If you see this pages, then the new file have been added.

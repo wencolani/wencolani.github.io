@@ -10,13 +10,13 @@ current stage: Chapter 3 --- page 59
 vimtutor --- an interactive tutorial in UNIX version vim 
 
 ## under the normal mode:
-i --- insert mode: insert a character before the character under the cursor
-* a --- insert mode: insert a character after the character under the cursor
-* o --- inserr mode: open a new line and put hte cursor to the begining of the new line
-* x --- delete current letter
-* enter --- move to the begining of the next line 
-* h --- move left 
-* j --- move down 
+* `i` --- insert mode: insert a character before the character under the cursor
+* `a` --- insert mode: insert a character after the character under the cursor
+* `o` --- inserr mode: open a new line and put hte cursor to the begining of the new line
+* `x` --- delete current letter
+* `<enter>` --- move to the begining of the next line 
+* `h` --- move left 
+* `j` --- move down 
 * k --- move up 
 * l --- move right 
 * u --- undo the last operation
@@ -59,12 +59,12 @@ i --- insert mode: insert a character before the character under the cursor
 * qx --- record keystrokes into the register named x   /  --- use q to quit the record  / --- use @x to reuse the operation / --- the difference from qx to . is that qx could record multiple steps
 
 ## under the command mode
-*q! --- quit without save the changes
+* q! --- quit without save the changes
 * :h(help) --- help document
 * :h x --- get help on x commond 
 * :set number --- show the line number
 * :set nonumber --- turn off showing the number
 * :help v_d --- get the help about what the delete(d) command does in visual mode 
 
-##under the visual mode
+## under the visual mode
 * J --- join the selected lines

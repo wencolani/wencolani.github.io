@@ -4,10 +4,7 @@ title: Vim Command
 date: 2017-09-24 15:32:24.000000000 +09:00
 ---
 
-learning book: file:///Users/zhangwen/Downloads/vim-1.0.pdf
-current stage: Chapter 3 --- page 59  
-
-vimtutor --- an interactive tutorial in UNIX version vim 
+`vimtutor` --- an interactive tutorial in UNIX version vim 
 
 ## under the normal mode:
 * `i` --- insert mode: insert a character before the character under the cursor

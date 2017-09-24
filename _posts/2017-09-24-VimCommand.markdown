@@ -24,7 +24,7 @@ date: 2017-09-24 15:32:24.000000000 +09:00
 * `$` --- move to the end of the line(also e.g.3$)
 * `^` --- move to the first nonblank character of the line
 * `fx` --- searches the right line for the single character x
-* `Fx` --- secrches the left line for the single character x 
+* `Fx` --- searches the left line for the single character x 
 * `tx` --- searches the right line for this single character x and stop one character before x (search till)
 * `Tx` --- for the left side 
 * `f<esc>` --- abord forward search

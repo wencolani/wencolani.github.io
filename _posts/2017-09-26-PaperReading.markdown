@@ -1,6 +1,6 @@
 ---
 layout: post
-title: (Paper Reading) Knowledge Transfer for Out-of-Knowledge-Base Entities, A Graph Neural Network Approach
+title: Paper Reading
 date: 2017-09-26 15:32:24.000000000 +09:00
 ---
 

@@ -40,7 +40,7 @@ transition function 的主要目标是通过每个与OOKB实体具有链接关�
 
 pooling function 主要目的是通过多个OOKB entity的表示结果生成一个向量表示，pooling的方法主要有以下三种：
 
-* sum pooling: <img src='http://www.forkosh.com/mathex.cgi? P(s) = \sum_{i=1}^N x_i '>
+* sum pooling: <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"> \\ P(S) = \sum_{i=1}^N x_i \\</script>
 * acerage pooling: 
 * max pooling
 
@@ -48,3 +48,20 @@ pooling function 主要目的是通过多个OOKB entity的表示结果生成一�
 
 ### output model
 output model借用了TransE的方法，使用|h + r -t| 作为score function，并且采用margin-based objective function. 相对于之前TrasnE的pairwise-margin，本文提出了absolute-margin，这样的定义同样可以使得可以生成更多的负样本，可以提高最终embedding的效果。
+
+## Experiment
+本文也进行了常规的knowledge base embedding的三元组分类的实验，即没有OOKB实体存在，在WN11和FB13上的实验均比TransE要好一些。但是我更关注OOKB实体的问题，所以主要介绍关于OOKB实体的实验。
+### 数据集的构造
+本文实验数据集的构造过程非常值得借鉴。以WordNet11s数据集为例， 构造过程如下：
+
+1. 选取OOKBentity：从WN11的test数据集中选取N=1000, 3000, 5000三元组。然后有三种策略选取OOKB entity：
+	1. 将选取出的三元组中的所有head entity当作是OOKB实体
+	1. 将选取出的三元组中的所有tail entity当作是OOKB实体
+	1. 将选取出的三元组中的所有head entity 和 tail entity均当作OOKB实体
+然后去掉候选OOKB实体中与任何非OOKB实体都没有链接的实体。
+
+1. 将原来训练数据集中的三元组划分入两个类别：将不含有选出的OOKB实体的三元组留在训练数据集中，将含有选出的OOKB实体的三元组放入auxiliary set中。
+
+由于OOKB entity是新提出的问题，没有baseline， 本文自己构造了baseline： 通过对TransE在训练数据集上的训练结果，直接选取和OOKB相连接的实体的向量表示并进行三种不同方式的pooling。
+
+!(../assets/paperReadingImages/2017-09-26-result.png)

@@ -64,4 +64,4 @@ output model借用了TransE的方法，使用|h + r -t| 作为score function，�
 
 由于OOKB entity是新提出的问题，没有baseline， 本文自己构造了baseline： 通过对TransE在训练数据集上的训练结果，直接选取和OOKB相连接的实体的向量表示并进行三种不同方式的pooling。
 
-!(../assets/paperReadingImages/2017-09-26-result.png)
+![](../assets/paperReadingImages/2017-09-26-result.png)

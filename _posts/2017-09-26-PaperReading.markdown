@@ -4,9 +4,9 @@ title: Paper Reading
 date: 2017-09-26 15:32:24.000000000 +09:00
 ---
 
-* title--Knowledge Transfer for Out-of-Knowledge-Base Entities: A Graph Neural Network Approach
-* author--Takuo Hamaguchi, Hidekazu Oiwa, Masashi Shimbo, and Yuji Matsumoto
-* conference--IJCAI 2017
+* Knowledge Transfer for Out-of-Knowledge-Base Entities: A Graph Neural Network Approach
+* Takuo Hamaguchi, Hidekazu Oiwa, Masashi Shimbo, and Yuji Matsumoto
+* IJCAI 2017
 * [article link](https://www.ijcai.org/proceedings/2017/0250.pdf)
 * [code link](https://github.com/takuo-h/GNN-for-OOKB)
 

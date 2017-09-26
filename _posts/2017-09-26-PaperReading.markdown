@@ -1,6 +1,6 @@
 ---
 layout: post
-title: [Paper Reading] Knowledge Transfer for Out-of-Knowledge-Base Entities, A Graph Neural Network Approach
+title: (Paper Reading) Knowledge Transfer for Out-of-Knowledge-Base Entities, A Graph Neural Network Approach
 date: 2017-09-26 15:32:24.000000000 +09:00
 ---
 
@@ -30,6 +30,7 @@ Propagation model 分为两个部分： trandition function 和 pooling function
 
 transition function 的主要目标是通过每个与OOKB实体具有链接关系的三元组中已有的实体和关系推测出当前OOKB实体的向量表示。具体定义如下：
 * <img src="http://www.forkosh.com/mathtex.cgi? T(\textbf{v}) = \textbf{v}"> --- (identity)
+* <img src="http://chart.googleapis.com/chart?cht=tx&chl= T(\textbf{v}) = \textbf{v}" style="border:none;">
 * <img src="http://www.forkosh.com/mathtex.cgi? T(\textbf{v}) = tanh(\textbf{Av})"> --- (single tanh layer)
 * <img src='http://www.forkosh.com.mathtex.cgi? T(\textbf{v}) = ReLU(\textbf{Av})'> --- (single ReLU layer)
 这里的transition function 也可以换成其他的神经网络，比如batch-normalization、residual connection 和 LSTM等。

@@ -41,6 +41,10 @@ transition function 的主要目标是通过每个与OOKB实体具有链接关�
 pooling function 主要目的是通过多个OOKB entity的表示结果生成一个向量表示，pooling的方法主要有以下三种：
 
 * sum pooling: <img src='http://www.forkosh.com/mathex.cgi? P(s) = \sum_{i=1}^N x_i '>
+* acerage pooling: 
+* max pooling
 
+(文中也使用了stacking and unrolling，不过不太了解)
 
 ### output model
+output model借用了TransE的方法，使用|h + r -t| 作为score function，并且采用margin-based objective function. 相对于之前TrasnE的pairwise-margin，本文提出了absolute-margin，这样的定义同样可以使得可以生成更多的负样本，可以提高最终embedding的效果。

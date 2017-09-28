@@ -3,7 +3,7 @@ layout: post
 category: Book reading
 title: 《陪安东尼度过的日子》
 tagline: by wencolani
-tags: [Book reading]
+tags: [book reading]
 ---
 
 《红》《橙》：

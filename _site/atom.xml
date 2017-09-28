@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.5.2">Jekyll</generator><link href="http://localhost:4000/atom.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2017-09-28T17:03:45+02:00</updated><id>http://localhost:4000/</id><title type="html">wencolani</title><subtitle>a CS Phd candidate in Zhejiang University</subtitle><author><name>wencolani</name></author><entry><title type="html">Knowledge Transfer for Out-of-Knowledge-Base Entities, A Graph Neural Network Approach</title><link href="http://localhost:4000/paper%20reading/2017/09/26/PaperReading/" rel="alternate" type="text/html" title="Knowledge Transfer for Out-of-Knowledge-Base Entities, A Graph Neural Network Approach" /><published>2017-09-26T00:00:00+02:00</published><updated>2017-09-26T00:00:00+02:00</updated><id>http://localhost:4000/paper%20reading/2017/09/26/PaperReading</id><content type="html" xml:base="http://localhost:4000/paper%20reading/2017/09/26/PaperReading/">&lt;ul&gt;
+  &lt;li&gt;Knowledge Transfer for Out-of-Knowledge-Base Entities: A Graph Neural Network Approach&lt;/li&gt;
+  &lt;li&gt;Takuo Hamaguchi, Hidekazu Oiwa, Masashi Shimbo, and Yuji Matsumoto&lt;/li&gt;
+  &lt;li&gt;IJCAI 2017&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.ijcai.org/proceedings/2017/0250.pdf&quot;&gt;article link&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/takuo-h/GNN-for-OOKB&quot;&gt;code link&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;main-idea&quot;&gt;Main Idea&lt;/h2&gt;
+
+&lt;p&gt;这篇文章提出了一个新的问题：关于out-of-knowledge-base(OOKB) entity的预测。以往的knowledge base embedding方法做链接预（link prediction）测和三元组分类(triple classification)时所用的测试数据集里都假设所有的实体的关系都已经在训练数据集里出现过，即每个实体和关系都有相关的向量表示，如果出现新的实体，那么模型需要进行重新训练。&lt;/p&gt;
+
+&lt;p&gt;out-of-knowlege-base entity 的问题如下：&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;out-of-knowledge-base entity problem arises when new entity(OOKB entities) occur in the relation triplets that are given to the system after training.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;解决OOKB的问题主要在于如何从已有的实体和关系的向量表示里获得OOKB实体的向量表示，本文主要利用了OOKB实体和知识库中已有的实体的链接关系得到其向量表示。&lt;/p&gt;
+
+&lt;h2 id=&quot;proposed-model&quot;&gt;Proposed Model&lt;/h2&gt;
+
+&lt;p&gt;本文借鉴了[Graph-NN]的方法, 将生成OOKB entity的向量表示的过程分为propagation model 和 output model.&lt;/p&gt;
+
+&lt;h3 id=&quot;propagation-model&quot;&gt;Propagation model&lt;/h3&gt;
+
+&lt;p&gt;Propagation model 分为两个部分： trandition function 和 pooling function.&lt;/p&gt;
+
+&lt;h4 id=&quot;transition-function&quot;&gt;transition function&lt;/h4&gt;
+
+&lt;p&gt;transition function 的主要目标是通过每个与OOKB实体具有链接关系的三元组中已有的实体和关系推测出当前OOKB实体的向量表示。具体定义如下：&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;img src=&quot;http://www.forkosh.com/mathtex.cgi? T(\textbf{v}) = \textbf{v}&quot; /&gt; — (identity)&lt;/li&gt;
+  &lt;li&gt;&lt;img src=&quot;http://www.forkosh.com/mathtex.cgi? T(\textbf{v}) = tanh(\textbf{Av})&quot; /&gt; — (single tanh layer)&lt;/li&gt;
+  &lt;li&gt;&lt;img src=&quot;http://www.forkosh.com.mathtex.cgi? T(\textbf{v}) = ReLU(\textbf{Av})&quot; /&gt; — (single ReLU layer)
+这里的transition function 也可以换成其他的神经网络，比如batch-normalization、residual connection 和 LSTM等。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;注意参数A的定义可以不是一个固定的全局的参数，而是与当前OOKB实体参与的三元组中的关系相关的 (注：这样肯定能提高效果的). 在single ReLU layer 中本文也添加了batch normalization.&lt;/p&gt;
+
+&lt;h4 id=&quot;pooling-function&quot;&gt;pooling function&lt;/h4&gt;
+
+&lt;p&gt;pooling function 主要目的是通过多个OOKB entity的表示结果生成一个向量表示，pooling的方法主要有以下三种：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;sum pooling: &lt;script type=&quot;text/javascript&quot; src=&quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default&quot;&gt; \\ P(S) = \sum_{i=1}^N x_i \\&lt;/script&gt;&lt;/li&gt;
+  &lt;li&gt;acerage pooling:&lt;/li&gt;
+  &lt;li&gt;max pooling&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;(文中也使用了stacking and unrolling，不过不太了解)&lt;/p&gt;
+
+&lt;h3 id=&quot;output-model&quot;&gt;output model&lt;/h3&gt;
+&lt;p&gt;output model借用了TransE的方法，使用|h + r -t| 作为score function，并且采用margin-based objective function. 相对于之前TrasnE的pairwise-margin，本文提出了absolute-margin，这样的定义同样可以使得可以生成更多的负样本，可以提高最终embedding的效果。&lt;/p&gt;
+
+&lt;h2 id=&quot;experiment&quot;&gt;Experiment&lt;/h2&gt;
+&lt;p&gt;本文也进行了常规的knowledge base embedding的三元组分类的实验，即没有OOKB实体存在，在WN11和FB13上的实验均比TransE要好一些。但是我更关注OOKB实体的问题，所以主要介绍关于OOKB实体的实验。&lt;/p&gt;
+&lt;h3 id=&quot;数据集的构造&quot;&gt;数据集的构造&lt;/h3&gt;
+&lt;p&gt;本文实验数据集的构造过程非常值得借鉴。以WordNet11s数据集为例， 构造过程如下：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;选取OOKBentity：从WN11的test数据集中选取N=1000, 3000, 5000三元组。然后有三种策略选取OOKB entity：
+    &lt;ol&gt;
+      &lt;li&gt;将选取出的三元组中的所有head entity当作是OOKB实体&lt;/li&gt;
+      &lt;li&gt;将选取出的三元组中的所有tail entity当作是OOKB实体&lt;/li&gt;
+      &lt;li&gt;将选取出的三元组中的所有head entity 和 tail entity均当作OOKB实体
+然后去掉候选OOKB实体中与任何非OOKB实体都没有链接的实体。&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;将原来训练数据集中的三元组划分入两个类别：将不含有选出的OOKB实体的三元组留在训练数据集中，将含有选出的OOKB实体的三元组放入auxiliary set中。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;由于OOKB entity是新提出的问题，没有baseline， 本文自己构造了baseline： 通过对TransE在训练数据集上的训练结果，直接选取和OOKB相连接的实体的向量表示并进行三种不同方式的pooling。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/paperReadingImages/2017-09-26-result.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;</content><author><name>wencolani</name></author><category term="Paper reading" /><category term="paper" /><category term="incremental" /><category term="KG embedding" /><summary type="html">Knowledge Transfer for Out-of-Knowledge-Base Entities: A Graph Neural Network Approach Takuo Hamaguchi, Hidekazu Oiwa, Masashi Shimbo, and Yuji Matsumoto IJCAI 2017 article link code link</summary></entry><entry><title type="html">Vim command</title><link href="http://localhost:4000/command%20learning/2017/09/24/VimCommand/" rel="alternate" type="text/html" title="Vim command" /><published>2017-09-24T00:00:00+02:00</published><updated>2017-09-24T00:00:00+02:00</updated><id>http://localhost:4000/command%20learning/2017/09/24/VimCommand</id><content type="html" xml:base="http://localhost:4000/command%20learning/2017/09/24/VimCommand/">&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;vimtutor&lt;/code&gt; — an interactive tutorial in UNIX version vim&lt;/p&gt;
+
+&lt;h2 id=&quot;under-the-normal-mode&quot;&gt;under the normal mode:&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;i&lt;/code&gt; — insert mode: insert a character before the character under the cursor&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;a&lt;/code&gt; — insert mode: insert a character after the character under the cursor&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;o&lt;/code&gt; — inserr mode: open a new line and put hte cursor to the begining of the new line&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;x&lt;/code&gt; — delete current letter&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;enter&amp;gt;&lt;/code&gt; — move to the begining of the next line&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;h&lt;/code&gt; — move left&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;j&lt;/code&gt; — move down&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;k&lt;/code&gt; — move up&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;l&lt;/code&gt; — move right&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;u&lt;/code&gt; — undo the last operation&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;:&lt;/code&gt; — enter command mode&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;dd&lt;/code&gt; — delete a line&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;w&lt;/code&gt; — move cursor forward one word&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;b&lt;/code&gt; — move cursor backward one word&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;$&lt;/code&gt; — move to the end of the line(also e.g.3$)&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;^&lt;/code&gt; — move to the first nonblank character of the line&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;fx&lt;/code&gt; — searches the right line for the single character x&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Fx&lt;/code&gt; — searches the left line for the single character x&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;tx&lt;/code&gt; — searches the right line for this single character x and stop one character before x (search till)&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Tx&lt;/code&gt; — for the left side&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;f&amp;lt;esc&amp;gt;&lt;/code&gt; — abord forward search&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;G&lt;/code&gt; — move the last line&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;3G&lt;/code&gt; — move to 3 line&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;1G&lt;/code&gt; — move to the top of the file&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;%&lt;/code&gt; — move to the first line&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;50%&lt;/code&gt; — move to the half part of the file&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;75%&lt;/code&gt; — move to the 75% of the file&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;CTRL+g&lt;/code&gt; — show where you are in the file&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;CTRL+u&lt;/code&gt; — scroll up half a screen of text&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;CTRL+d&lt;/code&gt; — scroll down hald a screen of the text&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;v&lt;/code&gt; — visual mode&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;dw&lt;/code&gt; — delete the rest of the current word where the cursor in&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;d$&lt;/code&gt; — delete the current line from where the cursor in&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;3dw&lt;/code&gt; — delete one word three times&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;d3w&lt;/code&gt; — delete three word one time&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;3d2w&lt;/code&gt; — delete two words three times&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;c&lt;/code&gt; — change text, it deletes the current choosed(in visul mode) otherwise the whole line  and leave you in the insert mode&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cw&lt;/code&gt; — change the current word&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cc&lt;/code&gt; — change the whole line (as dd)&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;c$(or C)&lt;/code&gt; — change from current place to the end of the line&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;.&lt;/code&gt; — repeat the last delete or change command&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;J&lt;/code&gt; — join the current with the next line (also 3J)&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;rx&lt;/code&gt; — replace current character with x (also 3rx)&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;3rx&lt;/code&gt; — replace threee character with x&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;3r&amp;lt;Enter&amp;gt;&lt;/code&gt; — replace 3 characters with one [Enter]&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;~&lt;/code&gt; — change a character’s case, changes uppercase to lowercase and vice versa&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;qx&lt;/code&gt; — record keystrokes into the register named x   /  — use q to quit the record  / — use @x to reuse the operation / — the difference from qx to . is that qx could record multiple steps&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;under-the-command-mode&quot;&gt;under the command mode&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;q!&lt;/code&gt; — quit without save the changes&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;:h(help)&lt;/code&gt; — help document&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;:h x&lt;/code&gt; — get help on x commond&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;:set number&lt;/code&gt; — show the line number&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;:set nonumber&lt;/code&gt; — turn off showing the number&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;:help v_d&lt;/code&gt; — get the help about what the delete(d) command does in visual mode&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;under-the-visual-mode&quot;&gt;under the visual mode&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;J&lt;/code&gt; — join the selected lines&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>wencolani</name></author><category term="Command learning" /><category term="vim" /><summary type="html">vimtutor — an interactive tutorial in UNIX version vim</summary></entry><entry><title type="html">《曾文正公家书 上》</title><link href="http://localhost:4000/book%20reading/2017/05/30/ZengWenZhengGongJiaShu1/" rel="alternate" type="text/html" title="《曾文正公家书 上》" /><published>2017-05-30T00:00:00+02:00</published><updated>2017-05-30T00:00:00+02:00</updated><id>http://localhost:4000/book%20reading/2017/05/30/ZengWenZhengGongJiaShu1</id><content type="html" xml:base="http://localhost:4000/book%20reading/2017/05/30/ZengWenZhengGongJiaShu1/">&lt;p&gt;初读此书觉得有几分枯燥，书中所记不过是琐碎的日常。但慢慢看着看着逐渐感受到了鲜活的形象，感受到了何为“长兄如父”“君君臣臣，父父子子”。历史中再伟岸的形象都是由鲜明及琐碎的生活构成的，伟人不是不食人间烟火，横空出世的圣人。他们也有自己所生活的时代的温度和生活的烙印。这是自己读的第一本历史一手书籍，值得。&lt;/p&gt;
+
+&lt;p&gt;每次看到书信的结尾处写着“兄国藩手草”五个大字，都觉得无比羡慕，我多么希望也有这样的长兄啊，那些文字间的提点皆珠玑。作为长兄的曾国藩操心的事儿可真不少呢，上至国事下至家务，无不上心。对几个弟弟们的成长也是关怀备至，会按照他们不同的天赋安排学习进度和学习策略，会经常督促他们发给自己最新的学习成果，当然以习字和作文为主。真是羡煞我也。&lt;/p&gt;
+
+&lt;p&gt;曾国藩对人都有自己的判断，处于何境何人可用何人不可用心中一清二楚，虽处事文雅，但内心绝不含糊。何人为有恩之人也一直铭记于心，无论自己处境如何都不忘感恩。读了这么多书信在平实的生活中逐渐构造出了曾国藩这个有血有肉的立体形象。至爽至爽。&lt;/p&gt;
+
+&lt;p&gt;说一说对曾国藩本人之外的认识吧。首先是对历史的认识，每个人的认知都是受到当前历史环境的局限的，在科学还并不发达的清朝，曾国藩也会有一些愚昧的认知，比如家庭的命运和祖坟的选址有关，信人但更信天。对医药的认知也是不清楚其根本。曾国藩常常会在信中癣疾又发，且数月不愈，这在现在看来真是不可思议，如果当今又连发数月的癣疾，当事人肯定急得团团转，不得不感谢现代的医学进步，让我们免去了多少痛苦啊。&lt;/p&gt;
+
+&lt;p&gt;那时的通讯并不发达，主要依靠书信沟通，但效率极慢，一封家信寄到家至少半个月之久，再待家人回信，一来一回已是一月过去了。所以每封信的第一段总是先告诉对方自己已经寄出的信件有哪些，收到的家中的信件有几封，多么原始而简单粗制的沟通方式啊，想想我们现在有微信是多么大的进步啊！但诸事均为双刃剑，由于信息沟通无法及时，他们往往计划事情总以周、月来计，他们可以预料到相对久远的事情，但我们现代人很多做不到，由于信息沟通足够及时，我们的计划总是会被突发状况打乱，渐渐地我们养成了以天、周为计划，但很少能够遇见待一月或半年一年之后的事，一来也是因为变化太快无法预见，二来也是应为我们渐渐遗忘了这样的能力——通过对历史的洞见去总结和预测未来可能发生的事情。通讯效率的差异也造成了我们用人策略的不同，在以前通讯不及时，远水救不了近火确实是真理，作为用人者最核心的策略是选择自己足够信任的人并且完全信任他去完成重要的事情，那是用人的眼光更重要。但现在不一样，由于通讯足够及时，现在用人的核心策略是选择有足够能力完成这样件事的人，而不再是有能力统领这件事完成的人。多么奇妙啊，技术的进步逐渐(无形)改变了我们的生存方式。而且技术会变的越来越重要，因为技术在改造这个构建在信息不对等基础上的世界，技术应该让世界变得更加公平。&lt;/p&gt;
+
+&lt;p&gt;还有对战争的认识，由于太平天国起义，国家有十几年(1851-1864)处于战乱年代，借用书信中的说法就是“乱世”，当战争来临，很多事都将化为泡影，那些美好的事情重见天日必等战争结束之时，呜呼，哀哉。我曾经幻想过自己生在战火纷飞的年代，一定是一条铮铮铁骨，但此刻起，再无心之往向。战争太过粗暴，摧毁了太多脆弱的美好，因为美好，即便是脆弱的，我们也应该去守护，心存敬畏，不是吗？&lt;/p&gt;
+
+&lt;p&gt;历史的一手书籍值得被品读。&lt;/p&gt;</content><author><name>wencolani</name></author><category term="Book reading" /><category term="book reading" /><summary type="html">初读此书觉得有几分枯燥，书中所记不过是琐碎的日常。但慢慢看着看着逐渐感受到了鲜活的形象，感受到了何为“长兄如父”“君君臣臣，父父子子”。历史中再伟岸的形象都是由鲜明及琐碎的生活构成的，伟人不是不食人间烟火，横空出世的圣人。他们也有自己所生活的时代的温度和生活的烙印。这是自己读的第一本历史一手书籍，值得。</summary></entry><entry><title type="html">《牛棚杂忆》——不为无益之事，何以遣有涯之生</title><link href="http://localhost:4000/book%20reading/2017/05/01/NiuPengZaYi/" rel="alternate" type="text/html" title="《牛棚杂忆》——不为无益之事，何以遣有涯之生" /><published>2017-05-01T00:00:00+02:00</published><updated>2017-05-01T00:00:00+02:00</updated><id>http://localhost:4000/book%20reading/2017/05/01/NiuPengZaYi</id><content type="html" xml:base="http://localhost:4000/book%20reading/2017/05/01/NiuPengZaYi/">&lt;p&gt;开始看这本书怀着嬉笑怒骂的心态，尽看季老讽刺调戏那个年代的记忆，对于自杀的考究尤值得叫好，在生死边缘走过的人才有那份戏谑的底气。&lt;/p&gt;
+
+&lt;p&gt;季老在最后写到经历过文革的老辈知识分子对此都闭口不谈，虽心中郁气难舒，而青年人（比如我）对文革的认识也知识道听途说，没有真实而深刻的认识，其实是莫大的悲哀。我想虽然季老写下了这本关于文革的书，但仍有很多敏感的部分是没有涉及的吧，这只是真实历史的一部分。&lt;/p&gt;
+
+&lt;p&gt;通过这本书我对文革的细节有一点印象，在审讯和劳动改造过程中那些“黑帮”知识份子所受的待遇非人也非鬼，人有人权，鬼有自由，他们却什么都没有。其实“改造”活动对于他们这些老辈知识份子而言改造的是体魄，并没有能改造他们的灵魂，“冥顽不灵”者依旧“冥顽不灵”，但可怕的是那些围观的群众，他们的思想确是被改造了，当看到描述小孩子对季老的态度，这是一件多么细思极恐的事，就像《上帝之城》中的小霸王，就像《湄公河行动》中的童子兵，对孩子们的影响和洗脑才是真正地抹灭了希望，那种寒心和震慑不仅仅是黑暗降临，看不到希望，还一丝温度都没有。社会的形成和素质的约束让我们告别了野蛮和原始，但我们也是那么容易就回到野蛮和原始。恻隐之心人皆有之，但它太脆弱，一用力触碰就会破碎还很难复原。关于人性本善性本恶，大概我还是会选择性本恶，毕竟如此以来多数的我们克服了恶的都是英雄。&lt;/p&gt;
+
+&lt;p&gt;另外让我佩服的是季老的治学态度，严谨别无二致。“学问不问有用没用，只问精不精”。&lt;/p&gt;
+
+&lt;p&gt;“不为无益之事，何以遣有涯之生”。&lt;/p&gt;
+
+&lt;p&gt;向季老致敬。&lt;/p&gt;</content><author><name>wencolani</name></author><category term="Book reading" /><category term="book reading" /><summary type="html">开始看这本书怀着嬉笑怒骂的心态，尽看季老讽刺调戏那个年代的记忆，对于自杀的考究尤值得叫好，在生死边缘走过的人才有那份戏谑的底气。</summary></entry><entry><title type="html">《我的前半生》</title><link href="http://localhost:4000/book%20reading/2017/02/25/WoDeQianBanShen/" rel="alternate" type="text/html" title="《我的前半生》" /><published>2017-02-25T00:00:00+01:00</published><updated>2017-02-25T00:00:00+01:00</updated><id>http://localhost:4000/book%20reading/2017/02/25/WoDeQianBanShen</id><content type="html" xml:base="http://localhost:4000/book%20reading/2017/02/25/WoDeQianBanShen/">&lt;p&gt;首先这本书本身可能写得并不算精彩，文学造诣并不深，但难得的是它从某个角度还原了那段历史和真正的皇帝的生活。之前买书看评论很多人对书中满满的自责和检讨感到失望和厌倦，也许这不是他们期待的那个样子，但是它却是真实的。&lt;/p&gt;
+
+&lt;p&gt;读完的感受主要有两个：&lt;/p&gt;
+
+&lt;p&gt;第一，对现在绝大多数宫廷电视局种的皇帝角色嗤之以鼻，现在流行的套路是塑造一个爱江山更爱美人的轰轰烈烈，荡气回肠的爱情故事，可实际上这样的事情发生的几率微乎其微，很多事情都因稀少而珍贵，但女性皇帝来说太唾手可得，所以并不会有及其重要的位置。但江山却是一件非常刺激的事，因为可以拥有超越个体本身的力量，即便是在略受挫的情况下。治理和拥有江山的新鲜感满足感也会更持久一些。而且皇帝从小成长的环境就是紫禁城内，他们感受这个世界的方式与百姓不同，甚至对世界的认知也完全不同，所以现在的演员如果没有深刻的历史积淀和对历史中皇帝这个角色的认知是不可能演好这个角色的。所以这类剧只能当笑剧或者闹剧看而已。&lt;/p&gt;
+
+&lt;p&gt;第二，我很感谢自己现在所处的时代，对于平凡出生的我，时代给我的最大的礼物是机会和道路，让我明白有怎样的可能性，而不是蒙着眼睛往前走。&lt;/p&gt;
+
+&lt;p&gt;溥仪能完成从清朝皇帝到新中国平民角色的转换中间所经历的挣扎也许只有他自己清楚，作为读者的我们只能在字里行间体会一二。在两种完全不同的制度下，国人的形态都是不同的，所以，如果在一个稳定的社会中，请明白时下的潮流；如果在一个动荡的年代中，请当那个激流勇进的冒险家。&lt;/p&gt;</content><author><name>wencolani</name></author><category term="Book reading" /><category term="book reading" /><summary type="html">首先这本书本身可能写得并不算精彩，文学造诣并不深，但难得的是它从某个角度还原了那段历史和真正的皇帝的生活。之前买书看评论很多人对书中满满的自责和检讨感到失望和厌倦，也许这不是他们期待的那个样子，但是它却是真实的。</summary></entry><entry><title type="html">《追风筝的人》—— 执念是为放不下的事</title><link href="http://localhost:4000/book%20reading/2016/08/02/ZhuiFengZhengDeRen/" rel="alternate" type="text/html" title="《追风筝的人》—— 执念是为放不下的事" /><published>2016-08-02T00:00:00+02:00</published><updated>2016-08-02T00:00:00+02:00</updated><id>http://localhost:4000/book%20reading/2016/08/02/ZhuiFengZhengDeRen</id><content type="html" xml:base="http://localhost:4000/book%20reading/2016/08/02/ZhuiFengZhengDeRen/">&lt;p&gt;为你，千千万万遍。&lt;/p&gt;
+
+&lt;p&gt;这是一部非常精彩的小说，最引人入胜的地方是作为故事中的我阿米尔的心理变化。简单来说，故事情节还略俗套，但它让我明白了，在情节之外还有更重要的心理变化，那其实才是真正动人和让错误情有可原的地方，谢谢你胡赛尼。&lt;/p&gt;
+
+&lt;p&gt;从阿米尔回到阿富汗并且决定去找在恤孤院中的哈桑的儿子他的侄子时，我才开始对这个故事的主人公有好感。但阿米尔没有错，他只是生活在了一个伟大父亲犯下的错误中，却一直备受煎熬，得不到父亲理所应当的全部的爱，因为他不知道真相；不明所以却惹得父亲恼羞成怒，因为他不知道真相；背负着放弃朋友哈桑的不安，原因只是当时能说服自己的种族歧视，但他不知道真相。&lt;/p&gt;
+
+&lt;p&gt;父亲告诉他世上只有一种罪行叫做偷盗，曾以为是因为自己的降生盗走了父亲挚爱的妻子而认为自己是个罪人，所以父亲总对自己冷言冷语，但却不知道自己的前半生都生活在父亲的偷盗的谎言里，父亲一生也没有把真相说出来，因为父亲在愧疚里囚禁了一辈子，最后也没有能够解放自己，父亲被分裂成两半，最终也没能完整。而我穷尽一生前面的所有年华让自己与父亲的关系缓和，当我终于快做到了，父亲却走了。幸而来自爱情的甜蜜和女性角色的进入让我可以不那么悲恸，但我觉得孤单。当我用自己的才华创造出了美好生活，故事偏偏又要还原成它本来的样子，我以为可以忽略的伤口终究还是要自己把伤口撕开，将血舔干才能愈合，我踏上了减轻内心重量的旅程，“那里有再次成为好人的路”，我应该感谢索拉博。&lt;/p&gt;
+
+&lt;p&gt;一个内心没有善良的人不会愧疚，每个人都在用不同的方式减轻那些也许只有自己知道的愧疚。&lt;/p&gt;
+
+&lt;p&gt;那些执念和那些傻事只是因为别人不知道而自己又放不下的事。&lt;/p&gt;</content><author><name>wencolani</name></author><category term="Book reading" /><category term="book reading" /><summary type="html">为你，千千万万遍。</summary></entry><entry><title type="html">《陪安东尼度过的日子》</title><link href="http://localhost:4000/book%20reading/2016/05/01/PeiAnDongNiDuGuoDeRiZi/" rel="alternate" type="text/html" title="《陪安东尼度过的日子》" /><published>2016-05-01T00:00:00+02:00</published><updated>2016-05-01T00:00:00+02:00</updated><id>http://localhost:4000/book%20reading/2016/05/01/PeiAnDongNiDuGuoDeRiZi</id><content type="html" xml:base="http://localhost:4000/book%20reading/2016/05/01/PeiAnDongNiDuGuoDeRiZi/">&lt;p&gt;《红》《橙》：&lt;/p&gt;
+
+&lt;p&gt;去阿里的路上和周末赖床的时间看完了安东尼的两本书，初高中时代没有看过这种年轻作者的书，现在竟然补上了。书中只是记录了安东尼的漫长岁月，第一本2005.08.16-2007.10.01，第二本2007.10.02-2010.6.22，短短的两本书看完了别人五年的岁月，想想也是刺激。&lt;/p&gt;
+
+&lt;p&gt;安东尼应该是个细腻的孩子，书中描绘的生活是那么生动，即便是单薄的。厨师这个专业真不错，“唯爱与美食不可辜负也”，厨师就这么轻而易举得得到了时间的珍宝。这是第一次通过书籍接触到墨尔本（猫本）这座城市，总觉得墨尔本这个名字很浪漫。在澳洲的生活很精彩，在作者身边都是真诚的朋友，开心有人陪伴笑，难过有人陪伴哭，疯狂有人陪伴闹。也许是自己还没出国感受世界上的其他文化，故而总保持着向往，支撑自己读完了生活流水账似的真诚的两本书。&lt;/p&gt;
+
+&lt;p&gt;曾经自己也想过用什么样的方式，连续的方式，来记录自己的一生，等老了的时候，就把它们拿出来让自己年轻。可惜并没有找到合适的方式，写日记也许不错，但没能坚持下来。我想等安东尼老了的时候，看着这一些列书的红橙花绿青蓝紫，一定是一种难以言喻的感动，那一刻书里所承载的岁月远远胜过了里面的文字内容。&lt;/p&gt;
+
+&lt;p&gt;我想生命是需要记录的，因为我们太健忘了；&lt;/p&gt;
+
+&lt;p&gt;生命是需要记录的，因为生命会被忙碌冲散；&lt;/p&gt;
+
+&lt;p&gt;生命需要被记录，以此超越时间。&lt;/p&gt;
+
+&lt;p&gt;《黄》：&lt;/p&gt;
+
+&lt;p&gt;在马克思的课上结束了这本书的阅读（上课的老师很有魅力，87年，理论经济）&lt;/p&gt;
+
+&lt;p&gt;安东尼的岁月记录到了2013年末，2013年没有以前精彩，只是对于我这个读者而言。回国了，失恋了，工作了。也许当为了能够写下去而写下去的时候，从前的感觉消失了。安东尼也长大了。&lt;/p&gt;
+
+&lt;p&gt;我想以后不会再看续集了，我需要去寻找陪伴自己度过漫长岁月的部分了。以后会多看一些理论完备的书吧，再见，安东尼。&lt;/p&gt;
+
+&lt;p&gt;安东尼，再见。&lt;/p&gt;</content><author><name>wencolani</name></author><category term="Book reading" /><category term="book reading" /><summary type="html">《红》《橙》：</summary></entry><entry><title type="html">《红与黑》——记一位悲剧的英雄</title><link href="http://localhost:4000/book%20reading/2013/06/16/HongYuHei/" rel="alternate" type="text/html" title="《红与黑》——记一位悲剧的英雄" /><published>2013-06-16T00:00:00+02:00</published><updated>2013-06-16T00:00:00+02:00</updated><id>http://localhost:4000/book%20reading/2013/06/16/HongYuHei</id><content type="html" xml:base="http://localhost:4000/book%20reading/2013/06/16/HongYuHei/">&lt;p&gt;封建等级的社会和奋力反抗的朱利安之间没有胜负，社会看待朱利安只是奴仆，朱利安看待社会只有厌恶，放弃上诉，这颗高傲的头颅从来没有像快要落下时那样富有诗意。&lt;/p&gt;
+
+&lt;p&gt;粉碎心目中社会等级的权威，以为个人的才智是分配社会权利的唯一合理的依据，朱利安雄心勃勃，精力旺盛，尽管他出身低微，但在智力和精力上大大优越于在惰怠虚荣环境下成长起来得贵族青年。英雄美梦无数次出现在他的脑海中，他早已下定了出人头地的决心，骄傲使他放弃了朋友凯复为他安排的发财路，而要自己走一条光辉的捷径。&lt;/p&gt;
+
+&lt;p&gt;但朱利安始终都是痛苦的，对荣誉和财富的渴望让他卷入到上流社会的角斗场，一个他从来都不削于正眼相看的阶级，他们的傲慢和偏见让他厌恶。可如今他却要在这里伪装出虔诚的样子，一个没有宗教信仰，不相信主的人要自己背下整本《圣经》还要对其大加赞扬并侃侃而谈，内心的挣扎一定是血淋淋的。&lt;/p&gt;
+
+&lt;p&gt;高傲的性格，强大的野心，卑微的出身，社会的等级，这四个因素注定将导演一出时代的悲剧。&lt;/p&gt;
+
+&lt;p&gt;也许小说中最动人的就是主人公朱利安的两段爱情吧，德·雷纳尔夫人在朱利安行刑后按照约定没有以任何方式寻短见，但却在三天后抱着她的孩子离开了人世。也许知道最后在监狱里，朱利安放下了世俗的防备和嫉恶如仇才相信世上真的有如此纯洁的情感，才有了这样的对白：“以前我们在韦尔吉树林里散步时，我本来可以获得无穷的快乐，但我却让强烈的野心把我的灵魂带到幻想之园里去了，你那迷人的胳臂就在我的唇边，我没有把他紧紧抱在我怀里，我对未来的幻想，把我从你那里夺走了。为了成名致富，不得不做数次的激烈战斗……是的，要是您不到监狱来看我，我到死也不会认识什么是幸福。”因为朱利安从来没有认为自己可以得到幸福，他追求的一直只有荣誉，是德·雷纳尔夫人这个不入俗的女子让他有了理性之外的人性。&lt;/p&gt;
+
+&lt;p&gt;而朱利安与德·拉莫尔小姐的故事更是有趣，两个骄傲的灵魂虽然彼此相爱过，但都不是纯粹的爱情。一个憧憬的是英雄式的浪漫主义和不拘一格，一个享受的是让其他贵族公子成为手下败将的荣耀，两种不同的骄傲没能谱写出完美的故事，虽然马蒂尔德做到了自己勇敢的极致，但朱利安却无法征服心中对贵族的偏见和没有安全感，他憎恨他们的高傲却同时将这种贵族式的高傲深深地烙进了自己的骨子里。&lt;/p&gt;
+
+&lt;p&gt;朱利安，他像一个英雄一样挣扎过，也许不甚喜欢，但保留对他的敬畏。&lt;/p&gt;
+
+&lt;p&gt;《红与黑》——记一位悲剧的英雄。&lt;/p&gt;</content><author><name>wencolani</name></author><category term="Book reading" /><category term="book reading" /><summary type="html">封建等级的社会和奋力反抗的朱利安之间没有胜负，社会看待朱利安只是奴仆，朱利安看待社会只有厌恶，放弃上诉，这颗高傲的头颅从来没有像快要落下时那样富有诗意。</summary></entry></feed>

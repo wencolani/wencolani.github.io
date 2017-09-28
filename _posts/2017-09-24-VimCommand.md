@@ -3,7 +3,7 @@ layout: post
 category: Command learning
 title: Vim command
 tagline: by wencolani
-tags: [command]
+tags: [vim]
 ---
 
 `vimtutor` --- an interactive tutorial in UNIX version vim 

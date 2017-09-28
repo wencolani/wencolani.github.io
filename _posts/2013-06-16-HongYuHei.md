@@ -1,10 +1,9 @@
-
 ---
 layout: post
 category: Book reading
 title: 《红与黑》——记一位悲剧的英雄
 tagline: by wencolani
-tags: [Book reading]
+tags: [book reading]
 ---
 
 封建等级的社会和奋力反抗的朱利安之间没有胜负，社会看待朱利安只是奴仆，朱利安看待社会只有厌恶，放弃上诉，这颗高傲的头颅从来没有像快要落下时那样富有诗意。

@@ -3,7 +3,7 @@ layout: post
 category: Paper reading
 title: Knowledge Transfer for Out-of-Knowledge-Base Entities, A Graph Neural Network Approach
 tagline: by wencolani
-tags: [paper reading]
+tags: [paper, incremental, KG embedding]
 ---
 
 * Knowledge Transfer for Out-of-Knowledge-Base Entities: A Graph Neural Network Approach

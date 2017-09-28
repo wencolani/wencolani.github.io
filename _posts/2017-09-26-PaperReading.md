@@ -33,9 +33,9 @@ Propagation model 分为两个部分： trandition function 和 pooling function
 #### transition function
 
 transition function 的主要目标是通过每个与OOKB实体具有链接关系的三元组中已有的实体和关系推测出当前OOKB实体的向量表示。具体定义如下：
-* <img src="http://www.forkosh.com/mathtex.cgi? T(\textbf{v}) = \textbf{v}"> --- (identity)
-* <img src="http://www.forkosh.com/mathtex.cgi? T(\textbf{v}) = tanh(\textbf{Av})"> --- (single tanh layer)
-* <img src='http://www.forkosh.com.mathtex.cgi? T(\textbf{v}) = ReLU(\textbf{Av})'> --- (single ReLU layer)
+* \\( T(\textbf{v}) = \textbf{v} \\) --- (identity)
+* \\( T(\textbf{v}) = tanh(\textbf{Av}) \\) --- (single tanh layer)
+* \\( T(\textbf{v}) = ReLU(\textbf{Av}) \\) --- (single ReLU layer)
 这里的transition function 也可以换成其他的神经网络，比如batch-normalization、residual connection 和 LSTM等。
 
 注意参数A的定义可以不是一个固定的全局的参数，而是与当前OOKB实体参与的三元组中的关系相关的 (注：这样肯定能提高效果的). 在single ReLU layer 中本文也添加了batch normalization.
@@ -68,4 +68,4 @@ output model借用了TransE的方法，使用|h + r -t| 作为score function，�
 
 由于OOKB entity是新提出的问题，没有baseline， 本文自己构造了baseline： 通过对TransE在训练数据集上的训练结果，直接选取和OOKB相连接的实体的向量表示并进行三种不同方式的pooling。
 
-![](https://github.com/wencolani/wencolani.github.io/blob/master/assets/images/paperReadingImages/2017-09-26-result.png)
+![](/img/2017-09-26-result.png)

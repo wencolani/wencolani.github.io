@@ -33,9 +33,9 @@ Propagation model 分为两个部分： trandition function 和 pooling function
 #### transition function
 
 transition function 的主要目标是通过每个与OOKB实体具有链接关系的三元组中已有的实体和关系推测出当前OOKB实体的向量表示。具体定义如下：
-* \\( T(\textbf{v}) = \textbf{v} \\) --- (identity)
-* \\( T(\textbf{v}) = tanh(\textbf{Av}) \\) --- (single tanh layer)
-* \\( T(\textbf{v}) = ReLU(\textbf{Av}) \\) --- (single ReLU layer)
+* $ T(\textbf{v}) = \textbf{v} $ --- (identity)
+* $ T(\textbf{v}) = tanh(\textbf{Av}) $ --- (single tanh layer)
+* $ T(\textbf{v}) = ReLU(\textbf{Av}) $ --- (single ReLU layer)
 这里的transition function 也可以换成其他的神经网络，比如batch-normalization、residual connection 和 LSTM等。
 
 注意参数A的定义可以不是一个固定的全局的参数，而是与当前OOKB实体参与的三元组中的关系相关的 (注：这样肯定能提高效果的). 在single ReLU layer 中本文也添加了batch normalization.
@@ -44,7 +44,7 @@ transition function 的主要目标是通过每个与OOKB实体具有链接关�
 
 pooling function 主要目的是通过多个OOKB entity的表示结果生成一个向量表示，pooling的方法主要有以下三种：
 
-* sum pooling: <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"> \\ P(S) = \sum_{i=1}^N x_i \\</script>
+* sum pooling: <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"> \\( P(S) = \sum_{i=1}^N x_i \\)</script>
 * acerage pooling: 
 * max pooling
 

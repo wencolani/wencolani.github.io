@@ -1,5 +1,5 @@
-{% if site.mathjax.enable %}
-  {% if page.layout == 'index' or page.mathjax or site.mathjax.per_page == nil or site.mathjax.per_page == false %}
+ {% if site.mathjax.enable %} 
+  <!-- {% if page.layout == 'index' or page.mathjax or site.mathjax.per_page == nil or site.mathjax.per_page == false %} -->
     <script type="text/x-mathjax-config">
       MathJax.Hub.Config({
         tex2jax: {
@@ -19,5 +19,5 @@
       });
     </script>
     <script type="text/javascript" src="{{ site.mathjax.cdn }}"></script>
-  {% endif %}
-{% endif %}
+  <!-- {% endif %} -->
+{% endif %} 

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.5.2">Jekyll</generator><link href="http://localhost:4000/atom.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2017-09-28T20:50:45+02:00</updated><id>http://localhost:4000/</id><title type="html">wencolani</title><subtitle>a CS Phd candidate in Zhejiang University</subtitle><author><name>wencolani</name></author><entry><title type="html">Knowledge Transfer for Out-of-Knowledge-Base Entities, A Graph Neural Network Approach</title><link href="http://localhost:4000/paper%20reading/2017/09/26/PaperReading/" rel="alternate" type="text/html" title="Knowledge Transfer for Out-of-Knowledge-Base Entities, A Graph Neural Network Approach" /><published>2017-09-26T00:00:00+02:00</published><updated>2017-09-26T00:00:00+02:00</updated><id>http://localhost:4000/paper%20reading/2017/09/26/PaperReading</id><content type="html" xml:base="http://localhost:4000/paper%20reading/2017/09/26/PaperReading/">&lt;ul&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.5.2">Jekyll</generator><link href="http://localhost:4000/atom.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2017-09-28T23:23:13+02:00</updated><id>http://localhost:4000/</id><title type="html">wencolani</title><subtitle>a CS Phd candidate in Zhejiang University</subtitle><author><name>wencolani</name></author><entry><title type="html">Knowledge Transfer for Out-of-Knowledge-Base Entities, A Graph Neural Network Approach</title><link href="http://localhost:4000/paper%20reading/2017/09/26/PaperReading/" rel="alternate" type="text/html" title="Knowledge Transfer for Out-of-Knowledge-Base Entities, A Graph Neural Network Approach" /><published>2017-09-26T00:00:00+02:00</published><updated>2017-09-26T00:00:00+02:00</updated><id>http://localhost:4000/paper%20reading/2017/09/26/PaperReading</id><content type="html" xml:base="http://localhost:4000/paper%20reading/2017/09/26/PaperReading/">&lt;ul&gt;
   &lt;li&gt;Knowledge Transfer for Out-of-Knowledge-Base Entities: A Graph Neural Network Approach&lt;/li&gt;
   &lt;li&gt;Takuo Hamaguchi, Hidekazu Oiwa, Masashi Shimbo, and Yuji Matsumoto&lt;/li&gt;
   &lt;li&gt;IJCAI 2017&lt;/li&gt;
@@ -30,9 +30,9 @@
 
 &lt;p&gt;transition function 的主要目标是通过每个与OOKB实体具有链接关系的三元组中已有的实体和关系推测出当前OOKB实体的向量表示。具体定义如下：&lt;/p&gt;
 &lt;ul&gt;
-  &lt;li&gt;\( T(\textbf{v}) = \textbf{v} \) — (identity)&lt;/li&gt;
-  &lt;li&gt;\( T(\textbf{v}) = tanh(\textbf{Av}) \) — (single tanh layer)&lt;/li&gt;
-  &lt;li&gt;\( T(\textbf{v}) = ReLU(\textbf{Av}) \) — (single ReLU layer)
+  &lt;li&gt;$ T(\textbf{v}) = \textbf{v} $ — (identity)&lt;/li&gt;
+  &lt;li&gt;$ T(\textbf{v}) = tanh(\textbf{Av}) $ — (single tanh layer)&lt;/li&gt;
+  &lt;li&gt;$ T(\textbf{v}) = ReLU(\textbf{Av}) $ — (single ReLU layer)
 这里的transition function 也可以换成其他的神经网络，比如batch-normalization、residual connection 和 LSTM等。&lt;/li&gt;
 &lt;/ul&gt;
 
@@ -43,7 +43,7 @@
 &lt;p&gt;pooling function 主要目的是通过多个OOKB entity的表示结果生成一个向量表示，pooling的方法主要有以下三种：&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;sum pooling: &lt;script type=&quot;text/javascript&quot; src=&quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default&quot;&gt; \\ P(S) = \sum_{i=1}^N x_i \\&lt;/script&gt;&lt;/li&gt;
+  &lt;li&gt;sum pooling: &lt;script type=&quot;text/javascript&quot; src=&quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default&quot;&gt; \\( P(S) = \sum_{i=1}^N x_i \\)&lt;/script&gt;&lt;/li&gt;
   &lt;li&gt;acerage pooling:&lt;/li&gt;
   &lt;li&gt;max pooling&lt;/li&gt;
 &lt;/ul&gt;

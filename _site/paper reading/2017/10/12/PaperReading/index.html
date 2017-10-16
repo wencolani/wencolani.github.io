@@ -83,7 +83,7 @@
 <link href="/assets/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="book reading," />
+  <meta name="keywords" content="paper,nature,memory,nature," />
 
 
 
@@ -111,17 +111,19 @@
 
 
 
-<meta name="description" content="《红》《橙》：">
-<meta name="keywords" content="book reading">
+<meta name="description" content="Hybrid computing using a neural network with dynamic external memory Google Deepmind Nature October 2016 article link code link">
+<meta name="keywords" content="paper, nature, memory, nature">
 <meta property="og:type" content="article">
-<meta property="og:title" content="《陪安东尼度过的日子》">
-<meta property="og:url" content="http://localhost:4000/book%20reading/2016/05/01/PeiAnDongNiDuGuoDeRiZi/">
+<meta property="og:title" content="Hybrid computing using a neural network with dynamic external memory">
+<meta property="og:url" content="http://localhost:4000/paper%20reading/2017/10/12/PaperReading/">
 <meta property="og:site_name" content="wencolani">
-<meta property="og:description" content="《红》《橙》：">
+<meta property="og:description" content="Hybrid computing using a neural network with dynamic external memory Google Deepmind Nature October 2016 article link code link">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="/img/2017-10-12-structure.png">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="《陪安东尼度过的日子》">
-<meta name="twitter:description" content="《红》《橙》：">
+<meta name="twitter:title" content="Hybrid computing using a neural network with dynamic external memory">
+<meta name="twitter:description" content="Hybrid computing using a neural network with dynamic external memory Google Deepmind Nature October 2016 article link code link">
+<meta name="twitter:image" content="/img/2017-10-12-structure.png">
 
 
 <script type="text/javascript" id="hexo.configurations">
@@ -155,7 +157,7 @@
 
 
 
-  <title>《陪安东尼度过的日子》</title>
+  <title>Hybrid computing using a neural network with dynamic external memory</title>
   
 
 
@@ -306,7 +308,7 @@
   
 
   <article class="post post-type- " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://localhost:4000/book%20reading/2016/05/01/PeiAnDongNiDuGuoDeRiZi/">
+    <link itemprop="mainEntityOfPage" href="http://localhost:4000/paper%20reading/2017/10/12/PaperReading/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="wencolani">
@@ -326,7 +328,7 @@
           <h1 class="post-title" itemprop="name headline">
           
           
-            《陪安东尼度过的日子》
+            Hybrid computing using a neural network with dynamic external memory
           
         </h1>
         
@@ -340,8 +342,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-05-01T00:00:00+02:00">
-                2016-05-01
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-12T00:00:00+02:00">
+                2017-10-12
               </time>
             
 
@@ -364,8 +366,8 @@
               
                 
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/category/#/Book%20reading" itemprop="url" rel="index">
-                    <span itemprop="name">Book reading</span>
+                  <a href="/category/#/Paper%20reading" itemprop="url" rel="index">
+                    <span itemprop="name">Paper reading</span>
                   </a>
                 </span>
 
@@ -382,9 +384,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/book%20reading/2016/05/01/PeiAnDongNiDuGuoDeRiZi/#comments" itemprop="discussionUrl">
+                <a href="/paper%20reading/2017/10/12/PaperReading/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="/book%20reading/2016/05/01/PeiAnDongNiDuGuoDeRiZi/" itemprop="commentCount"></span>
+                        data-disqus-identifier="/paper%20reading/2017/10/12/PaperReading/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -415,29 +417,67 @@
       
 
       
-        <p>《红》《橙》：</p>
+        <ul>
+  <li>Hybrid computing using a neural network with dynamic external memory</li>
+  <li>Google Deepmind</li>
+  <li>Nature October 2016</li>
+  <li><a href="http://www.nature.com/nature/journal/v538/n7626/abs/nature20101.html?foxtrotcallback=true">article link</a></li>
+  <li><a href="https://github.com/deepmind/dnc">code link</a></li>
+</ul>
 
-<p>去阿里的路上和周末赖床的时间看完了安东尼的两本书，初高中时代没有看过这种年轻作者的书，现在竟然补上了。书中只是记录了安东尼的漫长岁月，第一本2005.08.16-2007.10.01，第二本2007.10.02-2010.6.22，短短的两本书看完了别人五年的岁月，想想也是刺激。</p>
+<h1 id="overview">Overview</h1>
+<p>这篇文章提出了一个神经网络框架DNC(Differentiable neural computer)搭载了一个可读可写的外部memory模块。是NTM(Neural Turing Machine)的升级版。</p>
 
-<p>安东尼应该是个细腻的孩子，书中描绘的生活是那么生动，即便是单薄的。厨师这个专业真不错，“唯爱与美食不可辜负也”，厨师就这么轻而易举得得到了时间的珍宝。这是第一次通过书籍接触到墨尔本（猫本）这座城市，总觉得墨尔本这个名字很浪漫。在澳洲的生活很精彩，在作者身边都是真诚的朋友，开心有人陪伴笑，难过有人陪伴哭，疯狂有人陪伴闹。也许是自己还没出国感受世界上的其他文化，故而总保持着向往，支撑自己读完了生活流水账似的真诚的两本书。</p>
+<p>下面这张论文中的图很好地说明了整个DNC的框架：</p>
 
-<p>曾经自己也想过用什么样的方式，连续的方式，来记录自己的一生，等老了的时候，就把它们拿出来让自己年轻。可惜并没有找到合适的方式，写日记也许不错，但没能坚持下来。我想等安东尼老了的时候，看着这一些列书的红橙花绿青蓝紫，一定是一种难以言喻的感动，那一刻书里所承载的岁月远远胜过了里面的文字内容。</p>
+<p><img src="/img/2017-10-12-structure.png" alt="" /></p>
 
-<p>我想生命是需要记录的，因为我们太健忘了；</p>
+<p>整个框架流程可以分为四个部分：</p>
 
-<p>生命是需要记录的，因为生命会被忙碌冲散；</p>
+<h2 id="controller">Controller:</h2>
+<p>controller是一个recurrent的结构，输入输出均为向量，并会产生一系列interface parameters输入到读写部分。整个模型的输入是由controllor接受的。
+ 整个controllor采用的是deep LSTM结构，含有input gate, forget gate, output gate. controllor输出的output vector和interface vector都由hidden vector生成。</p>
 
-<p>生命需要被记录，以此超越时间。</p>
+<h2 id="read-and-write-head">Read and write head:</h2>
+<p><em>read head</em> 会接受由controllor产生的interface parameters包括：</p>
+<ul>
+  <li>read key：和memory的每一行的content计算相似度然用于读操作的寻址，用于计算read weight。</li>
+  <li>read strengths: 每一个read head都会分配一个read strength，可看作是当前时刻t每个read head的读操作权重。</li>
+  <li>read mode: 整个模型定义了三种读的方式,[‘C’]: content lookup using a read key；[‘F’]:reading out location forward in the order they were writteh; [‘B’]: reading out location backword in the order they were written.</li>
+</ul>
 
-<p>《黄》：</p>
+<p>每一个read head都会根据controllor的输入和当前的memory生成一个read vector，并反馈给controllor。</p>
 
-<p>在马克思的课上结束了这本书的阅读（上课的老师很有魅力，87年，理论经济）</p>
+<p><em>write head</em> 会接受由controllor产生的interface papameters包括：</p>
+<ul>
+  <li>write key: 和read key 类似。</li>
+  <li>write strength: 和read strength相似，但通常write head只有一个，而read head可能有多个。</li>
+  <li>erase vector: 用于控制前一时刻t-1的memory的忘记程度。</li>
+  <li>write vector：和write weight一起控制当前的写入内容。
+经过write head 操作后，会更新t-1时刻的momoey并生成时刻t修改后的memory。</li>
+</ul>
 
-<p>安东尼的岁月记录到了2013年末，2013年没有以前精彩，只是对于我这个读者而言。回国了，失恋了，工作了。也许当为了能够写下去而写下去的时候，从前的感觉消失了。安东尼也长大了。</p>
+<h2 id="momory">Momory:</h2>
+<p>Memory 表示成一个N*W的矩阵M。</p>
 
-<p>我想以后不会再看续集了，我需要去寻找陪伴自己度过漫长岁月的部分了。以后会多看一些理论完备的书吧，再见，安东尼。</p>
+<h2 id="memory-usage-and-temproal-links">Memory usage and temproal links:</h2>
+<ul>
+  <li><em>usage vector</em>(各元素取值为0到1之间)用来记录和衡量整个memory各个位置(通常以矩阵的行 为单位)的使用状况，如果当前行的memory usage为1，则不能对此位置进行任何寻址并进行读写操作，必须等待free gate将此位置重新释放。</li>
+  <li><em>temporal link matrix</em> 记录的memory中每个位置的写的顺序(图中用黑色的有向箭头表示)。维护这个temporal link matrix的原因是在一些场景下比如序列化的指令(sequence of instruction),比如bAbI数据集上对于对于逻辑推理能力的测试，输入数据的顺序是很重要的。</li>
+</ul>
 
-<p>安东尼，再见。</p>
+<h1 id="experiment">Experiment</h1>
+<p>论文主要包含了三个实验。</p>
+<ul>
+  <li>Synthetic question answering</li>
+  <li>Graph experiment</li>
+  <li>Block puzzle experiment</li>
+</ul>
+
+<p>这里就不详细介绍了</p>
+
+<h1 id="thinking">Thinking</h1>
+<p>个人认为这篇文章最精彩的地方在于整体框架的设计，尤其是对memory的利用，比如如何进行读写操作，读写操作各自都有怎样不同的策略，整个memory的使用有什么上层的策略比如usage等。仔细看论文后面Method部分会体会更深刻。</p>
 
 
       
@@ -469,7 +509,16 @@
         <div class="post-tags">
           
             
-            <a href="/tag/#/book%20reading" rel="tag"># book reading</a>
+            <a href="/tag/#/paper" rel="tag"># paper</a>
+          
+            
+            <a href="/tag/#/nature" rel="tag"># nature</a>
+          
+            
+            <a href="/tag/#/memory" rel="tag"># memory</a>
+          
+            
+            <a href="/tag/#/nature" rel="tag"># nature</a>
           
         </div>
       
@@ -485,18 +534,14 @@
         <div class="post-nav" id="post-nav-id">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/book%20reading/2016/08/02/ZhuiFengZhengDeRen/" rel="next" title="《追风筝的人》—— 执念是为放不下的事">
-                <i class="fa fa-chevron-left"></i> 《追风筝的人》—— 执念是为放不下的事
-              </a>
-            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/book%20reading/2013/06/16/HongYuHei/" rel="prev" title="《红与黑》——记一位悲剧的英雄">
-                《红与黑》——记一位悲剧的英雄 <i class="fa fa-chevron-right"></i>
+              <a href="/code%20reading/2017/10/09/CodeReadign/" rel="prev" title="IJCAI 2017 OOKB (main.py)">
+                IJCAI 2017 OOKB (main.py) <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -557,8 +602,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/assets/images/avatar.jpg"
@@ -644,6 +698,31 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+
+
+
+
+            
+              <div class="post-toc-content">
+    <ol class=nav>
+      <li class="nav-item nav-level-1"> <a class="nav-link" href="#overview"> <span class="nav-number">1</span> <span class="nav-text">Overview</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-2"> <a class="nav-link" href="#controller"> <span class="nav-number">1.1</span> <span class="nav-text">Controller:</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#read-and-write-head"> <span class="nav-number">1.2</span> <span class="nav-text">Read and write head:</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#momory"> <span class="nav-number">1.3</span> <span class="nav-text">Momory:</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#memory-usage-and-temproal-links"> <span class="nav-number">1.4</span> <span class="nav-text">Memory usage and temproal links:</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-1"> <a class="nav-link" href="#experiment"> <span class="nav-number">2</span> <span class="nav-text">Experiment</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-1"> <a class="nav-link" href="#thinking"> <span class="nav-number">3</span> <span class="nav-text">Thinking</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child">
+    </ol>
+  </div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -804,9 +883,9 @@
       
       <script type="text/javascript">
           var disqus_config = function () {
-              this.page.url = 'http://localhost:4000/book%20reading/2016/05/01/PeiAnDongNiDuGuoDeRiZi/';
-              this.page.identifier = '/book%20reading/2016/05/01/PeiAnDongNiDuGuoDeRiZi/';
-              this.page.title = '《陪安东尼度过的日子》';
+              this.page.url = 'http://localhost:4000/paper%20reading/2017/10/12/PaperReading/';
+              this.page.identifier = '/paper%20reading/2017/10/12/PaperReading/';
+              this.page.title = 'Hybrid computing using a neural network with dynamic external memory';
           };
           var d = document, s = d.createElement('script');
           s.src = 'https://.disqus.com/embed.js';

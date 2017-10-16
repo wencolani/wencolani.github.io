@@ -1,95 +1,421 @@
-<?xml version="1.0" encoding="utf-8"?>
-<search>
+
+<!doctype html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   
-    <entry>
-      <title><![CDATA[Hybrid computing using a neural network with dynamic external memory]]></title>
-      <url>/paper%20reading/2017/10/12/PaperReading/</url>
-      <content type="html"><![CDATA[<ul>
-  <li>Hybrid computing using a neural network with dynamic external memory</li>
-  <li>Google Deepmind</li>
-  <li>Nature October 2016</li>
-  <li><a href="http://www.nature.com/nature/journal/v538/n7626/abs/nature20101.html?foxtrotcallback=true">article link</a></li>
-  <li><a href="https://github.com/deepmind/dnc">code link</a></li>
-</ul>
-
-<h1 id="overview">Overview</h1>
-<p>这篇文章提出了一个神经网络框架DNC(Differentiable neural computer)搭载了一个可读可写的外部memory模块。是NTM(Neural Turing Machine)的升级版。</p>
-
-<p>下面这张论文中的图很好地说明了整个DNC的框架：</p>
-
-<p><img src="/img/2017-10-12-structure.png" alt="" /></p>
-
-<p>整个框架流程可以分为四个部分：</p>
-
-<h2 id="controller">Controller:</h2>
-<p>controller是一个recurrent的结构，输入输出均为向量，并会产生一系列interface parameters输入到读写部分。整个模型的输入是由controllor接受的。
- 整个controllor采用的是deep LSTM结构，含有input gate, forget gate, output gate. controllor输出的output vector和interface vector都由hidden vector生成。</p>
-
-<h2 id="read-and-write-head">Read and write head:</h2>
-<p><em>read head</em> 会接受由controllor产生的interface parameters包括：</p>
-<ul>
-  <li>read key：和memory的每一行的content计算相似度然用于读操作的寻址，用于计算read weight。</li>
-  <li>read strengths: 每一个read head都会分配一个read strength，可看作是当前时刻t每个read head的读操作权重。</li>
-  <li>read mode: 整个模型定义了三种读的方式,[‘C’]: content lookup using a read key；[‘F’]:reading out location forward in the order they were writteh; [‘B’]: reading out location backword in the order they were written.</li>
-</ul>
-
-<p>每一个read head都会根据controllor的输入和当前的memory生成一个read vector，并反馈给controllor。</p>
-
-<p><em>write head</em> 会接受由controllor产生的interface papameters包括：</p>
-<ul>
-  <li>write key: 和read key 类似。</li>
-  <li>write strength: 和read strength相似，但通常write head只有一个，而read head可能有多个。</li>
-  <li>erase vector: 用于控制前一时刻t-1的memory的忘记程度。</li>
-  <li>write vector：和write weight一起控制当前的写入内容。
-经过write head 操作后，会更新t-1时刻的momoey并生成时刻t修改后的memory。</li>
-</ul>
-
-<h2 id="momory">Momory:</h2>
-<p>Memory 表示成一个N*W的矩阵M。</p>
-
-<h2 id="memory-usage-and-temproal-links">Memory usage and temproal links:</h2>
-<ul>
-  <li><em>usage vector</em>(各元素取值为0到1之间)用来记录和衡量整个memory各个位置(通常以矩阵的行 为单位)的使用状况，如果当前行的memory usage为1，则不能对此位置进行任何寻址并进行读写操作，必须等待free gate将此位置重新释放。</li>
-  <li><em>temporal link matrix</em> 记录的memory中每个位置的写的顺序(图中用黑色的有向箭头表示)。维护这个temporal link matrix的原因是在一些场景下比如序列化的指令(sequence of instruction),比如bAbI数据集上对于对于逻辑推理能力的测试，输入数据的顺序是很重要的。</li>
-</ul>
-
-<h1 id="experiment">Experiment</h1>
-<p>论文主要包含了三个实验。</p>
-<ul>
-  <li>Synthetic question answering</li>
-  <li>Graph experiment</li>
-  <li>Block puzzle experiment</li>
-</ul>
-
-<p>这里就不详细介绍了</p>
-
-<h1 id="thinking">Thinking</h1>
-<p>个人认为这篇文章最精彩的地方在于整体框架的设计，尤其是对memory的利用，比如如何进行读写操作，读写操作各自都有怎样不同的策略，整个memory的使用有什么上层的策略比如usage等。仔细看论文后面Method部分会体会更深刻。</p>
-
-]]></content>
-      <categories>
-        
-          <category> Paper reading </category>
-        
-      </categories>
-      <tags>
-        
-          <tag> paper </tag>
-        
-          <tag> nature </tag>
-        
-          <tag> memory </tag>
-        
-          <tag> nature </tag>
-        
-      </tags>
-      <tags></tags>
-    </entry>
   
-    <entry>
-      <title><![CDATA[IJCAI 2017 OOKB (main.py)]]></title>
-      <url>/code%20reading/2017/10/09/CodeReadign/</url>
-      <content type="html"><![CDATA[<ul>
+  <link href="/assets/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/assets/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/assets/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="code reading,paper code," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="wencolani" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/assets/images/avatar.jpg?v=5.1.1" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="paper : Knowledge Transfer for Out-of-Knowledge-Base Entities: A Graph Neural Network Approach code from : https://github.com/takuo-h/GNN-for-OOKB">
+<meta name="keywords" content="code reading, paper code">
+<meta property="og:type" content="article">
+<meta property="og:title" content="IJCAI 2017 OOKB (main.py)">
+<meta property="og:url" content="http://localhost:4000/code%20reading/2017/10/09/CodeReadign/">
+<meta property="og:site_name" content="wencolani">
+<meta property="og:description" content="paper : Knowledge Transfer for Out-of-Knowledge-Base Entities: A Graph Neural Network Approach code from : https://github.com/takuo-h/GNN-for-OOKB">
+<meta property="og:locale" content="zh-Hans">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="IJCAI 2017 OOKB (main.py)">
+<meta name="twitter:description" content="paper : Knowledge Transfer for Out-of-Knowledge-Base Entities: A Graph Neural Network Approach code from : https://github.com/takuo-h/GNN-for-OOKB">
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://localhost:4000/"/>
+
+
+
+
+
+  <title>IJCAI 2017 OOKB (main.py)</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+  <!--  -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <!--  -->
+ 
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">wencolani</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Zhang Wen's blog</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+<div id="posts" class="posts-expand">
+  
+  
+
+  
+
+  
+  
+  
+
+  <article class="post post-type- " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://localhost:4000/code%20reading/2017/10/09/CodeReadign/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wencolani">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/assets/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wencolani">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+          
+          
+            IJCAI 2017 OOKB (main.py)
+          
+        </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-09T00:00:00+02:00">
+                2017-10-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/#/code%20reading" itemprop="url" rel="index">
+                    <span itemprop="name">code reading</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/code%20reading/2017/10/09/CodeReadign/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="/code%20reading/2017/10/09/CodeReadign/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+            
+                <div class="post-description">
+                    
+                </div>
+            
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <ul>
   <li>paper : Knowledge Transfer for Out-of-Knowledge-Base Entities: A Graph Neural Network Approach</li>
   <li>code from : https://github.com/takuo-h/GNN-for-OOKB</li>
 </ul>
@@ -508,423 +834,476 @@ positive/negativeを返すように
 </code></pre>
 </div>
 
-]]></content>
-      <categories>
+
+      
+    </div>
+
+    <div>
+      
         
-          <category> code reading </category>
+
+      
+    </div>
+
+    <div>
+      
         
-      </categories>
-      <tags>
+
+      
+    </div>
+
+    <div>
+      
         
-          <tag> code reading </tag>
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            
+            <a href="/tag/#/code%20reading" rel="tag"># code reading</a>
+          
+            
+            <a href="/tag/#/paper%20code" rel="tag"># paper code</a>
+          
+        </div>
+      
+
+      
+      
+      
+      
+      
+
+      
+      
+        <div class="post-nav" id="post-nav-id">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/paper%20reading/2017/10/12/PaperReading/" rel="next" title="Hybrid computing using a neural network with dynamic external memory">
+                <i class="fa fa-chevron-left"></i> Hybrid computing using a neural network with dynamic external memory
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/%E9%9A%8F%E7%AC%94/2017/10/07/suibi/" rel="prev" title="新的演员">
+                新的演员 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+      
+
+      
+    </footer>
+  </article>
+
+  <div class="post-spread">
+    
+  </div>
+</div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
         
-          <tag> paper code </tag>
+          
+
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
         
-      </tags>
-      <tags></tags>
-    </entry>
+        
+        
+
+
+
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/assets/images/avatar.jpg"
+               alt="wencolani" />
+          <p class="site-author-name" itemprop="name">wencolani</p>
+           
+              <p class="site-description motion-element" itemprop="description">a CS Phd candidate in Zhejiang University</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+        
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              
+              
+              <span class="links-of-author-item">
+                <a href="https://github.com/wencolani" target="_blank" title="Github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Github
+                </a>
+              </span>
+            
+              
+              
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/2834705480" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
   
-    <entry>
-      <title><![CDATA[新的演员]]></title>
-      <url>/%E9%9A%8F%E7%AC%94/2017/10/07/suibi/</url>
-      <content type="html"><![CDATA[<p>每条路都是花枝招展</p>
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-wencolani"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wencolani</span>
+</div>
 
-<p>可为什么</p>
 
-<p>路上都是花仙子</p>
+<div class="powered-by">
+  由 <a class="theme-link" href="https://jekyllrb.com">Jekyll</a> 强力驱动
+</div>
 
-<p>那就走近看一看</p>
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/simpleyyt/jekyll-theme-next">
+    NexT.Mist
+  </a>
+</div>
 
-<p>哦 原来都是敬业的演员</p>
 
-<p>恍然大悟</p>
-
-<p>回头无岸</p>
-
-<p>新的演员</p>
-]]></content>
-      <categories>
         
-          <category> 随笔 </category>
+
         
-      </categories>
-      <tags>
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
         
-          <tag> 随笔 </tag>
-        
-          <tag> 小诗 </tag>
-        
-      </tags>
-      <tags></tags>
-    </entry>
+      </div>
+    
+
+  </div>
+
   
-    <entry>
-      <title><![CDATA[Knowledge Transfer for Out-of-Knowledge-Base Entities, A Graph Neural Network Approach]]></title>
-      <url>/paper%20reading/2017/09/26/PaperReading/</url>
-      <content type="html"><![CDATA[<ul>
-  <li>Knowledge Transfer for Out-of-Knowledge-Base Entities: A Graph Neural Network Approach</li>
-  <li>Takuo Hamaguchi, Hidekazu Oiwa, Masashi Shimbo, and Yuji Matsumoto</li>
-  <li>IJCAI 2017</li>
-  <li><a href="https://www.ijcai.org/proceedings/2017/0250.pdf">article link</a></li>
-  <li><a href="https://github.com/takuo-h/GNN-for-OOKB">code link</a></li>
-</ul>
 
-<h2 id="main-idea">Main Idea</h2>
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
 
-<p>这篇文章提出了一个新的问题：关于out-of-knowledge-base(OOKB) entity的预测。以往的knowledge base embedding方法做链接预（link prediction）测和三元组分类(triple classification)时所用的测试数据集里都假设所有的实体的关系都已经在训练数据集里出现过，即每个实体和关系都有相关的向量表示，如果出现新的实体，那么模型需要进行重新训练。</p>
 
-<p>out-of-knowlege-base entity 的问题如下：</p>
 
-<blockquote>
-  <p>out-of-knowledge-base entity problem arises when new entity(OOKB entities) occur in the relation triplets that are given to the system after training.</p>
-</blockquote>
 
-<p>解决OOKB的问题主要在于如何从已有的实体和关系的向量表示里获得OOKB实体的向量表示，本文主要利用了OOKB实体和知识库中已有的实体的链接关系得到其向量表示。</p>
 
-<h2 id="proposed-model">Proposed Model</h2>
 
-<p>本文借鉴了[Graph-NN]的方法, 将生成OOKB entity的向量表示的过程分为propagation model 和 output model.</p>
 
-<h3 id="propagation-model">Propagation model</h3>
 
-<p>Propagation model 分为两个部分： trandition function 和 pooling function.</p>
 
-<h4 id="transition-function">transition function</h4>
 
-<p>transition function 的主要目标是通过每个与OOKB实体具有链接关系的三元组中已有的实体和关系推测出当前OOKB实体的向量表示。具体定义如下：</p>
-<ul>
-  <li>$ T(\textbf{v}) = \textbf{v} $ — (identity)</li>
-  <li>$ T(\textbf{v}) = tanh(\textbf{Av}) $ — (single tanh layer)</li>
-  <li>$ T(\textbf{v}) = ReLU(\textbf{Av}) $ — (single ReLU layer)
-这里的transition function 也可以换成其他的神经网络，比如batch-normalization、residual connection 和 LSTM等。</li>
-</ul>
 
-<p>注意参数A的定义可以不是一个固定的全局的参数，而是与当前OOKB实体参与的三元组中的关系相关的 (注：这样肯定能提高效果的). 在single ReLU layer 中本文也添加了batch normalization.</p>
 
-<h4 id="pooling-function">pooling function</h4>
 
-<p>pooling function 主要目的是通过多个OOKB entity的表示结果生成一个向量表示，pooling的方法主要有以下三种：</p>
 
-<ul>
-  <li>sum pooling: <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"> \\( P(S) = \sum_{i=1}^N x_i \\)</script></li>
-  <li>acerage pooling:</li>
-  <li>max pooling</li>
-</ul>
 
-<p>(文中也使用了stacking and unrolling，不过不太了解)</p>
 
-<h3 id="output-model">output model</h3>
-<p>output model借用了TransE的方法，使用|h + r -t| 作为score function，并且采用margin-based objective function. 相对于之前TrasnE的pairwise-margin，本文提出了absolute-margin，这样的定义同样可以使得可以生成更多的负样本，可以提高最终embedding的效果。</p>
 
-<h2 id="experiment">Experiment</h2>
-<p>本文也进行了常规的knowledge base embedding的三元组分类的实验，即没有OOKB实体存在，在WN11和FB13上的实验均比TransE要好一些。但是我更关注OOKB实体的问题，所以主要介绍关于OOKB实体的实验。</p>
-<h3 id="数据集的构造">数据集的构造</h3>
-<p>本文实验数据集的构造过程非常值得借鉴。以WordNet11s数据集为例， 构造过程如下：</p>
 
-<ol>
-  <li>选取OOKBentity：从WN11的test数据集中选取N=1000, 3000, 5000三元组。然后有三种策略选取OOKB entity：
-    <ol>
-      <li>将选取出的三元组中的所有head entity当作是OOKB实体</li>
-      <li>将选取出的三元组中的所有tail entity当作是OOKB实体</li>
-      <li>将选取出的三元组中的所有head entity 和 tail entity均当作OOKB实体
-然后去掉候选OOKB实体中与任何非OOKB实体都没有链接的实体。</li>
-    </ol>
-  </li>
-  <li>将原来训练数据集中的三元组划分入两个类别：将不含有选出的OOKB实体的三元组留在训练数据集中，将含有选出的OOKB实体的三元组放入auxiliary set中。</li>
-</ol>
 
-<p>由于OOKB entity是新提出的问题，没有baseline， 本文自己构造了baseline： 通过对TransE在训练数据集上的训练结果，直接选取和OOKB相连接的实体的向量表示并进行三种不同方式的pooling。</p>
 
-<p><img src="/img/2017-09-26-result.png" alt="" /></p>
-]]></content>
-      <categories>
-        
-          <category> Paper reading </category>
-        
-      </categories>
-      <tags>
-        
-          <tag> paper </tag>
-        
-          <tag> incremental </tag>
-        
-          <tag> KG embedding </tag>
-        
-      </tags>
-      <tags></tags>
-    </entry>
+
   
-    <entry>
-      <title><![CDATA[Vim command]]></title>
-      <url>/command%20learning/2017/09/24/VimCommand/</url>
-      <content type="html"><![CDATA[<p><code class="highlighter-rouge">vimtutor</code> — an interactive tutorial in UNIX version vim</p>
-
-<h2 id="under-the-normal-mode">under the normal mode:</h2>
-<ul>
-  <li><code class="highlighter-rouge">i</code> — insert mode: insert a character before the character under the cursor</li>
-  <li><code class="highlighter-rouge">a</code> — insert mode: insert a character after the character under the cursor</li>
-  <li><code class="highlighter-rouge">o</code> — inserr mode: open a new line and put hte cursor to the begining of the new line</li>
-  <li><code class="highlighter-rouge">x</code> — delete current letter</li>
-  <li><code class="highlighter-rouge">&lt;enter&gt;</code> — move to the begining of the next line</li>
-  <li><code class="highlighter-rouge">h</code> — move left</li>
-  <li><code class="highlighter-rouge">j</code> — move down</li>
-  <li><code class="highlighter-rouge">k</code> — move up</li>
-  <li><code class="highlighter-rouge">l</code> — move right</li>
-  <li><code class="highlighter-rouge">u</code> — undo the last operation</li>
-  <li><code class="highlighter-rouge">:</code> — enter command mode</li>
-  <li><code class="highlighter-rouge">dd</code> — delete a line</li>
-  <li><code class="highlighter-rouge">w</code> — move cursor forward one word</li>
-  <li><code class="highlighter-rouge">b</code> — move cursor backward one word</li>
-  <li><code class="highlighter-rouge">$</code> — move to the end of the line(also e.g.3$)</li>
-  <li><code class="highlighter-rouge">^</code> — move to the first nonblank character of the line</li>
-  <li><code class="highlighter-rouge">fx</code> — searches the right line for the single character x</li>
-  <li><code class="highlighter-rouge">Fx</code> — searches the left line for the single character x</li>
-  <li><code class="highlighter-rouge">tx</code> — searches the right line for this single character x and stop one character before x (search till)</li>
-  <li><code class="highlighter-rouge">Tx</code> — for the left side</li>
-  <li><code class="highlighter-rouge">f&lt;esc&gt;</code> — abord forward search</li>
-  <li><code class="highlighter-rouge">G</code> — move the last line</li>
-  <li><code class="highlighter-rouge">3G</code> — move to 3 line</li>
-  <li><code class="highlighter-rouge">1G</code> — move to the top of the file</li>
-  <li><code class="highlighter-rouge">%</code> — move to the first line</li>
-  <li><code class="highlighter-rouge">50%</code> — move to the half part of the file</li>
-  <li><code class="highlighter-rouge">75%</code> — move to the 75% of the file</li>
-  <li><code class="highlighter-rouge">CTRL+g</code> — show where you are in the file</li>
-  <li><code class="highlighter-rouge">CTRL+u</code> — scroll up half a screen of text</li>
-  <li><code class="highlighter-rouge">CTRL+d</code> — scroll down hald a screen of the text</li>
-  <li><code class="highlighter-rouge">v</code> — visual mode</li>
-  <li><code class="highlighter-rouge">dw</code> — delete the rest of the current word where the cursor in</li>
-  <li><code class="highlighter-rouge">d$</code> — delete the current line from where the cursor in</li>
-  <li><code class="highlighter-rouge">3dw</code> — delete one word three times</li>
-  <li><code class="highlighter-rouge">d3w</code> — delete three word one time</li>
-  <li><code class="highlighter-rouge">3d2w</code> — delete two words three times</li>
-  <li><code class="highlighter-rouge">c</code> — change text, it deletes the current choosed(in visul mode) otherwise the whole line  and leave you in the insert mode</li>
-  <li><code class="highlighter-rouge">cw</code> — change the current word</li>
-  <li><code class="highlighter-rouge">cc</code> — change the whole line (as dd)</li>
-  <li><code class="highlighter-rouge">c$(or C)</code> — change from current place to the end of the line</li>
-  <li><code class="highlighter-rouge">.</code> — repeat the last delete or change command</li>
-  <li><code class="highlighter-rouge">J</code> — join the current with the next line (also 3J)</li>
-  <li><code class="highlighter-rouge">rx</code> — replace current character with x (also 3rx)</li>
-  <li><code class="highlighter-rouge">3rx</code> — replace threee character with x</li>
-  <li><code class="highlighter-rouge">3r&lt;Enter&gt;</code> — replace 3 characters with one [Enter]</li>
-  <li><code class="highlighter-rouge">~</code> — change a character’s case, changes uppercase to lowercase and vice versa</li>
-  <li><code class="highlighter-rouge">qx</code> — record keystrokes into the register named x   /  — use q to quit the record  / — use @x to reuse the operation / — the difference from qx to . is that qx could record multiple steps</li>
-</ul>
-
-<h2 id="under-the-command-mode">under the command mode</h2>
-<ul>
-  <li><code class="highlighter-rouge">q!</code> — quit without save the changes</li>
-  <li><code class="highlighter-rouge">:h(help)</code> — help document</li>
-  <li><code class="highlighter-rouge">:h x</code> — get help on x commond</li>
-  <li><code class="highlighter-rouge">:set number</code> — show the line number</li>
-  <li><code class="highlighter-rouge">:set nonumber</code> — turn off showing the number</li>
-  <li><code class="highlighter-rouge">:help v_d</code> — get the help about what the delete(d) command does in visual mode</li>
-</ul>
-
-<h2 id="under-the-visual-mode">under the visual mode</h2>
-<ul>
-  <li><code class="highlighter-rouge">J</code> — join the selected lines</li>
-</ul>
-]]></content>
-      <categories>
-        
-          <category> Command learning </category>
-        
-      </categories>
-      <tags>
-        
-          <tag> vim </tag>
-        
-      </tags>
-      <tags></tags>
-    </entry>
+   
   
-    <entry>
-      <title><![CDATA[《曾文正公家书 上》]]></title>
-      <url>/book%20reading/2017/05/30/ZengWenZhengGongJiaShu1/</url>
-      <content type="html"><![CDATA[<p>初读此书觉得有几分枯燥，书中所记不过是琐碎的日常。但慢慢看着看着逐渐感受到了鲜活的形象，感受到了何为“长兄如父”“君君臣臣，父父子子”。历史中再伟岸的形象都是由鲜明及琐碎的生活构成的，伟人不是不食人间烟火，横空出世的圣人。他们也有自己所生活的时代的温度和生活的烙印。这是自己读的第一本历史一手书籍，值得。</p>
-
-<p>每次看到书信的结尾处写着“兄国藩手草”五个大字，都觉得无比羡慕，我多么希望也有这样的长兄啊，那些文字间的提点皆珠玑。作为长兄的曾国藩操心的事儿可真不少呢，上至国事下至家务，无不上心。对几个弟弟们的成长也是关怀备至，会按照他们不同的天赋安排学习进度和学习策略，会经常督促他们发给自己最新的学习成果，当然以习字和作文为主。真是羡煞我也。</p>
-
-<p>曾国藩对人都有自己的判断，处于何境何人可用何人不可用心中一清二楚，虽处事文雅，但内心绝不含糊。何人为有恩之人也一直铭记于心，无论自己处境如何都不忘感恩。读了这么多书信在平实的生活中逐渐构造出了曾国藩这个有血有肉的立体形象。至爽至爽。</p>
-
-<p>说一说对曾国藩本人之外的认识吧。首先是对历史的认识，每个人的认知都是受到当前历史环境的局限的，在科学还并不发达的清朝，曾国藩也会有一些愚昧的认知，比如家庭的命运和祖坟的选址有关，信人但更信天。对医药的认知也是不清楚其根本。曾国藩常常会在信中癣疾又发，且数月不愈，这在现在看来真是不可思议，如果当今又连发数月的癣疾，当事人肯定急得团团转，不得不感谢现代的医学进步，让我们免去了多少痛苦啊。</p>
-
-<p>那时的通讯并不发达，主要依靠书信沟通，但效率极慢，一封家信寄到家至少半个月之久，再待家人回信，一来一回已是一月过去了。所以每封信的第一段总是先告诉对方自己已经寄出的信件有哪些，收到的家中的信件有几封，多么原始而简单粗制的沟通方式啊，想想我们现在有微信是多么大的进步啊！但诸事均为双刃剑，由于信息沟通无法及时，他们往往计划事情总以周、月来计，他们可以预料到相对久远的事情，但我们现代人很多做不到，由于信息沟通足够及时，我们的计划总是会被突发状况打乱，渐渐地我们养成了以天、周为计划，但很少能够遇见待一月或半年一年之后的事，一来也是因为变化太快无法预见，二来也是应为我们渐渐遗忘了这样的能力——通过对历史的洞见去总结和预测未来可能发生的事情。通讯效率的差异也造成了我们用人策略的不同，在以前通讯不及时，远水救不了近火确实是真理，作为用人者最核心的策略是选择自己足够信任的人并且完全信任他去完成重要的事情，那是用人的眼光更重要。但现在不一样，由于通讯足够及时，现在用人的核心策略是选择有足够能力完成这样件事的人，而不再是有能力统领这件事完成的人。多么奇妙啊，技术的进步逐渐(无形)改变了我们的生存方式。而且技术会变的越来越重要，因为技术在改造这个构建在信息不对等基础上的世界，技术应该让世界变得更加公平。</p>
-
-<p>还有对战争的认识，由于太平天国起义，国家有十几年(1851-1864)处于战乱年代，借用书信中的说法就是“乱世”，当战争来临，很多事都将化为泡影，那些美好的事情重见天日必等战争结束之时，呜呼，哀哉。我曾经幻想过自己生在战火纷飞的年代，一定是一条铮铮铁骨，但此刻起，再无心之往向。战争太过粗暴，摧毁了太多脆弱的美好，因为美好，即便是脆弱的，我们也应该去守护，心存敬畏，不是吗？</p>
-
-<p>历史的一手书籍值得被品读。</p>
-
-]]></content>
-      <categories>
-        
-          <category> Book reading </category>
-        
-      </categories>
-      <tags>
-        
-          <tag> book reading </tag>
-        
-      </tags>
-      <tags></tags>
-    </entry>
   
-    <entry>
-      <title><![CDATA[《牛棚杂忆》——不为无益之事，何以遣有涯之生]]></title>
-      <url>/book%20reading/2017/05/01/NiuPengZaYi/</url>
-      <content type="html"><![CDATA[<p>开始看这本书怀着嬉笑怒骂的心态，尽看季老讽刺调戏那个年代的记忆，对于自杀的考究尤值得叫好，在生死边缘走过的人才有那份戏谑的底气。</p>
-
-<p>季老在最后写到经历过文革的老辈知识分子对此都闭口不谈，虽心中郁气难舒，而青年人（比如我）对文革的认识也知识道听途说，没有真实而深刻的认识，其实是莫大的悲哀。我想虽然季老写下了这本关于文革的书，但仍有很多敏感的部分是没有涉及的吧，这只是真实历史的一部分。</p>
-
-<p>通过这本书我对文革的细节有一点印象，在审讯和劳动改造过程中那些“黑帮”知识份子所受的待遇非人也非鬼，人有人权，鬼有自由，他们却什么都没有。其实“改造”活动对于他们这些老辈知识份子而言改造的是体魄，并没有能改造他们的灵魂，“冥顽不灵”者依旧“冥顽不灵”，但可怕的是那些围观的群众，他们的思想确是被改造了，当看到描述小孩子对季老的态度，这是一件多么细思极恐的事，就像《上帝之城》中的小霸王，就像《湄公河行动》中的童子兵，对孩子们的影响和洗脑才是真正地抹灭了希望，那种寒心和震慑不仅仅是黑暗降临，看不到希望，还一丝温度都没有。社会的形成和素质的约束让我们告别了野蛮和原始，但我们也是那么容易就回到野蛮和原始。恻隐之心人皆有之，但它太脆弱，一用力触碰就会破碎还很难复原。关于人性本善性本恶，大概我还是会选择性本恶，毕竟如此以来多数的我们克服了恶的都是英雄。</p>
-
-<p>另外让我佩服的是季老的治学态度，严谨别无二致。“学问不问有用没用，只问精不精”。</p>
-
-<p>“不为无益之事，何以遣有涯之生”。</p>
-
-<p>向季老致敬。</p>
-
-]]></content>
-      <categories>
-        
-          <category> Book reading </category>
-        
-      </categories>
-      <tags>
-        
-          <tag> book reading </tag>
-        
-      </tags>
-      <tags></tags>
-    </entry>
   
-    <entry>
-      <title><![CDATA[《我的前半生》]]></title>
-      <url>/book%20reading/2017/02/25/WoDeQianBanShen/</url>
-      <content type="html"><![CDATA[<p>首先这本书本身可能写得并不算精彩，文学造诣并不深，但难得的是它从某个角度还原了那段历史和真正的皇帝的生活。之前买书看评论很多人对书中满满的自责和检讨感到失望和厌倦，也许这不是他们期待的那个样子，但是它却是真实的。</p>
-
-<p>读完的感受主要有两个：</p>
-
-<p>第一，对现在绝大多数宫廷电视局种的皇帝角色嗤之以鼻，现在流行的套路是塑造一个爱江山更爱美人的轰轰烈烈，荡气回肠的爱情故事，可实际上这样的事情发生的几率微乎其微，很多事情都因稀少而珍贵，但女性皇帝来说太唾手可得，所以并不会有及其重要的位置。但江山却是一件非常刺激的事，因为可以拥有超越个体本身的力量，即便是在略受挫的情况下。治理和拥有江山的新鲜感满足感也会更持久一些。而且皇帝从小成长的环境就是紫禁城内，他们感受这个世界的方式与百姓不同，甚至对世界的认知也完全不同，所以现在的演员如果没有深刻的历史积淀和对历史中皇帝这个角色的认知是不可能演好这个角色的。所以这类剧只能当笑剧或者闹剧看而已。</p>
-
-<p>第二，我很感谢自己现在所处的时代，对于平凡出生的我，时代给我的最大的礼物是机会和道路，让我明白有怎样的可能性，而不是蒙着眼睛往前走。</p>
-
-<p>溥仪能完成从清朝皇帝到新中国平民角色的转换中间所经历的挣扎也许只有他自己清楚，作为读者的我们只能在字里行间体会一二。在两种完全不同的制度下，国人的形态都是不同的，所以，如果在一个稳定的社会中，请明白时下的潮流；如果在一个动荡的年代中，请当那个激流勇进的冒险家。</p>
-
-]]></content>
-      <categories>
-        
-          <category> Book reading </category>
-        
-      </categories>
-      <tags>
-        
-          <tag> book reading </tag>
-        
-      </tags>
-      <tags></tags>
-    </entry>
   
-    <entry>
-      <title><![CDATA[《追风筝的人》—— 执念是为放不下的事]]></title>
-      <url>/book%20reading/2016/08/02/ZhuiFengZhengDeRen/</url>
-      <content type="html"><![CDATA[<p>为你，千千万万遍。</p>
-
-<p>这是一部非常精彩的小说，最引人入胜的地方是作为故事中的我阿米尔的心理变化。简单来说，故事情节还略俗套，但它让我明白了，在情节之外还有更重要的心理变化，那其实才是真正动人和让错误情有可原的地方，谢谢你胡赛尼。</p>
-
-<p>从阿米尔回到阿富汗并且决定去找在恤孤院中的哈桑的儿子他的侄子时，我才开始对这个故事的主人公有好感。但阿米尔没有错，他只是生活在了一个伟大父亲犯下的错误中，却一直备受煎熬，得不到父亲理所应当的全部的爱，因为他不知道真相；不明所以却惹得父亲恼羞成怒，因为他不知道真相；背负着放弃朋友哈桑的不安，原因只是当时能说服自己的种族歧视，但他不知道真相。</p>
-
-<p>父亲告诉他世上只有一种罪行叫做偷盗，曾以为是因为自己的降生盗走了父亲挚爱的妻子而认为自己是个罪人，所以父亲总对自己冷言冷语，但却不知道自己的前半生都生活在父亲的偷盗的谎言里，父亲一生也没有把真相说出来，因为父亲在愧疚里囚禁了一辈子，最后也没有能够解放自己，父亲被分裂成两半，最终也没能完整。而我穷尽一生前面的所有年华让自己与父亲的关系缓和，当我终于快做到了，父亲却走了。幸而来自爱情的甜蜜和女性角色的进入让我可以不那么悲恸，但我觉得孤单。当我用自己的才华创造出了美好生活，故事偏偏又要还原成它本来的样子，我以为可以忽略的伤口终究还是要自己把伤口撕开，将血舔干才能愈合，我踏上了减轻内心重量的旅程，“那里有再次成为好人的路”，我应该感谢索拉博。</p>
-
-<p>一个内心没有善良的人不会愧疚，每个人都在用不同的方式减轻那些也许只有自己知道的愧疚。</p>
-
-<p>那些执念和那些傻事只是因为别人不知道而自己又放不下的事。</p>
-
-]]></content>
-      <categories>
-        
-          <category> Book reading </category>
-        
-      </categories>
-      <tags>
-        
-          <tag> book reading </tag>
-        
-      </tags>
-      <tags></tags>
-    </entry>
   
-    <entry>
-      <title><![CDATA[《陪安东尼度过的日子》]]></title>
-      <url>/book%20reading/2016/05/01/PeiAnDongNiDuGuoDeRiZi/</url>
-      <content type="html"><![CDATA[<p>《红》《橙》：</p>
+  <script type="text/javascript" src="/assets/lib/jquery/index.js?v=2.1.3"></script>
 
-<p>去阿里的路上和周末赖床的时间看完了安东尼的两本书，初高中时代没有看过这种年轻作者的书，现在竟然补上了。书中只是记录了安东尼的漫长岁月，第一本2005.08.16-2007.10.01，第二本2007.10.02-2010.6.22，短短的两本书看完了别人五年的岁月，想想也是刺激。</p>
-
-<p>安东尼应该是个细腻的孩子，书中描绘的生活是那么生动，即便是单薄的。厨师这个专业真不错，“唯爱与美食不可辜负也”，厨师就这么轻而易举得得到了时间的珍宝。这是第一次通过书籍接触到墨尔本（猫本）这座城市，总觉得墨尔本这个名字很浪漫。在澳洲的生活很精彩，在作者身边都是真诚的朋友，开心有人陪伴笑，难过有人陪伴哭，疯狂有人陪伴闹。也许是自己还没出国感受世界上的其他文化，故而总保持着向往，支撑自己读完了生活流水账似的真诚的两本书。</p>
-
-<p>曾经自己也想过用什么样的方式，连续的方式，来记录自己的一生，等老了的时候，就把它们拿出来让自己年轻。可惜并没有找到合适的方式，写日记也许不错，但没能坚持下来。我想等安东尼老了的时候，看着这一些列书的红橙花绿青蓝紫，一定是一种难以言喻的感动，那一刻书里所承载的岁月远远胜过了里面的文字内容。</p>
-
-<p>我想生命是需要记录的，因为我们太健忘了；</p>
-
-<p>生命是需要记录的，因为生命会被忙碌冲散；</p>
-
-<p>生命需要被记录，以此超越时间。</p>
-
-<p>《黄》：</p>
-
-<p>在马克思的课上结束了这本书的阅读（上课的老师很有魅力，87年，理论经济）</p>
-
-<p>安东尼的岁月记录到了2013年末，2013年没有以前精彩，只是对于我这个读者而言。回国了，失恋了，工作了。也许当为了能够写下去而写下去的时候，从前的感觉消失了。安东尼也长大了。</p>
-
-<p>我想以后不会再看续集了，我需要去寻找陪伴自己度过漫长岁月的部分了。以后会多看一些理论完备的书吧，再见，安东尼。</p>
-
-<p>安东尼，再见。</p>
-
-]]></content>
-      <categories>
-        
-          <category> Book reading </category>
-        
-      </categories>
-      <tags>
-        
-          <tag> book reading </tag>
-        
-      </tags>
-      <tags></tags>
-    </entry>
   
-    <entry>
-      <title><![CDATA[《红与黑》——记一位悲剧的英雄]]></title>
-      <url>/book%20reading/2013/06/16/HongYuHei/</url>
-      <content type="html"><![CDATA[<p>封建等级的社会和奋力反抗的朱利安之间没有胜负，社会看待朱利安只是奴仆，朱利安看待社会只有厌恶，放弃上诉，这颗高傲的头颅从来没有像快要落下时那样富有诗意。</p>
-
-<p>粉碎心目中社会等级的权威，以为个人的才智是分配社会权利的唯一合理的依据，朱利安雄心勃勃，精力旺盛，尽管他出身低微，但在智力和精力上大大优越于在惰怠虚荣环境下成长起来得贵族青年。英雄美梦无数次出现在他的脑海中，他早已下定了出人头地的决心，骄傲使他放弃了朋友凯复为他安排的发财路，而要自己走一条光辉的捷径。</p>
-
-<p>但朱利安始终都是痛苦的，对荣誉和财富的渴望让他卷入到上流社会的角斗场，一个他从来都不削于正眼相看的阶级，他们的傲慢和偏见让他厌恶。可如今他却要在这里伪装出虔诚的样子，一个没有宗教信仰，不相信主的人要自己背下整本《圣经》还要对其大加赞扬并侃侃而谈，内心的挣扎一定是血淋淋的。</p>
-
-<p>高傲的性格，强大的野心，卑微的出身，社会的等级，这四个因素注定将导演一出时代的悲剧。</p>
-
-<p>也许小说中最动人的就是主人公朱利安的两段爱情吧，德·雷纳尔夫人在朱利安行刑后按照约定没有以任何方式寻短见，但却在三天后抱着她的孩子离开了人世。也许知道最后在监狱里，朱利安放下了世俗的防备和嫉恶如仇才相信世上真的有如此纯洁的情感，才有了这样的对白：“以前我们在韦尔吉树林里散步时，我本来可以获得无穷的快乐，但我却让强烈的野心把我的灵魂带到幻想之园里去了，你那迷人的胳臂就在我的唇边，我没有把他紧紧抱在我怀里，我对未来的幻想，把我从你那里夺走了。为了成名致富，不得不做数次的激烈战斗……是的，要是您不到监狱来看我，我到死也不会认识什么是幸福。”因为朱利安从来没有认为自己可以得到幸福，他追求的一直只有荣誉，是德·雷纳尔夫人这个不入俗的女子让他有了理性之外的人性。</p>
-
-<p>而朱利安与德·拉莫尔小姐的故事更是有趣，两个骄傲的灵魂虽然彼此相爱过，但都不是纯粹的爱情。一个憧憬的是英雄式的浪漫主义和不拘一格，一个享受的是让其他贵族公子成为手下败将的荣耀，两种不同的骄傲没能谱写出完美的故事，虽然马蒂尔德做到了自己勇敢的极致，但朱利安却无法征服心中对贵族的偏见和没有安全感，他憎恨他们的高傲却同时将这种贵族式的高傲深深地烙进了自己的骨子里。</p>
-
-<p>朱利安，他像一个英雄一样挣扎过，也许不甚喜欢，但保留对他的敬畏。</p>
-
-<p>《红与黑》——记一位悲剧的英雄。</p>
-]]></content>
-      <categories>
-        
-          <category> Book reading </category>
-        
-      </categories>
-      <tags>
-        
-          <tag> book reading </tag>
-        
-      </tags>
-      <tags></tags>
-    </entry>
   
-</search>
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/assets/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/assets/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  <script type="text/javascript" src="/assets/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/assets/js/src/post-details.js?v=5.1.1"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/assets/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      
+      <script type="text/javascript">
+          var disqus_config = function () {
+              this.page.url = 'http://localhost:4000/code%20reading/2017/10/09/CodeReadign/';
+              this.page.identifier = '/code%20reading/2017/10/09/CodeReadign/';
+              this.page.title = 'IJCAI 2017 OOKB (main.py)';
+          };
+          var d = document, s = d.createElement('script');
+          s.src = 'https://.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', '' + +new Date());
+          (d.head || d.body).appendChild(s);
+      </script>
+      
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+
+    
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+
+    
+  <!--  -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <!--  -->
+ 
+
+  
+
+  
+
+</body>
+</html>
+

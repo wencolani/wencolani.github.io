@@ -87,13 +87,14 @@
     </entry>
   
     <entry>
-      <title><![CDATA[IJCAI 2017 OOKB (main.py)]]></title>
+      <title><![CDATA[IJCAI 2017 OOKB 1]]></title>
       <url>/code%20reading/2017/10/09/CodeReadign/</url>
       <content type="html"><![CDATA[<ul>
   <li>paper : Knowledge Transfer for Out-of-Knowledge-Base Entities: A Graph Neural Network Approach</li>
   <li>code from : https://github.com/takuo-h/GNN-for-OOKB</li>
 </ul>
 
+<h1 id="mainpy">main.py</h1>
 <div class="language-python highlighter-rouge"><pre class="highlight"><code>
 <span class="c"># -*- coding: utf-8 -*-</span>
 

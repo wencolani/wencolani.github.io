@@ -1,7 +1,7 @@
 ---
 layout: post
 category: code reading
-title: IJCAI 2017 OOKB (main.py)
+title: IJCAI 2017 OOKB 1 
 tagline: by wencolani
 tags: [code reading, paper code]
 ---
@@ -9,6 +9,7 @@ tags: [code reading, paper code]
 * paper : Knowledge Transfer for Out-of-Knowledge-Base Entities: A Graph Neural Network Approach
 * code from : https://github.com/takuo-h/GNN-for-OOKB
 
+# main.py
 ```python
 
 # -*- coding: utf-8 -*-

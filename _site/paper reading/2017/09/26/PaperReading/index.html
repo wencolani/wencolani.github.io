@@ -111,18 +111,18 @@
 
 
 
-<meta name="description" content="Knowledge Transfer for Out-of-Knowledge-Base Entities: A Graph Neural Network Approach Takuo Hamaguchi, Hidekazu Oiwa, Masashi Shimbo, and Yuji Matsumoto IJCAI 2017 article link code link">
+<meta name="description" content="这篇文章提出了一个新的问题：关于out-of-knowledge-base(OOKB) entity的预测。以往的knowledge base embedding方法做链接预（link prediction）测和三元组分类(triple classification)时所用的测试数据集里都假设所有的实体的关系都已经在训练数据集里出现过，即每个实体和关系都有相关的向量表示，如果出现新的实体，那么模型需要进行重新训练。">
 <meta name="keywords" content="paper, incremental, KG embedding">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Knowledge Transfer for Out-of-Knowledge-Base Entities, A Graph Neural Network Approach">
 <meta property="og:url" content="http://localhost:4000/paper%20reading/2017/09/26/PaperReading/">
 <meta property="og:site_name" content="wencolani">
-<meta property="og:description" content="Knowledge Transfer for Out-of-Knowledge-Base Entities: A Graph Neural Network Approach Takuo Hamaguchi, Hidekazu Oiwa, Masashi Shimbo, and Yuji Matsumoto IJCAI 2017 article link code link">
+<meta property="og:description" content="这篇文章提出了一个新的问题：关于out-of-knowledge-base(OOKB) entity的预测。以往的knowledge base embedding方法做链接预（link prediction）测和三元组分类(triple classification)时所用的测试数据集里都假设所有的实体的关系都已经在训练数据集里出现过，即每个实体和关系都有相关的向量表示，如果出现新的实体，那么模型需要进行重新训练。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="/img/2017-09-26-result.png">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Knowledge Transfer for Out-of-Knowledge-Base Entities, A Graph Neural Network Approach">
-<meta name="twitter:description" content="Knowledge Transfer for Out-of-Knowledge-Base Entities: A Graph Neural Network Approach Takuo Hamaguchi, Hidekazu Oiwa, Masashi Shimbo, and Yuji Matsumoto IJCAI 2017 article link code link">
+<meta name="twitter:description" content="这篇文章提出了一个新的问题：关于out-of-knowledge-base(OOKB) entity的预测。以往的knowledge base embedding方法做链接预（link prediction）测和三元组分类(triple classification)时所用的测试数据集里都假设所有的实体的关系都已经在训练数据集里出现过，即每个实体和关系都有相关的向量表示，如果出现新的实体，那么模型需要进行重新训练。">
 <meta name="twitter:image" content="/img/2017-09-26-result.png">
 
 
@@ -417,17 +417,7 @@
       
 
       
-        <ul>
-  <li>Knowledge Transfer for Out-of-Knowledge-Base Entities: A Graph Neural Network Approach</li>
-  <li>Takuo Hamaguchi, Hidekazu Oiwa, Masashi Shimbo, and Yuji Matsumoto</li>
-  <li>IJCAI 2017</li>
-  <li><a href="https://www.ijcai.org/proceedings/2017/0250.pdf">article link</a></li>
-  <li><a href="https://github.com/takuo-h/GNN-for-OOKB">code link</a></li>
-</ul>
-
-<h2 id="main-idea">Main Idea</h2>
-
-<p>这篇文章提出了一个新的问题：关于out-of-knowledge-base(OOKB) entity的预测。以往的knowledge base embedding方法做链接预（link prediction）测和三元组分类(triple classification)时所用的测试数据集里都假设所有的实体的关系都已经在训练数据集里出现过，即每个实体和关系都有相关的向量表示，如果出现新的实体，那么模型需要进行重新训练。</p>
+        <p>这篇文章提出了一个新的问题：关于out-of-knowledge-base(OOKB) entity的预测。以往的knowledge base embedding方法做链接预（link prediction）测和三元组分类(triple classification)时所用的测试数据集里都假设所有的实体的关系都已经在训练数据集里出现过，即每个实体和关系都有相关的向量表示，如果出现新的实体，那么模型需要进行重新训练。</p>
 
 <p>out-of-knowlege-base entity 的问题如下：</p>
 
@@ -492,6 +482,14 @@
 <p>由于OOKB entity是新提出的问题，没有baseline， 本文自己构造了baseline： 通过对TransE在训练数据集上的训练结果，直接选取和OOKB相连接的实体的向量表示并进行三种不同方式的pooling。</p>
 
 <p><img src="/img/2017-09-26-result.png" alt="" /></p>
+
+<ul>
+  <li>Knowledge Transfer for Out-of-Knowledge-Base Entities: A Graph Neural Network Approach</li>
+  <li>Takuo Hamaguchi, Hidekazu Oiwa, Masashi Shimbo, and Yuji Matsumoto</li>
+  <li>IJCAI 2017</li>
+  <li><a href="https://www.ijcai.org/proceedings/2017/0250.pdf">article link</a></li>
+  <li><a href="https://github.com/takuo-h/GNN-for-OOKB">code link</a></li>
+</ul>
 
       
     </div>
@@ -641,7 +639,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-count">12</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -729,7 +727,7 @@
             
               <div class="post-toc-content">
     <ol class=nav>
-      <li class="nav-item nav-level-2"> <a class="nav-link" href="#main-idea"> <span class="nav-number">1</span> <span class="nav-text">Main Idea</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#proposed-model"> <span class="nav-number">2</span> <span class="nav-text">Proposed Model</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-3"> <a class="nav-link" href="#propagation-model"> <span class="nav-number">2.1</span> <span class="nav-text">Propagation model</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-4"> <a class="nav-link" href="#transition-function"> <span class="nav-number">2.1.1</span> <span class="nav-text">transition function</span> </a> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li> <li class="nav-item nav-level-4"> <a class="nav-link" href="#pooling-function"> <span class="nav-number">2.1.2</span> <span class="nav-text">pooling function</span> </a> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#output-model"> <span class="nav-number">2.2</span> <span class="nav-text">output model</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#experiment"> <span class="nav-number">3</span> <span class="nav-text">Experiment</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-3"> <a class="nav-link" href="#数据集的构造"> <span class="nav-number">3.1</span> <span class="nav-text">数据集的构造</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child">
+      <li class="nav-item nav-level-2"> <a class="nav-link" href="#proposed-model"> <span class="nav-number">1</span> <span class="nav-text">Proposed Model</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-3"> <a class="nav-link" href="#propagation-model"> <span class="nav-number">1.1</span> <span class="nav-text">Propagation model</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-4"> <a class="nav-link" href="#transition-function"> <span class="nav-number">1.1.1</span> <span class="nav-text">transition function</span> </a> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li> <li class="nav-item nav-level-4"> <a class="nav-link" href="#pooling-function"> <span class="nav-number">1.1.2</span> <span class="nav-text">pooling function</span> </a> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#output-model"> <span class="nav-number">1.2</span> <span class="nav-text">output model</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#experiment"> <span class="nav-number">2</span> <span class="nav-text">Experiment</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-3"> <a class="nav-link" href="#数据集的构造"> <span class="nav-number">2.1</span> <span class="nav-text">数据集的构造</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child">
     </ol>
   </div>
             

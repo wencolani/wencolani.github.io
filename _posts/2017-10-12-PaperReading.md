@@ -6,13 +6,6 @@ tagline: by wencolani
 tags: [paper, nature, memory, nature]
 ---
 
-* Hybrid computing using a neural network with dynamic external memory 
-* Google Deepmind
-* Nature October 2016
-* [article link](http://www.nature.com/nature/journal/v538/n7626/abs/nature20101.html?foxtrotcallback=true)
-* [code link](https://github.com/deepmind/dnc)
-
-# Overview 
 这篇文章提出了一个神经网络框架DNC(Differentiable neural computer)搭载了一个可读可写的外部memory模块。是NTM(Neural Turing Machine)的升级版。
 
 下面这张论文中的图很好地说明了整个DNC的框架：
@@ -59,5 +52,9 @@ Memory 表示成一个N\*W的矩阵M。
 个人认为这篇文章最精彩的地方在于整体框架的设计，尤其是对memory的利用，比如如何进行读写操作，读写操作各自都有怎样不同的策略，整个memory的使用有什么上层的策略比如usage等。仔细看论文后面Method部分会体会更深刻。
 
 
-
+* Hybrid computing using a neural network with dynamic external memory 
+* Google Deepmind
+* Nature October 2016
+* [article link](http://www.nature.com/nature/journal/v538/n7626/abs/nature20101.html?foxtrotcallback=true)
+* [code link](https://github.com/deepmind/dnc)
 

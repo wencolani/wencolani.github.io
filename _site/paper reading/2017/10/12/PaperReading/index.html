@@ -111,18 +111,18 @@
 
 
 
-<meta name="description" content="Hybrid computing using a neural network with dynamic external memory Google Deepmind Nature October 2016 article link code link">
+<meta name="description" content="这篇文章提出了一个神经网络框架DNC(Differentiable neural computer)搭载了一个可读可写的外部memory模块。是NTM(Neural Turing Machine)的升级版。">
 <meta name="keywords" content="paper, nature, memory, nature">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hybrid computing using a neural network with dynamic external memory">
 <meta property="og:url" content="http://localhost:4000/paper%20reading/2017/10/12/PaperReading/">
 <meta property="og:site_name" content="wencolani">
-<meta property="og:description" content="Hybrid computing using a neural network with dynamic external memory Google Deepmind Nature October 2016 article link code link">
+<meta property="og:description" content="这篇文章提出了一个神经网络框架DNC(Differentiable neural computer)搭载了一个可读可写的外部memory模块。是NTM(Neural Turing Machine)的升级版。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="/img/2017-10-12-structure.png">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hybrid computing using a neural network with dynamic external memory">
-<meta name="twitter:description" content="Hybrid computing using a neural network with dynamic external memory Google Deepmind Nature October 2016 article link code link">
+<meta name="twitter:description" content="这篇文章提出了一个神经网络框架DNC(Differentiable neural computer)搭载了一个可读可写的外部memory模块。是NTM(Neural Turing Machine)的升级版。">
 <meta name="twitter:image" content="/img/2017-10-12-structure.png">
 
 
@@ -417,16 +417,7 @@
       
 
       
-        <ul>
-  <li>Hybrid computing using a neural network with dynamic external memory</li>
-  <li>Google Deepmind</li>
-  <li>Nature October 2016</li>
-  <li><a href="http://www.nature.com/nature/journal/v538/n7626/abs/nature20101.html?foxtrotcallback=true">article link</a></li>
-  <li><a href="https://github.com/deepmind/dnc">code link</a></li>
-</ul>
-
-<h1 id="overview">Overview</h1>
-<p>这篇文章提出了一个神经网络框架DNC(Differentiable neural computer)搭载了一个可读可写的外部memory模块。是NTM(Neural Turing Machine)的升级版。</p>
+        <p>这篇文章提出了一个神经网络框架DNC(Differentiable neural computer)搭载了一个可读可写的外部memory模块。是NTM(Neural Turing Machine)的升级版。</p>
 
 <p>下面这张论文中的图很好地说明了整个DNC的框架：</p>
 
@@ -478,6 +469,14 @@
 
 <h1 id="thinking">Thinking</h1>
 <p>个人认为这篇文章最精彩的地方在于整体框架的设计，尤其是对memory的利用，比如如何进行读写操作，读写操作各自都有怎样不同的策略，整个memory的使用有什么上层的策略比如usage等。仔细看论文后面Method部分会体会更深刻。</p>
+
+<ul>
+  <li>Hybrid computing using a neural network with dynamic external memory</li>
+  <li>Google Deepmind</li>
+  <li>Nature October 2016</li>
+  <li><a href="http://www.nature.com/nature/journal/v538/n7626/abs/nature20101.html?foxtrotcallback=true">article link</a></li>
+  <li><a href="https://github.com/deepmind/dnc">code link</a></li>
+</ul>
 
 
       
@@ -534,14 +533,18 @@
         <div class="post-nav" id="post-nav-id">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/english%20writing/2017/10/24/EnglishWriting/" rel="next" title="Some useful meterials for English writing">
+                <i class="fa fa-chevron-left"></i> Some useful meterials for English writing
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/code%20reading/2017/10/09/CodeReadign/" rel="prev" title="IJCAI 2017 OOKB 1">
-                IJCAI 2017 OOKB 1 <i class="fa fa-chevron-right"></i>
+              <a href="/%E9%9A%8F%E7%AC%94/2017/10/07/suibi/" rel="prev" title="新的演员">
+                新的演员 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -627,7 +630,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-count">12</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -715,7 +718,7 @@
             
               <div class="post-toc-content">
     <ol class=nav>
-      <li class="nav-item nav-level-1"> <a class="nav-link" href="#overview"> <span class="nav-number">1</span> <span class="nav-text">Overview</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-2"> <a class="nav-link" href="#controller"> <span class="nav-number">1.1</span> <span class="nav-text">Controller:</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#read-and-write-head"> <span class="nav-number">1.2</span> <span class="nav-text">Read and write head:</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#momory"> <span class="nav-number">1.3</span> <span class="nav-text">Momory:</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#memory-usage-and-temproal-links"> <span class="nav-number">1.4</span> <span class="nav-text">Memory usage and temproal links:</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-1"> <a class="nav-link" href="#experiment"> <span class="nav-number">2</span> <span class="nav-text">Experiment</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-1"> <a class="nav-link" href="#thinking"> <span class="nav-number">3</span> <span class="nav-text">Thinking</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child">
+      <li class="nav-item nav-level-1"> <a class="nav-link" href="#experiment"> <span class="nav-number">1</span> <span class="nav-text">Experiment</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-1"> <a class="nav-link" href="#thinking"> <span class="nav-number">2</span> <span class="nav-text">Thinking</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child">
     </ol>
   </div>
             

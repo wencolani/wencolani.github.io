@@ -2,18 +2,154 @@
 <search>
   
     <entry>
-      <title><![CDATA[Hybrid computing using a neural network with dynamic external memory]]></title>
-      <url>/paper%20reading/2017/10/12/PaperReading/</url>
-      <content type="html"><![CDATA[<ul>
-  <li>Hybrid computing using a neural network with dynamic external memory</li>
-  <li>Google Deepmind</li>
-  <li>Nature October 2016</li>
-  <li><a href="http://www.nature.com/nature/journal/v538/n7626/abs/nature20101.html?foxtrotcallback=true">article link</a></li>
-  <li><a href="https://github.com/deepmind/dnc">code link</a></li>
+      <title><![CDATA[Distributed Representations of Sentences and Documents]]></title>
+      <url>/paper%20reading/2017/11/01/PaperReading/</url>
+      <content type="html"><![CDATA[<p>本文提出了一个非监督学习方法Paragraph Vectore，从文本中学习句子，段落，和文本的向量表示。</p>
+
+<h1 id="motivation">Motivation:</h1>
+<p>很多机器学习方法要求输入是固定长度的特征向量，词袋(bag-of-word)是最常用的方法，但词袋有两个最重要的缺点：</p>
+
+<ul>
+  <li>失去了词序信息。虽然bag-of-n-gram考虑了词序的信息，但是会面临新的问题：data-sparsity和 high-dimensionality。</li>
+  <li>忽略了词的语义信息(semantics of words)。比如“苹果”和“梨”。</li>
 </ul>
 
-<h1 id="overview">Overview</h1>
-<p>这篇文章提出了一个神经网络框架DNC(Differentiable neural computer)搭载了一个可读可写的外部memory模块。是NTM(Neural Turing Machine)的升级版。</p>
+<h1 id="adavantages-of-paragraph-vectore">Adavantages of Paragraph Vectore</h1>
+<ul>
+  <li>
+    <p>Pagraph vector 是一个非监督的模型。可以应用于标注不足的数据。</p>
+  </li>
+  <li>
+    <p>Paragraph Vectore 是固定长度的向量，它表示的文本长度是可变的，可以从sentence到paragraph到text。</p>
+  </li>
+  <li>
+    <p>Paragraph vector acts a memory that remembers that is missing from the current context – or the topic of the paragraph. 我的理解是在预测文本中的下一个词时，通常会取这个词前后的固定长度的词(context)，虽然多数情况下, context是非常有效的信息，但有时候这些词对于预测所需要的信息的覆盖是补全的，这就是paragraph vector存在的意义，它可以捕捉并记住文本的主题信息，并辅助预测。</p>
+  </li>
+</ul>
+
+<h1 id="method">Method:</h1>
+
+<h2 id="paragraph-vector-a-distributed-memory-modelpv-dm">Paragraph Vector: a distributed memory model(PV-DM)</h2>
+
+<p><img src="/img/2017-11-02-PargraphVector1.png" alt="" /></p>
+
+<ul>
+  <li>任务目标：给定一个段落中固定长度的文本内容context，结合当前所处段落一个预测下一个词是什么。</li>
+  <li>方法： 和word2vec相似，每个词用一个向量表示，每个段落也用一个向量表示。连接(concatinate)paragraph vector和所有context的word vector作为输入，预测下一个词。</li>
+</ul>
+
+<h2 id="paragraph-vector-without-word-ordering-distributed-bag-of-wordspv-dbow">Paragraph Vector without word ordering: Distributed bag of words(PV-DBOW)</h2>
+<p><img src="/img/2017-11-02-PargraphVector2.png" alt="" /></p>
+
+<ul>
+  <li>任务目标：用paragraph vector预测从当前文本中随机生成的词。</li>
+  <li>方法：每次随机梯度下降的迭代中，选取当前段落中一个固定窗口的文本，从这个窗口的文本中随机选取一个词，then form a classifi-
+cation task given the Paragraph Vector.</li>
+</ul>
+
+<h2 id="final-paragraph-vector">final paragraph vector</h2>
+<p>combiantion of PV-DM and PV-DBOW.</p>
+<h1 id="experiments">Experiments</h1>
+
+<h2 id="sentiment-analysis">Sentiment Analysis</h2>
+<ul>
+  <li>
+    <p>数据集： Standford sentiment treebank dataset with 8544 training sentences, 2210 testsentence and 1101 calidation sentences. 每个句子标有0.0到1.0的极性(由人生成的)。</p>
+  </li>
+  <li>Evaluation:
+    <ul>
+      <li>5-way fine-grained classification: {Very Negative, Negative, Neutral, Positive,
+Very Positive}</li>
+      <li>2-way coarse-grained classification: {Negative, Positive}</li>
+    </ul>
+  </li>
+  <li>方法：
+    <ul>
+      <li>training: 先学习训练样本中的sentence和subphrases的向量表示，然后用这些学习得的向量表示学习逻辑回归分类器。</li>
+      <li>testing: 固定所有的词向量，对每个test的句子学习词向量，然后讲句子向量表示输入之前学习得的分类器，对句子做情绪分类。</li>
+      <li>notice: 选词窗口大小为8，向量维度为400。</li>
+    </ul>
+  </li>
+  <li>结果：
+<img src="/img/2017-11-02-result2.png" alt="" /></li>
+</ul>
+
+<p>在多句子数据集IMDB dataset上情绪分析的结果如下：
+<img src="/img/2017-11-02-result2.png" alt="" /></p>
+
+<h2 id="information-retrieval">Information Retrieval</h2>
+<ul>
+  <li>数据构造：首先对于每个查询，记录下搜索引擎返回的top10的结果，然后在这些结果数据集上构造数据集如下：对一个查询构造结果三元组，其中前两个是这个查询的答案，另一个不是。 构造的查询结果三元组80% for training, 10% for validation, 10% for testing.</li>
+  <li>测试方法：计算结果三元组中三个paragraph vector之间的距离。测试error是指，在测试三元组中，前两个来自相同查询的结果之间的距离比来第一和第三个来自不同查询结果之间的距离大。</li>
+  <li>结果如下：</li>
+</ul>
+
+<p><img src="/img/2017-11-02-result3.png" alt="img-w1" /></p>
+
+<h1 id="thinking">Thinking</h1>
+<p>paragraph vector是很直观的想法。
+本文的实验设计很值得借鉴，对于非监督方法而言实验设计尤其中重要。</p>
+
+<ul>
+  <li>Distributed Representations of Sentences and Documents</li>
+  <li>Quoc Le, Tomas Mikolov</li>
+  <li>Proceedings of the 31st International Conference on Machine Learning, PMLR 32(2):1188-1196, 2014.</li>
+  <li><a href="https://arxiv.org/pdf/1405.4053.pdf">article link</a></li>
+  <li><a href="">code link</a></li>
+</ul>
+]]></content>
+      <categories>
+        
+          <category> Paper reading </category>
+        
+      </categories>
+      <tags>
+        
+          <tag> paper </tag>
+        
+          <tag> paragraph embedding </tag>
+        
+          <tag> word2vec </tag>
+        
+          <tag> NLP </tag>
+        
+      </tags>
+      <tags></tags>
+    </entry>
+  
+    <entry>
+      <title><![CDATA[Some useful meterials for English writing]]></title>
+      <url>/english%20writing/2017/10/24/EnglishWriting/</url>
+      <content type="html"><![CDATA[<p>这里列举了一些我自己认为比较有用的关于英文写作的资源：</p>
+
+<h2 id="books">Books</h2>
+<ol>
+  <li><a href="http://www.jlakes.org/ch/web/The-elements-of-style.pdf">The Element of Style</a>: 
+这是一本美国英语的写作指南。作者是William Strunk, Jr.和E. B. White。书中包括8个“基本使用规则”，10个“创作的基本原则”，“一些形式的问题”，一个包含49个易误用的单词和表达，57个易拼错的单词的列表。在2011年，时代 (杂志)把The Elements of Style列为从1923年到现在100本最富有影响力的书之一。 — 摘自<a href="https://zh.wikipedia.org/wiki/%E8%8B%B1%E6%96%87%E5%86%99%E4%BD%9C%E6%8C%87%E5%8D%97">维基百科</a></li>
+</ol>
+
+]]></content>
+      <categories>
+        
+          <category> English Writing </category>
+        
+      </categories>
+      <tags>
+        
+          <tag> English </tag>
+        
+          <tag> writing </tag>
+        
+          <tag> English writing </tag>
+        
+      </tags>
+      <tags></tags>
+    </entry>
+  
+    <entry>
+      <title><![CDATA[Hybrid computing using a neural network with dynamic external memory]]></title>
+      <url>/paper%20reading/2017/10/12/PaperReading/</url>
+      <content type="html"><![CDATA[<p>这篇文章提出了一个神经网络框架DNC(Differentiable neural computer)搭载了一个可读可写的外部memory模块。是NTM(Neural Turing Machine)的升级版。</p>
 
 <p>下面这张论文中的图很好地说明了整个DNC的框架：</p>
 
@@ -66,6 +202,14 @@
 <h1 id="thinking">Thinking</h1>
 <p>个人认为这篇文章最精彩的地方在于整体框架的设计，尤其是对memory的利用，比如如何进行读写操作，读写操作各自都有怎样不同的策略，整个memory的使用有什么上层的策略比如usage等。仔细看论文后面Method部分会体会更深刻。</p>
 
+<ul>
+  <li>Hybrid computing using a neural network with dynamic external memory</li>
+  <li>Google Deepmind</li>
+  <li>Nature October 2016</li>
+  <li><a href="http://www.nature.com/nature/journal/v538/n7626/abs/nature20101.html?foxtrotcallback=true">article link</a></li>
+  <li><a href="https://github.com/deepmind/dnc">code link</a></li>
+</ul>
+
 ]]></content>
       <categories>
         
@@ -81,445 +225,6 @@
           <tag> memory </tag>
         
           <tag> nature </tag>
-        
-      </tags>
-      <tags></tags>
-    </entry>
-  
-    <entry>
-      <title><![CDATA[IJCAI 2017 OOKB 1]]></title>
-      <url>/code%20reading/2017/10/09/CodeReadign/</url>
-      <content type="html"><![CDATA[<ul>
-  <li>paper : Knowledge Transfer for Out-of-Knowledge-Base Entities: A Graph Neural Network Approach</li>
-  <li>code from : https://github.com/takuo-h/GNN-for-OOKB</li>
-</ul>
-
-<h1 id="mainpy">main.py</h1>
-<div class="language-python highlighter-rouge"><pre class="highlight"><code>
-<span class="c"># -*- coding: utf-8 -*-</span>
-
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s">'CHAINER_TYPE_CHECK'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'0'</span>
-
-<span class="c"># wen: chianer is 'a powerful flexible, and intuitive framework for Neural Network'</span>
-<span class="kn">import</span> <span class="nn">chainer</span> 
-
-<span class="c"># wen: cupy is a 'NumPy-like API accelerate with CUDA'	</span>
-<span class="kn">import</span> <span class="nn">cupy</span> <span class="kn">as</span> <span class="nn">cp</span> 	
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span> 
-<span class="kn">from</span> <span class="nn">chainer</span> <span class="kn">import</span> <span class="n">serializers</span>
-
-<span class="c"># wen: in this file, there are a lot of usually used function defined </span>
-<span class="kn">import</span> <span class="nn">util.general_tool</span> <span class="kn">as</span> <span class="nn">tool</span> 	
-<span class="kn">from</span> <span class="nn">util.backend</span> <span class="kn">import</span> <span class="n">XP</span>
-<span class="kn">from</span> <span class="nn">util.vocabulary</span> <span class="kn">import</span> <span class="n">Vocabulary</span>
-<span class="kn">from</span> <span class="nn">util.optimizer_manager</span> <span class="kn">import</span> <span class="n">get_opt</span>
-<span class="kn">from</span> <span class="nn">models.manager</span> <span class="kn">import</span> <span class="n">get_model</span>
-
-<span class="c">#----------------------------------------------------------------------------</span>
-<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
-
-<span class="c"># wen: python collection.defaultdict is a very useful datastructure,</span>
-<span class="c"># you could assign the datastructure of the values in defaultdict when you creat it</span>
-<span class="n">candidate_heads</span><span class="o">=</span><span class="n">defaultdict</span><span class="p">(</span><span class="nb">set</span><span class="p">)</span>  
-
-<span class="c"># wen: these are globle parameters			  </span>
-<span class="n">gold_heads</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">set</span><span class="p">)</span>
-
-<span class="n">candidate_tails</span><span class="o">=</span><span class="n">defaultdict</span><span class="p">(</span><span class="nb">set</span><span class="p">)</span>
-<span class="n">gold_tails</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">set</span><span class="p">)</span>
-<span class="n">black_set</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
-
-<span class="n">tail_per_head</span><span class="o">=</span><span class="n">defaultdict</span><span class="p">(</span><span class="nb">set</span><span class="p">)</span>
-<span class="n">head_per_tail</span><span class="o">=</span><span class="n">defaultdict</span><span class="p">(</span><span class="nb">set</span><span class="p">)</span>
-
-<span class="n">train_data</span><span class="p">,</span><span class="n">dev_data</span><span class="p">,</span><span class="n">test_data</span><span class="o">=</span><span class="p">[],[],[]</span>
-
-<span class="n">trfreq</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
-
-<span class="s">"""
-positive/negativeを返すように
-"""</span>
-<span class="kn">from</span> <span class="nn">more_itertools</span> <span class="kn">import</span> <span class="n">chunked</span>
-<span class="kn">import</span> <span class="nn">random</span>
-<span class="k">def</span> <span class="nf">gen_batch</span><span class="p">(</span><span class="n">args</span><span class="p">,</span><span class="n">mode</span><span class="o">=</span><span class="s">'train'</span><span class="p">):</span>
-	<span class="c"># wen: use them as global parameters, only read the train/test/dev file once</span>
-	<span class="k">global</span> <span class="n">train_data</span><span class="p">,</span><span class="n">dev_data</span><span class="p">,</span><span class="n">test_data</span><span class="p">,</span><span class="n">trfreq</span> 
-
-	<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">train_data</span><span class="p">)</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
-		<span class="n">train_data</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
-		<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">train_file</span><span class="p">):</span>
-			<span class="n">items</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">'</span><span class="se">\t</span><span class="s">'</span><span class="p">)))</span>
-			<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">items</span><span class="p">)</span><span class="o">==</span><span class="mi">4</span><span class="p">:</span>
-				<span class="n">h</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">l</span> <span class="o">=</span> <span class="n">items</span>
-				<span class="k">if</span> <span class="n">l</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span> <span class="k">continue</span>
-			<span class="k">else</span><span class="p">:</span>
-				<span class="n">h</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">t</span> <span class="o">=</span> <span class="n">items</span>
-			<span class="n">train_data</span><span class="o">.</span><span class="n">add</span><span class="p">((</span><span class="n">h</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">t</span><span class="p">,))</span>
-			<span class="n">trfreq</span><span class="p">[</span><span class="n">r</span><span class="p">]</span><span class="o">+=</span><span class="mi">1</span>
-		<span class="n">train_data</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">train_data</span><span class="p">)</span>
-		<span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">trfreq</span><span class="p">:</span>
-			<span class="c"># wen: what is [trfreq[r]] defined for?</span>
-			<span class="n">trfreq</span><span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">train_size</span><span class="o">/</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">trfreq</span><span class="p">[</span><span class="n">r</span><span class="p">])</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">trfreq</span><span class="p">))</span> 
-
-	<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dev_data</span><span class="p">)</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
-		<span class="n">dev_data</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
-		<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">dev_file</span><span class="p">):</span>
-			<span class="n">h</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">l</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">'</span><span class="se">\t</span><span class="s">'</span><span class="p">)))</span>
-			<span class="n">dev_data</span><span class="o">.</span><span class="n">add</span><span class="p">((</span><span class="n">h</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">l</span><span class="p">,))</span>
-		<span class="n">dev_data</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">dev_data</span><span class="p">)</span>
-		<span class="k">print</span><span class="p">(</span><span class="s">'dev size:'</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">dev_data</span><span class="p">))</span>
-	<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">test_data</span><span class="p">)</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
-		<span class="c"># wen: read file like this seems more elegent</span>
-		<span class="n">test_data</span> <span class="o">=</span> <span class="p">[</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">'</span><span class="se">\t</span><span class="s">'</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">test_file</span><span class="p">)]</span> 
-		<span class="n">test_data</span> <span class="o">=</span> <span class="p">[</span><span class="nb">tuple</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span><span class="n">x</span><span class="p">))</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">test_data</span><span class="p">]</span>
-		<span class="n">test_data</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">test_data</span><span class="p">))</span>
-		<span class="k">print</span><span class="p">(</span><span class="s">'test size:'</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">test_data</span><span class="p">))</span>
-
-	<span class="c"># wen: 不是很明白这种检测性的代码存在的意义</span>
-	<span class="k">if</span> <span class="n">mode</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s">'train'</span><span class="p">,</span><span class="s">'dev'</span><span class="p">,</span><span class="s">'test'</span><span class="p">]:</span>  
-		<span class="k">print</span><span class="p">(</span><span class="s">'no such mode in gen_data'</span><span class="p">,</span><span class="n">mode</span><span class="p">)</span>
-		<span class="n">sys</span><span class="o">.</span><span class="nb">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-	<span class="k">elif</span> <span class="n">mode</span><span class="o">==</span><span class="s">'train'</span><span class="p">:</span>
-		<span class="c"># wen: what is the difference between [args.train_size] and [args.batch_size]</span>
-		<span class="n">skip_rate</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">train_size</span><span class="o">/</span><span class="nb">float</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">train_data</span><span class="p">))</span>  
-
-		<span class="n">positive</span><span class="p">,</span><span class="n">negative</span><span class="o">=</span><span class="p">[],[]</span>
-
-		<span class="c"># wen: i like random.shuffle() </span>
-		<span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">train_data</span><span class="p">)</span>  
-
-		<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">train_data</span><span class="p">)):</span>
-			<span class="n">h</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">t</span> <span class="o">=</span> <span class="n">train_data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-			<span class="c"># ignore the triple exist in [blace_set]</span>
-			<span class="k">if</span> <span class="p">(</span><span class="o">-</span><span class="n">r</span><span class="p">,</span><span class="n">t</span><span class="p">)</span> <span class="ow">in</span> <span class="n">black_set</span><span class="p">:</span> <span class="k">continue</span> 
-			<span class="k">if</span> <span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span> <span class="ow">in</span> <span class="n">black_set</span><span class="p">:</span> <span class="k">continue</span>
-
-			<span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">is_balanced_tr</span><span class="p">:</span>
-				<span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span><span class="o">&gt;</span><span class="n">trfreq</span><span class="p">[</span><span class="n">r</span><span class="p">]:</span> <span class="k">continue</span>
-			<span class="k">else</span><span class="p">:</span>
-				<span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span><span class="o">&gt;</span><span class="n">skip_rate</span><span class="p">:</span> <span class="k">continue</span>
-
-			<span class="c"># tph/Z</span>
-			<span class="n">head_ratio</span> <span class="o">=</span> <span class="mf">0.5</span>  <span class="c"># wen: unif setting</span>
-			<span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">is_bernoulli_trick</span><span class="p">:</span> <span class="c"># wen: bern setting</span>
-				<span class="n">head_ratio</span> <span class="o">=</span> <span class="n">tail_per_head</span><span class="p">[</span><span class="n">h</span><span class="p">]</span><span class="o">/</span><span class="p">(</span><span class="n">tail_per_head</span><span class="p">[</span><span class="n">h</span><span class="p">]</span><span class="o">+</span><span class="n">head_per_tail</span><span class="p">[</span><span class="n">t</span><span class="p">])</span>
-			<span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span><span class="o">&gt;</span><span class="n">head_ratio</span><span class="p">:</span>
-				<span class="n">cand</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">candidate_heads</span><span class="p">[</span><span class="n">r</span><span class="p">])</span>
-				<span class="k">while</span> <span class="n">cand</span> <span class="ow">in</span> <span class="n">gold_heads</span><span class="p">[(</span><span class="n">r</span><span class="p">,</span><span class="n">t</span><span class="p">)]:</span>
-					<span class="c"># wen: this is a small trick: to generat negative triple by replace head/tail</span>
-					<span class="c"># wen: with the entities that are once act as a head or tail entity in triple contained relation r</span>
-					<span class="n">cand</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">candidate_heads</span><span class="p">[</span><span class="n">r</span><span class="p">])</span>  
-															  
-				<span class="n">h</span> <span class="o">=</span> <span class="n">cand</span>
-			<span class="k">else</span><span class="p">:</span>
-				<span class="n">cand</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">candidate_tails</span><span class="p">[</span><span class="n">r</span><span class="p">])</span>
-				<span class="k">while</span> <span class="n">cand</span> <span class="ow">in</span> <span class="n">gold_tails</span><span class="p">[(</span><span class="n">h</span><span class="p">,</span><span class="n">r</span><span class="p">)]:</span>
-					<span class="n">cand</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">candidate_tails</span><span class="p">[</span><span class="n">r</span><span class="p">])</span>
-				<span class="n">t</span> <span class="o">=</span> <span class="n">cand</span>
-			<span class="c"># wen: gerate one negtive triple for every positive triple</span>
-			<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">positive</span><span class="p">)</span><span class="o">==</span><span class="mi">0</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">positive</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">args</span><span class="o">.</span><span class="n">batch_size</span><span class="p">:</span>  
-				<span class="n">positive</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">train_data</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
-				<span class="n">negative</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">h</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">t</span><span class="p">))</span>
-			<span class="k">else</span><span class="p">:</span>
-				<span class="c"># wen: yield positve truples and negative triples by batch_size</span>
-				<span class="k">yield</span> <span class="n">positive</span><span class="p">,</span><span class="n">negative</span> 
-				<span class="c"># wen: if the len of positive triples meet batch_size then current triples pair were not add </span>
-				<span class="c"># wen: so need to set positive,negative = [train_data[i]],[(h,r,t)]</span>
-				<span class="n">positive</span><span class="p">,</span><span class="n">negative</span> <span class="o">=</span> <span class="p">[</span><span class="n">train_data</span><span class="p">[</span><span class="n">i</span><span class="p">]],[(</span><span class="n">h</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">t</span><span class="p">)]</span>  
-		<span class="c"># wen: this is set for the last batch in which the length of [positve] is likely to less than batch_size									   </span>
-		<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">positive</span><span class="p">)</span><span class="o">!=</span><span class="mi">0</span><span class="p">:</span>  
-			<span class="k">yield</span> <span class="n">positive</span><span class="p">,</span><span class="n">negative</span>
-	<span class="k">elif</span> <span class="n">mode</span><span class="o">==</span><span class="s">'dev'</span><span class="p">:</span>
-		<span class="c"># wen: there is no module is called more_itertools and what is function chuncked()?</span>
-		<span class="c"># wen: chuncked() will yeild triple by the input batch_size</span>
-		<span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="n">chunked</span><span class="p">(</span><span class="n">dev_data</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">test_batch_size</span><span class="p">):</span> 
-															  
-			<span class="k">yield</span> <span class="n">batch</span>
-	<span class="k">elif</span> <span class="n">mode</span><span class="o">==</span><span class="s">'test'</span><span class="p">:</span>
-		<span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="n">chunked</span><span class="p">(</span><span class="n">test_data</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">test_batch_size</span><span class="p">):</span>
-			<span class="k">yield</span> <span class="n">batch</span>
-
-<span class="c">#----------------------------------------------------------------------------</span>
-
-<span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="n">args</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">xp</span><span class="p">,</span><span class="n">opt</span><span class="p">,</span><span class="n">links</span><span class="p">,</span><span class="n">relations</span><span class="p">,</span><span class="n">edges</span><span class="p">):</span>
-	<span class="n">Loss</span><span class="p">,</span><span class="n">N</span> <span class="o">=</span> <span class="p">[],</span><span class="mi">0</span>
-	<span class="k">for</span> <span class="n">positive</span><span class="p">,</span><span class="n">negative</span> <span class="ow">in</span> <span class="n">gen_batch</span><span class="p">(</span><span class="n">args</span><span class="p">,</span><span class="n">mode</span><span class="o">=</span><span class="s">'train'</span><span class="p">):</span>
-		<span class="n">loss</span> <span class="o">=</span> <span class="n">m</span><span class="p">(</span><span class="n">positive</span><span class="p">,</span><span class="n">negative</span><span class="p">,</span><span class="n">links</span><span class="p">,</span><span class="n">relations</span><span class="p">,</span><span class="n">edges</span><span class="p">,</span><span class="n">xp</span><span class="p">,</span><span class="bp">True</span><span class="p">)</span>
-		<span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
-		<span class="n">opt</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
-		<span class="n">Loss</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">loss</span><span class="o">.</span><span class="n">data</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">positive</span><span class="p">))</span>
-		<span class="n">N</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">positive</span><span class="p">)</span>
-		<span class="k">del</span> <span class="n">loss</span>
-	<span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">Loss</span><span class="p">),</span><span class="n">N</span>
-
-<span class="k">def</span> <span class="nf">evaluate</span><span class="p">(</span><span class="n">args</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">xp</span><span class="p">,</span><span class="n">links</span><span class="p">,</span><span class="n">relations</span><span class="p">,</span><span class="n">edges</span><span class="p">):</span>
-	<span class="k">for</span> <span class="n">mode</span> <span class="ow">in</span> <span class="p">[</span><span class="s">'dev'</span><span class="p">,</span><span class="s">'test'</span><span class="p">]:</span>
-		<span class="n">values</span> <span class="o">=</span> <span class="p">[]</span>
-		<span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="n">gen_batch</span><span class="p">(</span><span class="n">args</span><span class="p">,</span><span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">):</span>
-			<span class="n">margins</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">get_margins</span><span class="p">(</span><span class="n">batch</span><span class="p">,</span><span class="n">links</span><span class="p">,</span><span class="n">relations</span><span class="p">,</span><span class="n">edges</span><span class="p">,</span><span class="n">xp</span><span class="p">,</span><span class="n">mode</span><span class="p">)</span>
-			<span class="k">for</span> <span class="n">v</span><span class="p">,(</span><span class="n">h</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">l</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">margins</span><span class="o">.</span><span class="n">data</span><span class="p">,</span><span class="n">batch</span><span class="p">):</span>
-				<span class="n">values</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">h</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">v</span><span class="p">))</span>
-			<span class="k">del</span> <span class="n">margins</span>
-		<span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">margin_file</span><span class="o">!=</span><span class="s">''</span><span class="p">:</span>
-			<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">margin_file</span><span class="p">,</span><span class="s">'a'</span><span class="p">)</span> <span class="k">as</span> <span class="n">wf</span><span class="p">:</span>
-				<span class="n">wf</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">mode</span><span class="o">+</span><span class="s">':'</span><span class="o">+</span><span class="s">' '</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s">','</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span><span class="n">x</span><span class="p">)))</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">values</span><span class="p">])</span><span class="o">+</span><span class="s">'</span><span class="se">\n</span><span class="s">'</span><span class="p">)</span>
-
-<span class="k">def</span> <span class="nf">get_sizes</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
-	<span class="s">"""
-	relation,entity=set(),set()
-	for l in open(args.train_file):
-		h,r,t,l = l.strip().split('</span><span class="se">\t</span><span class="s">')
-		entity.add(h)
-		relation.add(r)
-		entity.add(t)
-	return len(relation),len(entity)
-	"""</span>
-	<span class="n">relation</span><span class="p">,</span><span class="n">entity</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span>
-	<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">train_file</span><span class="p">):</span>
-		<span class="c"># wen: apply int() function for every element input_list by map()</span>
-		<span class="c"># wen: the blueprint of map() is: map(function_to_apply, list_of_inputs)</span>
-		<span class="n">items</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">'</span><span class="se">\t</span><span class="s">'</span><span class="p">)))</span> 
-														
-		<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">items</span><span class="p">)</span><span class="o">==</span><span class="mi">4</span><span class="p">:</span>
-			<span class="c"># wen: what is l ?</span>
-			<span class="n">h</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">l</span> <span class="o">=</span> <span class="n">items</span> 
-
-			<span class="k">if</span> <span class="n">l</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span> <span class="k">continue</span>
-		<span class="k">else</span><span class="p">:</span>
-			<span class="n">h</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">t</span> <span class="o">=</span> <span class="n">items</span>
-		<span class="n">relation</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">relation</span><span class="p">,</span><span class="n">r</span><span class="p">)</span>
-		<span class="n">entity</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">entity</span><span class="p">,</span><span class="n">h</span><span class="p">,</span><span class="n">t</span><span class="p">)</span>
-	<span class="k">return</span> <span class="n">relation</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">entity</span><span class="o">+</span><span class="mi">1</span> 
-	<span class="c"># wen:这种get_sizes的方法真是清奇, 相比起上面作者注释掉的方法，这个的计算量会小很多，</span>
-	<span class="c"># wen:但前提是每个entity和relation都已经分配了连续的id</span>
-								
-
-<span class="kn">import</span> <span class="nn">sys</span>
-<span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
-	<span class="k">global</span> <span class="n">candidate_heads</span><span class="p">,</span><span class="n">gold_heads</span><span class="p">,</span><span class="n">candidate_tails</span><span class="p">,</span><span class="n">gold_tails</span><span class="p">,</span><span class="n">black_set</span>
-	<span class="n">xp</span> <span class="o">=</span> <span class="n">XP</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
-
-	<span class="c"># wen: if the args.rel_size and args.entity_size is set by function get_size()</span>
-	<span class="c"># wen: then it is better not add them with P.add_argument(). only the parameters deployable are needed to be added</span>
-	<span class="n">args</span><span class="o">.</span><span class="n">rel_size</span><span class="p">,</span><span class="n">args</span><span class="o">.</span><span class="n">entity_size</span> <span class="o">=</span> <span class="n">get_sizes</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> 
-													 
-	<span class="k">print</span><span class="p">(</span><span class="s">'relation size:'</span><span class="p">,</span><span class="n">args</span><span class="o">.</span><span class="n">rel_size</span><span class="p">,</span><span class="s">'entity size:'</span><span class="p">,</span><span class="n">args</span><span class="o">.</span><span class="n">entity_size</span><span class="p">)</span>
-	<span class="n">m</span> <span class="o">=</span> <span class="n">get_model</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
-	<span class="n">opt</span> <span class="o">=</span> <span class="n">get_opt</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
-	<span class="n">opt</span><span class="o">.</span><span class="n">setup</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
-
-	<span class="n">relations</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
-	<span class="n">links</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">set</span><span class="p">)</span>
-	<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">tool</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">train_file</span><span class="p">):</span>
-		<span class="n">items</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">'</span><span class="se">\t</span><span class="s">'</span><span class="p">)))</span>
-		<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">items</span><span class="p">)</span><span class="o">==</span><span class="mi">4</span><span class="p">:</span>
-			<span class="n">h</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">l</span> <span class="o">=</span> <span class="n">items</span>
-			<span class="k">if</span> <span class="n">l</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span> <span class="k">continue</span>
-		<span class="k">else</span><span class="p">:</span>
-			<span class="n">h</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">t</span> <span class="o">=</span> <span class="n">items</span>
-
-		<span class="c"># wen: relations:{(h1,t1):r1, (h2,t2):r2,...}</span>
-		<span class="n">relations</span><span class="p">[(</span><span class="n">h</span><span class="p">,</span><span class="n">t</span><span class="p">)]</span><span class="o">=</span><span class="n">r</span> 
-
-		<span class="c"># wen: links:(defaultdict){e1:[e2, e3, e5...], e2:{e2,e4, e8,...}}. neglect the direction of relation</span>
-		<span class="n">links</span><span class="p">[</span><span class="n">t</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>    
-		<span class="n">links</span><span class="p">[</span><span class="n">h</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
-
-		<span class="c"># wen: [gold_heads] is defaultdict and a global parameter and record all head entities connecting to for every (r,t)</span>
-		<span class="n">gold_heads</span><span class="p">[(</span><span class="n">r</span><span class="p">,</span><span class="n">t</span><span class="p">)]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
-
-		<span class="c"># wen: [gold_tails] record all tail entities connecting to for every (h,r) </span>
-		<span class="n">gold_tails</span><span class="p">[(</span><span class="n">h</span><span class="p">,</span><span class="n">r</span><span class="p">)]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
-
-		<span class="c"># wen: [candidate_heads]: record all head entities for relation r </span>
-		<span class="n">candidate_heads</span><span class="p">[</span><span class="n">r</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
-
-		<span class="c"># wen: [candidate_tails]: record all tial entities for relation r </span>
-		<span class="n">candidate_tails</span><span class="p">[</span><span class="n">r</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
-
-		<span class="c"># wen: [tail_per_head]: all the tail entities t connected to head entity h </span>
-		<span class="n">tail_per_head</span><span class="p">[</span><span class="n">h</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
-
-		<span class="c"># wen: [head_per_tail:] all the head entitise h connected to tail entity t</span>
-		<span class="c"># wen: [links] is a combination of [tail_per_head] and [head_per_tail] </span>
-		<span class="n">head_per_tail</span><span class="p">[</span><span class="n">t</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">h</span><span class="p">)</span> 
-							    
-	<span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">links</span><span class="p">:</span>
-		<span class="c"># wen: the default value of keys in defaultdict is list</span>
-		<span class="c"># wen: but we could also set it with other datatype like this: links = defaultdict(set) </span>
-		<span class="n">links</span><span class="p">[</span><span class="n">e</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">links</span><span class="p">[</span><span class="n">e</span><span class="p">])</span> 
-								  
-
-	<span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">gold_heads</span><span class="p">:</span>
-		<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">candidate_heads</span><span class="p">[</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span><span class="o">-</span><span class="n">gold_heads</span><span class="p">[</span><span class="n">p</span><span class="p">])</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
-			<span class="n">p</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-
-			<span class="c"># wen: [black_set] stores the relation that only connecting to one head or tail entity</span>
-			<span class="n">black_set</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
-
-	<span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">gold_tails</span><span class="p">:</span>
-		<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">candidate_tails</span><span class="p">[</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span><span class="o">-</span><span class="n">gold_tails</span><span class="p">[</span><span class="n">p</span><span class="p">])</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
-			<span class="n">black_set</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
-	<span class="k">print</span><span class="p">(</span><span class="s">'black list size:'</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">black_set</span><span class="p">))</span>	
-	<span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">candidate_heads</span><span class="p">:</span>
-		<span class="n">candidate_heads</span><span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">candidate_heads</span><span class="p">[</span><span class="n">r</span><span class="p">])</span>
-	<span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">candidate_tails</span><span class="p">:</span>
-		<span class="n">candidate_tails</span><span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">candidate_tails</span><span class="p">[</span><span class="n">r</span><span class="p">])</span>
-	<span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">tail_per_head</span><span class="p">:</span>
-		<span class="c"># wen: use +0.0 to conver the number from int to float</span>
-		<span class="n">tail_per_head</span><span class="p">[</span><span class="n">h</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">tail_per_head</span><span class="p">[</span><span class="n">h</span><span class="p">])</span><span class="o">+</span><span class="mf">0.0</span>
-	<span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">head_per_tail</span><span class="p">:</span>
-		<span class="n">head_per_tail</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">head_per_tail</span><span class="p">[</span><span class="n">t</span><span class="p">])</span><span class="o">+</span><span class="mf">0.0</span>
-
-	<span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">train_file</span><span class="o">==</span><span class="n">args</span><span class="o">.</span><span class="n">auxiliary_file</span><span class="p">:</span>
-		<span class="n">tool</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s">'use: edges=links'</span><span class="p">)</span>
-		<span class="n">edges</span> <span class="o">=</span> <span class="n">links</span>
-	<span class="k">else</span><span class="p">:</span>
-		<span class="n">tool</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s">'use: different edges'</span><span class="p">)</span>
-		<span class="n">edges</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">set</span><span class="p">)</span>
-
-		<span class="c"># wen: in tool.read() will yeild line.strip() for every line in the file</span>
-		<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">tool</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">auxiliary_file</span><span class="p">):</span>
-			<span class="c"># wen: there is duplicated strip()   </span>
-			<span class="n">items</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">'</span><span class="se">\t</span><span class="s">'</span><span class="p">)))</span>  
-			<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">items</span><span class="p">)</span><span class="o">==</span><span class="mi">4</span><span class="p">:</span>
-				<span class="n">h</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">l</span> <span class="o">=</span> <span class="n">items</span>
-				<span class="k">if</span> <span class="n">l</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span> <span class="k">continue</span>
-			<span class="k">else</span><span class="p">:</span>
-				<span class="n">h</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">t</span> <span class="o">=</span> <span class="n">items</span>
-			<span class="n">relations</span><span class="p">[(</span><span class="n">h</span><span class="p">,</span><span class="n">t</span><span class="p">)]</span><span class="o">=</span><span class="n">r</span>
-			<span class="n">edges</span><span class="p">[</span><span class="n">t</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
-			<span class="n">edges</span><span class="p">[</span><span class="n">h</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
-		<span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">edges</span><span class="p">:</span>
-			<span class="c"># wen: what is the differece between (use: edges = links) and (use: different edges)?</span>
-			<span class="n">edges</span><span class="p">[</span><span class="n">e</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">edges</span><span class="p">[</span><span class="n">e</span><span class="p">])</span>  
-
-	<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">epoch_size</span><span class="p">):</span>
-		<span class="n">opt</span><span class="o">.</span><span class="n">alpha</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">beta0</span><span class="o">/</span><span class="p">(</span><span class="mf">1.0</span><span class="o">+</span><span class="n">args</span><span class="o">.</span><span class="n">beta1</span><span class="o">*</span><span class="n">epoch</span><span class="p">)</span>
-		<span class="n">trLoss</span><span class="p">,</span><span class="n">Ntr</span> <span class="o">=</span> <span class="n">train</span><span class="p">(</span><span class="n">args</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">xp</span><span class="p">,</span><span class="n">opt</span><span class="p">,</span><span class="n">links</span><span class="p">,</span><span class="n">relations</span><span class="p">,</span><span class="n">edges</span><span class="p">)</span>
-		<span class="n">evaluate</span><span class="p">(</span><span class="n">args</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">xp</span><span class="p">,</span><span class="n">links</span><span class="p">,</span><span class="n">relations</span><span class="p">,</span><span class="n">edges</span><span class="p">)</span>
-		<span class="n">tool</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s">'epoch:'</span><span class="p">,</span><span class="n">epoch</span><span class="p">,</span><span class="s">'tr Loss:'</span><span class="p">,</span><span class="n">tool</span><span class="o">.</span><span class="n">dress</span><span class="p">(</span><span class="n">trLoss</span><span class="p">),</span><span class="n">Ntr</span><span class="p">)</span>
-
-<span class="c">#----------------------------------------------------------------------------</span>
-
-<span class="kn">import</span> <span class="nn">sys</span>
-<span class="k">def</span> <span class="nf">test</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
-	<span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">param_dir</span><span class="o">==</span><span class="s">''</span><span class="p">:</span> <span class="k">return</span>
-
-<span class="c">#----------------------------------------------------------------------------</span>
-<span class="s">"""
-	-tF dataset/data/Freebase13/train </span><span class="se">\
-</span><span class="s">	-dF dataset/data/Freebase13/train </span><span class="se">\
-</span><span class="s">	-eF dataset/data/Freebase13/test </span><span class="se">\
-</span><span class="s">"""</span>
-
-<span class="c"># wen: "the argparse model makes it easy to write user-friendly command-line interface.</span>
-<span class="c"># The program defines what the arguments it requires, and argparse will figure out how</span>
-<span class="c"># parse those out of sys.argv. The argparse module also automatically generates help and</span>
-<span class="c"># usage messages and issues error when users give the program invalid arguments."  </span>
-<span class="kn">from</span> <span class="nn">argparse</span> <span class="kn">import</span> <span class="n">ArgumentParser</span> 	
-										
-										
-										
-<span class="k">def</span> <span class="nf">argument</span><span class="p">():</span>
-	<span class="n">p</span> <span class="o">=</span> <span class="n">ArgumentParser</span><span class="p">()</span>
-
-	<span class="c"># wen: add_argument('--commandline parameter', 'name for the parameter used in the code', default= default value,</span>
-	<span class="c"># wen:  type= the type for this parameter,  )</span>
-	<span class="n">p</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'--train_file'</span><span class="p">,</span>      <span class="s">'-tF'</span><span class="p">,</span>  <span class="n">default</span><span class="o">=</span><span class="s">'dataset/data/Freebase13/classify/train'</span><span class="p">)</span>  
-																								   
-	<span class="n">p</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'--dev_file'</span><span class="p">,</span>        <span class="s">'-vF'</span><span class="p">,</span>  <span class="n">default</span><span class="o">=</span><span class="s">'dataset/data/Freebase13/classify/dev'</span><span class="p">)</span>
-	<span class="n">p</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'--test_file'</span><span class="p">,</span>       <span class="s">'-eF'</span><span class="p">,</span>  <span class="n">default</span><span class="o">=</span><span class="s">'dataset/data/Freebase13/classify/test'</span><span class="p">)</span>
-	<span class="n">p</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'--auxiliary_file'</span><span class="p">,</span>  <span class="s">'-aF'</span><span class="p">,</span>  <span class="n">default</span><span class="o">=</span><span class="s">'dataset/data/Freebase13/classify/train'</span><span class="p">)</span>
-	<span class="n">p</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'--param_dir'</span><span class="p">,</span>       <span class="s">'-pD'</span><span class="p">,</span>  <span class="n">default</span><span class="o">=</span><span class="s">''</span><span class="p">)</span>
-	<span class="n">p</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'--margin_file'</span><span class="p">,</span>     <span class="s">'-mF'</span><span class="p">,</span>  <span class="n">default</span><span class="o">=</span><span class="s">''</span><span class="p">)</span>
-
-	<span class="n">p</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'--use_gpu'</span><span class="p">,</span>     <span class="s">'-g'</span><span class="p">,</span>   <span class="n">default</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>  <span class="n">action</span><span class="o">=</span><span class="s">'store_true'</span><span class="p">)</span>
-	<span class="n">p</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'--gpu_device'</span><span class="p">,</span>  <span class="s">'-gd'</span><span class="p">,</span>  <span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>      <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
-
-	<span class="n">p</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'--seed'</span><span class="p">,</span>        <span class="s">'-seed'</span><span class="p">,</span><span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>      <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
-
-	<span class="n">p</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'--rel_size'</span><span class="p">,</span>  <span class="s">'-Rs'</span><span class="p">,</span>       <span class="n">default</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>    <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
-	<span class="n">p</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'--entity_size'</span><span class="p">,</span> <span class="s">'-Es'</span><span class="p">,</span>       <span class="n">default</span><span class="o">=</span><span class="mi">18</span><span class="p">,</span>    <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
-
-	<span class="n">p</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'--is_residual'</span><span class="p">,</span>     <span class="s">'-iR'</span><span class="p">,</span>   <span class="n">default</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>  <span class="n">action</span><span class="o">=</span><span class="s">'store_true'</span><span class="p">)</span>
-	<span class="n">p</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'--is_batchnorm'</span><span class="p">,</span>    <span class="s">'-iBN'</span><span class="p">,</span>  <span class="n">default</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>  <span class="n">action</span><span class="o">=</span><span class="s">'store_true'</span><span class="p">)</span>
-	<span class="n">p</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'--is_embed'</span><span class="p">,</span>      	<span class="s">'-nE'</span><span class="p">,</span>   <span class="n">default</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>   <span class="n">action</span><span class="o">=</span><span class="s">'store_false'</span><span class="p">)</span>
-	<span class="n">p</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'--is_known'</span><span class="p">,</span>    	<span class="s">'-nK'</span><span class="p">,</span>   <span class="n">default</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>   <span class="n">action</span><span class="o">=</span><span class="s">'store_false'</span><span class="p">)</span>
-	<span class="n">p</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'--is_balanced_tr'</span><span class="p">,</span>    <span class="s">'-nBtr'</span><span class="p">,</span>   <span class="n">default</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>   <span class="n">action</span><span class="o">=</span><span class="s">'store_false'</span><span class="p">)</span>
-	<span class="n">p</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'--is_balanced_dev'</span><span class="p">,</span>   <span class="s">'-iBde'</span><span class="p">,</span>   <span class="n">default</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>   <span class="n">action</span><span class="o">=</span><span class="s">'store_true'</span><span class="p">)</span>
-	<span class="n">p</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'--is_bernoulli_trick'</span><span class="p">,</span>  <span class="s">'-iBeT'</span><span class="p">,</span>   <span class="n">default</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>   <span class="n">action</span><span class="o">=</span><span class="s">'store_true'</span><span class="p">)</span>
-
-	<span class="n">p</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'--is_bound_wr'</span><span class="p">,</span>   <span class="s">'-iRB'</span><span class="p">,</span>   <span class="n">default</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>   <span class="n">action</span><span class="o">=</span><span class="s">'store_true'</span><span class="p">)</span>
-	<span class="n">p</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'--object_kind'</span><span class="p">,</span>   <span class="s">'-oK'</span><span class="p">,</span>    <span class="n">default</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>  <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
-
-	<span class="n">p</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'--layerR'</span> <span class="p">,</span>      <span class="s">'-Lr'</span><span class="p">,</span>      <span class="n">default</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>      <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
-
-	<span class="n">p</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'--dim'</span><span class="p">,</span>         <span class="s">'-D'</span><span class="p">,</span>       <span class="n">default</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>    <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
-	<span class="n">p</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'--order'</span><span class="p">,</span>       <span class="s">'-O'</span><span class="p">,</span>       <span class="n">default</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>      <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
-	<span class="n">p</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'--threshold'</span><span class="p">,</span>   <span class="s">'-T'</span><span class="p">,</span>       <span class="n">default</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>   <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
-
-	<span class="n">p</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'--dropout_block'</span><span class="p">,</span><span class="s">'-dBR'</span><span class="p">,</span>     <span class="n">default</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span>  <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
-	<span class="n">p</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'--dropout_decay'</span><span class="p">,</span><span class="s">'-dDR'</span><span class="p">,</span>     <span class="n">default</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>   <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
-	<span class="n">p</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'--dropout_embed'</span><span class="p">,</span><span class="s">'-dER'</span><span class="p">,</span>     <span class="n">default</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>   <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
-
-	<span class="n">p</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'--train_size'</span><span class="p">,</span>  <span class="s">'-trS'</span><span class="p">,</span>  <span class="n">default</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>       <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
-
-	<span class="n">p</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'--batch_size'</span><span class="p">,</span>  <span class="s">'-bS'</span><span class="p">,</span>  <span class="n">default</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span>        <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
-	<span class="n">p</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'--test_batch_size'</span><span class="p">,</span>  <span class="s">'-tbS'</span><span class="p">,</span>  <span class="n">default</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span>        <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
-	<span class="n">p</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'--sample_size'</span><span class="p">,</span> <span class="s">'-sS'</span><span class="p">,</span>  <span class="n">default</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span>        <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
-	<span class="n">p</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'--pool_size'</span><span class="p">,</span>   <span class="s">'-pS'</span><span class="p">,</span>  <span class="n">default</span><span class="o">=</span><span class="mi">128</span><span class="o">*</span><span class="mi">5</span><span class="p">,</span>      <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
-	<span class="n">p</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'--epoch_size'</span><span class="p">,</span>  <span class="s">'-eS'</span><span class="p">,</span>  <span class="n">default</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>       <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
-	<span class="n">p</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'--nn_model'</span><span class="p">,</span>    <span class="s">'-nn'</span><span class="p">,</span>  <span class="n">default</span><span class="o">=</span><span class="s">'H'</span><span class="p">)</span>
-	<span class="n">p</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'--activate'</span><span class="p">,</span>    <span class="s">'-af'</span><span class="p">,</span>  <span class="n">default</span><span class="o">=</span><span class="s">'tanh'</span><span class="p">)</span>
-	<span class="n">p</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'--pooling_method'</span><span class="p">,</span>    <span class="s">'-pM'</span><span class="p">,</span>  <span class="n">default</span><span class="o">=</span><span class="s">'max'</span><span class="p">)</span>
-
-	<span class="n">p</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'--opt_model'</span><span class="p">,</span>   <span class="s">"-Op"</span><span class="p">,</span>  <span class="n">default</span><span class="o">=</span><span class="s">"Adam"</span><span class="p">)</span>
-	<span class="n">p</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'--alpha0'</span><span class="p">,</span>      <span class="s">"-a0"</span><span class="p">,</span>  <span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>      <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
-	<span class="n">p</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'--alpha1'</span><span class="p">,</span>      <span class="s">"-a1"</span><span class="p">,</span>  <span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>      <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
-	<span class="n">p</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'--alpha2'</span><span class="p">,</span>      <span class="s">"-a2"</span><span class="p">,</span>  <span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>      <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
-	<span class="n">p</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'--alpha3'</span><span class="p">,</span>      <span class="s">"-a3"</span><span class="p">,</span>  <span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>      <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
-	<span class="n">p</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'--beta0'</span><span class="p">,</span>       <span class="s">"-b0"</span><span class="p">,</span>  <span class="n">default</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span>   <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
-	<span class="n">p</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'--beta1'</span><span class="p">,</span>       <span class="s">"-b1"</span><span class="p">,</span>  <span class="n">default</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span>  <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
-
-	<span class="n">args</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
-	<span class="k">return</span> <span class="n">args</span>
-
-<span class="kn">import</span> <span class="nn">random</span>
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
-	<span class="n">args</span> <span class="o">=</span> <span class="n">argument</span><span class="p">()</span>
-	<span class="k">print</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
-
-	<span class="c"># wen: sys.argv will return a list of command line arguments passed to a Python script. </span>
-	<span class="k">print</span><span class="p">(</span><span class="s">' '</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">))</span> 
-
-	<span class="c"># wen: check all the paths is exit</span>
-	<span class="n">tool</span><span class="o">.</span><span class="n">check_exists</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">auxiliary_file</span><span class="p">,</span><span class="n">args</span><span class="o">.</span><span class="n">auxiliary_file</span><span class="p">,</span><span class="n">args</span><span class="o">.</span><span class="n">param_dir</span><span class="p">)</span> 
-	<span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">seed</span><span class="o">!=-</span><span class="mi">1</span><span class="p">:</span>
-		<span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">seed</span><span class="p">)</span>
-		<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">seed</span><span class="p">)</span>
-
-		<span class="c"># wen: once you put the same seed you will get the same pattern of the random number</span>
-		<span class="n">cp</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">seed</span><span class="p">)</span> 
-			
-	<span class="n">main</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
-
-
-</code></pre>
-</div>
-
-]]></content>
-      <categories>
-        
-          <category> code reading </category>
-        
-      </categories>
-      <tags>
-        
-          <tag> code reading </tag>
-        
-          <tag> paper code </tag>
         
       </tags>
       <tags></tags>
@@ -562,17 +267,7 @@ positive/negativeを返すように
     <entry>
       <title><![CDATA[Knowledge Transfer for Out-of-Knowledge-Base Entities, A Graph Neural Network Approach]]></title>
       <url>/paper%20reading/2017/09/26/PaperReading/</url>
-      <content type="html"><![CDATA[<ul>
-  <li>Knowledge Transfer for Out-of-Knowledge-Base Entities: A Graph Neural Network Approach</li>
-  <li>Takuo Hamaguchi, Hidekazu Oiwa, Masashi Shimbo, and Yuji Matsumoto</li>
-  <li>IJCAI 2017</li>
-  <li><a href="https://www.ijcai.org/proceedings/2017/0250.pdf">article link</a></li>
-  <li><a href="https://github.com/takuo-h/GNN-for-OOKB">code link</a></li>
-</ul>
-
-<h2 id="main-idea">Main Idea</h2>
-
-<p>这篇文章提出了一个新的问题：关于out-of-knowledge-base(OOKB) entity的预测。以往的knowledge base embedding方法做链接预（link prediction）测和三元组分类(triple classification)时所用的测试数据集里都假设所有的实体的关系都已经在训练数据集里出现过，即每个实体和关系都有相关的向量表示，如果出现新的实体，那么模型需要进行重新训练。</p>
+      <content type="html"><![CDATA[<p>这篇文章提出了一个新的问题：关于out-of-knowledge-base(OOKB) entity的预测。以往的knowledge base embedding方法做链接预（link prediction）测和三元组分类(triple classification)时所用的测试数据集里都假设所有的实体的关系都已经在训练数据集里出现过，即每个实体和关系都有相关的向量表示，如果出现新的实体，那么模型需要进行重新训练。</p>
 
 <p>out-of-knowlege-base entity 的问题如下：</p>
 
@@ -637,6 +332,14 @@ positive/negativeを返すように
 <p>由于OOKB entity是新提出的问题，没有baseline， 本文自己构造了baseline： 通过对TransE在训练数据集上的训练结果，直接选取和OOKB相连接的实体的向量表示并进行三种不同方式的pooling。</p>
 
 <p><img src="/img/2017-09-26-result.png" alt="" /></p>
+
+<ul>
+  <li>Knowledge Transfer for Out-of-Knowledge-Base Entities: A Graph Neural Network Approach</li>
+  <li>Takuo Hamaguchi, Hidekazu Oiwa, Masashi Shimbo, and Yuji Matsumoto</li>
+  <li>IJCAI 2017</li>
+  <li><a href="https://www.ijcai.org/proceedings/2017/0250.pdf">article link</a></li>
+  <li><a href="https://github.com/takuo-h/GNN-for-OOKB">code link</a></li>
+</ul>
 ]]></content>
       <categories>
         

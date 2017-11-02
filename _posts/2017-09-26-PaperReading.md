@@ -6,13 +6,6 @@ tagline: by wencolani
 tags: [paper, incremental, KG embedding]
 ---
 
-* Knowledge Transfer for Out-of-Knowledge-Base Entities: A Graph Neural Network Approach
-* Takuo Hamaguchi, Hidekazu Oiwa, Masashi Shimbo, and Yuji Matsumoto
-* IJCAI 2017
-* [article link](https://www.ijcai.org/proceedings/2017/0250.pdf)
-* [code link](https://github.com/takuo-h/GNN-for-OOKB)
-
-## Main Idea
 
 这篇文章提出了一个新的问题：关于out-of-knowledge-base(OOKB) entity的预测。以往的knowledge base embedding方法做链接预（link prediction）测和三元组分类(triple classification)时所用的测试数据集里都假设所有的实体的关系都已经在训练数据集里出现过，即每个实体和关系都有相关的向量表示，如果出现新的实体，那么模型需要进行重新训练。
 
@@ -69,3 +62,9 @@ output model借用了TransE的方法，使用|h + r -t| 作为score function，�
 由于OOKB entity是新提出的问题，没有baseline， 本文自己构造了baseline： 通过对TransE在训练数据集上的训练结果，直接选取和OOKB相连接的实体的向量表示并进行三种不同方式的pooling。
 
 ![](/img/2017-09-26-result.png)
+
+* Knowledge Transfer for Out-of-Knowledge-Base Entities: A Graph Neural Network Approach
+* Takuo Hamaguchi, Hidekazu Oiwa, Masashi Shimbo, and Yuji Matsumoto
+* IJCAI 2017
+* [article link](https://www.ijcai.org/proceedings/2017/0250.pdf)
+* [code link](https://github.com/takuo-h/GNN-for-OOKB)

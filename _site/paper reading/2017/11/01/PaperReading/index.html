@@ -83,7 +83,7 @@
 <link href="/assets/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="book reading," />
+  <meta name="keywords" content="paper,paragraph embedding,word2vec,NLP," />
 
 
 
@@ -111,17 +111,23 @@
 
 
 
-<meta name="description" content="《红》《橙》：">
-<meta name="keywords" content="book reading">
+<meta name="description" content="本文提出了一个非监督学习方法Paragraph Vectore，从文本中学习句子，段落，和文本的向量表示。">
+<meta name="keywords" content="paper, paragraph embedding, word2vec, NLP">
 <meta property="og:type" content="article">
-<meta property="og:title" content="《陪安东尼度过的日子》">
-<meta property="og:url" content="http://localhost:4000/book%20reading/2016/05/01/PeiAnDongNiDuGuoDeRiZi/">
+<meta property="og:title" content="Distributed Representations of Sentences and Documents">
+<meta property="og:url" content="http://localhost:4000/paper%20reading/2017/11/01/PaperReading/">
 <meta property="og:site_name" content="wencolani">
-<meta property="og:description" content="《红》《橙》：">
+<meta property="og:description" content="本文提出了一个非监督学习方法Paragraph Vectore，从文本中学习句子，段落，和文本的向量表示。">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="/img/2017-11-02-PargraphVector1.png">
+<meta property="og:image" content="/img/2017-11-02-PargraphVector2.png">
+<meta property="og:image" content="/img/2017-11-02-result2.png">
+<meta property="og:image" content="/img/2017-11-02-result2.png">
+<meta property="og:image" content="/img/2017-11-02-result3.png">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="《陪安东尼度过的日子》">
-<meta name="twitter:description" content="《红》《橙》：">
+<meta name="twitter:title" content="Distributed Representations of Sentences and Documents">
+<meta name="twitter:description" content="本文提出了一个非监督学习方法Paragraph Vectore，从文本中学习句子，段落，和文本的向量表示。">
+<meta name="twitter:image" content="/img/2017-11-02-PargraphVector1.png">
 
 
 <script type="text/javascript" id="hexo.configurations">
@@ -155,7 +161,7 @@
 
 
 
-  <title>《陪安东尼度过的日子》</title>
+  <title>Distributed Representations of Sentences and Documents</title>
   
 
 
@@ -306,7 +312,7 @@
   
 
   <article class="post post-type- " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://localhost:4000/book%20reading/2016/05/01/PeiAnDongNiDuGuoDeRiZi/">
+    <link itemprop="mainEntityOfPage" href="http://localhost:4000/paper%20reading/2017/11/01/PaperReading/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="wencolani">
@@ -326,7 +332,7 @@
           <h1 class="post-title" itemprop="name headline">
           
           
-            《陪安东尼度过的日子》
+            Distributed Representations of Sentences and Documents
           
         </h1>
         
@@ -340,8 +346,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-05-01T00:00:00+02:00">
-                2016-05-01
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-01T00:00:00+01:00">
+                2017-11-01
               </time>
             
 
@@ -364,8 +370,8 @@
               
                 
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/category/#/Book%20reading" itemprop="url" rel="index">
-                    <span itemprop="name">Book reading</span>
+                  <a href="/category/#/Paper%20reading" itemprop="url" rel="index">
+                    <span itemprop="name">Paper reading</span>
                   </a>
                 </span>
 
@@ -382,9 +388,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/book%20reading/2016/05/01/PeiAnDongNiDuGuoDeRiZi/#comments" itemprop="discussionUrl">
+                <a href="/paper%20reading/2017/11/01/PaperReading/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="/book%20reading/2016/05/01/PeiAnDongNiDuGuoDeRiZi/" itemprop="commentCount"></span>
+                        data-disqus-identifier="/paper%20reading/2017/11/01/PaperReading/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -415,30 +421,99 @@
       
 
       
-        <p>《红》《橙》：</p>
+        <p>本文提出了一个非监督学习方法Paragraph Vectore，从文本中学习句子，段落，和文本的向量表示。</p>
 
-<p>去阿里的路上和周末赖床的时间看完了安东尼的两本书，初高中时代没有看过这种年轻作者的书，现在竟然补上了。书中只是记录了安东尼的漫长岁月，第一本2005.08.16-2007.10.01，第二本2007.10.02-2010.6.22，短短的两本书看完了别人五年的岁月，想想也是刺激。</p>
+<h1 id="motivation">Motivation:</h1>
+<p>很多机器学习方法要求输入是固定长度的特征向量，词袋(bag-of-word)是最常用的方法，但词袋有两个最重要的缺点：</p>
 
-<p>安东尼应该是个细腻的孩子，书中描绘的生活是那么生动，即便是单薄的。厨师这个专业真不错，“唯爱与美食不可辜负也”，厨师就这么轻而易举得得到了时间的珍宝。这是第一次通过书籍接触到墨尔本（猫本）这座城市，总觉得墨尔本这个名字很浪漫。在澳洲的生活很精彩，在作者身边都是真诚的朋友，开心有人陪伴笑，难过有人陪伴哭，疯狂有人陪伴闹。也许是自己还没出国感受世界上的其他文化，故而总保持着向往，支撑自己读完了生活流水账似的真诚的两本书。</p>
+<ul>
+  <li>失去了词序信息。虽然bag-of-n-gram考虑了词序的信息，但是会面临新的问题：data-sparsity和 high-dimensionality。</li>
+  <li>忽略了词的语义信息(semantics of words)。比如“苹果”和“梨”。</li>
+</ul>
 
-<p>曾经自己也想过用什么样的方式，连续的方式，来记录自己的一生，等老了的时候，就把它们拿出来让自己年轻。可惜并没有找到合适的方式，写日记也许不错，但没能坚持下来。我想等安东尼老了的时候，看着这一些列书的红橙花绿青蓝紫，一定是一种难以言喻的感动，那一刻书里所承载的岁月远远胜过了里面的文字内容。</p>
+<h1 id="adavantages-of-paragraph-vectore">Adavantages of Paragraph Vectore</h1>
+<ul>
+  <li>
+    <p>Pagraph vector 是一个非监督的模型。可以应用于标注不足的数据。</p>
+  </li>
+  <li>
+    <p>Paragraph Vectore 是固定长度的向量，它表示的文本长度是可变的，可以从sentence到paragraph到text。</p>
+  </li>
+  <li>
+    <p>Paragraph vector acts a memory that remembers that is missing from the current context – or the topic of the paragraph. 我的理解是在预测文本中的下一个词时，通常会取这个词前后的固定长度的词(context)，虽然多数情况下, context是非常有效的信息，但有时候这些词对于预测所需要的信息的覆盖是补全的，这就是paragraph vector存在的意义，它可以捕捉并记住文本的主题信息，并辅助预测。</p>
+  </li>
+</ul>
 
-<p>我想生命是需要记录的，因为我们太健忘了；</p>
+<h1 id="method">Method:</h1>
 
-<p>生命是需要记录的，因为生命会被忙碌冲散；</p>
+<h2 id="paragraph-vector-a-distributed-memory-modelpv-dm">Paragraph Vector: a distributed memory model(PV-DM)</h2>
 
-<p>生命需要被记录，以此超越时间。</p>
+<p><img src="/img/2017-11-02-PargraphVector1.png" alt="" /></p>
 
-<p>《黄》：</p>
+<ul>
+  <li>任务目标：给定一个段落中固定长度的文本内容context，结合当前所处段落一个预测下一个词是什么。</li>
+  <li>方法： 和word2vec相似，每个词用一个向量表示，每个段落也用一个向量表示。连接(concatinate)paragraph vector和所有context的word vector作为输入，预测下一个词。</li>
+</ul>
 
-<p>在马克思的课上结束了这本书的阅读（上课的老师很有魅力，87年，理论经济）</p>
+<h2 id="paragraph-vector-without-word-ordering-distributed-bag-of-wordspv-dbow">Paragraph Vector without word ordering: Distributed bag of words(PV-DBOW)</h2>
+<p><img src="/img/2017-11-02-PargraphVector2.png" alt="" /></p>
 
-<p>安东尼的岁月记录到了2013年末，2013年没有以前精彩，只是对于我这个读者而言。回国了，失恋了，工作了。也许当为了能够写下去而写下去的时候，从前的感觉消失了。安东尼也长大了。</p>
+<ul>
+  <li>任务目标：用paragraph vector预测从当前文本中随机生成的词。</li>
+  <li>方法：每次随机梯度下降的迭代中，选取当前段落中一个固定窗口的文本，从这个窗口的文本中随机选取一个词，then form a classifi-
+cation task given the Paragraph Vector.</li>
+</ul>
 
-<p>我想以后不会再看续集了，我需要去寻找陪伴自己度过漫长岁月的部分了。以后会多看一些理论完备的书吧，再见，安东尼。</p>
+<h2 id="final-paragraph-vector">final paragraph vector</h2>
+<p>combiantion of PV-DM and PV-DBOW.</p>
+<h1 id="experiments">Experiments</h1>
 
-<p>安东尼，再见。</p>
+<h2 id="sentiment-analysis">Sentiment Analysis</h2>
+<ul>
+  <li>
+    <p>数据集： Standford sentiment treebank dataset with 8544 training sentences, 2210 testsentence and 1101 calidation sentences. 每个句子标有0.0到1.0的极性(由人生成的)。</p>
+  </li>
+  <li>Evaluation:
+    <ul>
+      <li>5-way fine-grained classification: {Very Negative, Negative, Neutral, Positive,
+Very Positive}</li>
+      <li>2-way coarse-grained classification: {Negative, Positive}</li>
+    </ul>
+  </li>
+  <li>方法：
+    <ul>
+      <li>training: 先学习训练样本中的sentence和subphrases的向量表示，然后用这些学习得的向量表示学习逻辑回归分类器。</li>
+      <li>testing: 固定所有的词向量，对每个test的句子学习词向量，然后讲句子向量表示输入之前学习得的分类器，对句子做情绪分类。</li>
+      <li>notice: 选词窗口大小为8，向量维度为400。</li>
+    </ul>
+  </li>
+  <li>结果：
+<img src="/img/2017-11-02-result2.png" alt="" /></li>
+</ul>
 
+<p>在多句子数据集IMDB dataset上情绪分析的结果如下：
+<img src="/img/2017-11-02-result2.png" alt="" /></p>
+
+<h2 id="information-retrieval">Information Retrieval</h2>
+<ul>
+  <li>数据构造：首先对于每个查询，记录下搜索引擎返回的top10的结果，然后在这些结果数据集上构造数据集如下：对一个查询构造结果三元组，其中前两个是这个查询的答案，另一个不是。 构造的查询结果三元组80% for training, 10% for validation, 10% for testing.</li>
+  <li>测试方法：计算结果三元组中三个paragraph vector之间的距离。测试error是指，在测试三元组中，前两个来自相同查询的结果之间的距离比来第一和第三个来自不同查询结果之间的距离大。</li>
+  <li>结果如下：</li>
+</ul>
+
+<p><img src="/img/2017-11-02-result3.png" alt="img-w1" /></p>
+
+<h1 id="thinking">Thinking</h1>
+<p>paragraph vector是很直观的想法。
+本文的实验设计很值得借鉴，对于非监督方法而言实验设计尤其中重要。</p>
+
+<ul>
+  <li>Distributed Representations of Sentences and Documents</li>
+  <li>Quoc Le, Tomas Mikolov</li>
+  <li>Proceedings of the 31st International Conference on Machine Learning, PMLR 32(2):1188-1196, 2014.</li>
+  <li><a href="https://arxiv.org/pdf/1405.4053.pdf">article link</a></li>
+  <li><a href="">code link</a></li>
+</ul>
 
       
     </div>
@@ -469,7 +544,16 @@
         <div class="post-tags">
           
             
-            <a href="/tag/#/book%20reading" rel="tag"># book reading</a>
+            <a href="/tag/#/paper" rel="tag"># paper</a>
+          
+            
+            <a href="/tag/#/paragraph%20embedding" rel="tag"># paragraph embedding</a>
+          
+            
+            <a href="/tag/#/word2vec" rel="tag"># word2vec</a>
+          
+            
+            <a href="/tag/#/NLP" rel="tag"># NLP</a>
           
         </div>
       
@@ -485,18 +569,14 @@
         <div class="post-nav" id="post-nav-id">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/book%20reading/2016/08/02/ZhuiFengZhengDeRen/" rel="next" title="《追风筝的人》—— 执念是为放不下的事">
-                <i class="fa fa-chevron-left"></i> 《追风筝的人》—— 执念是为放不下的事
-              </a>
-            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/book%20reading/2013/06/16/HongYuHei/" rel="prev" title="《红与黑》——记一位悲剧的英雄">
-                《红与黑》——记一位悲剧的英雄 <i class="fa fa-chevron-right"></i>
+              <a href="/english%20writing/2017/10/24/EnglishWriting/" rel="prev" title="Some useful meterials for English writing">
+                Some useful meterials for English writing <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -557,8 +637,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/assets/images/avatar.jpg"
@@ -644,6 +733,31 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+
+
+
+
+            
+              <div class="post-toc-content">
+    <ol class=nav>
+      <li class="nav-item nav-level-1"> <a class="nav-link" href="#motivation"> <span class="nav-number">1</span> <span class="nav-text">Motivation:</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-1"> <a class="nav-link" href="#adavantages-of-paragraph-vectore"> <span class="nav-number">2</span> <span class="nav-text">Adavantages of Paragraph Vectore</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-1"> <a class="nav-link" href="#method"> <span class="nav-number">3</span> <span class="nav-text">Method:</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-2"> <a class="nav-link" href="#paragraph-vector-a-distributed-memory-modelpv-dm"> <span class="nav-number">3.1</span> <span class="nav-text">Paragraph Vector: a distributed memory model(PV-DM)</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#paragraph-vector-without-word-ordering-distributed-bag-of-wordspv-dbow"> <span class="nav-number">3.2</span> <span class="nav-text">Paragraph Vector without word ordering: Distributed bag of words(PV-DBOW)</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#final-paragraph-vector"> <span class="nav-number">3.3</span> <span class="nav-text">final paragraph vector</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-1"> <a class="nav-link" href="#experiments"> <span class="nav-number">4</span> <span class="nav-text">Experiments</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-2"> <a class="nav-link" href="#sentiment-analysis"> <span class="nav-number">4.1</span> <span class="nav-text">Sentiment Analysis</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#information-retrieval"> <span class="nav-number">4.2</span> <span class="nav-text">Information Retrieval</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-1"> <a class="nav-link" href="#thinking"> <span class="nav-number">5</span> <span class="nav-text">Thinking</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child">
+    </ol>
+  </div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -804,9 +918,9 @@
       
       <script type="text/javascript">
           var disqus_config = function () {
-              this.page.url = 'http://localhost:4000/book%20reading/2016/05/01/PeiAnDongNiDuGuoDeRiZi/';
-              this.page.identifier = '/book%20reading/2016/05/01/PeiAnDongNiDuGuoDeRiZi/';
-              this.page.title = '《陪安东尼度过的日子》';
+              this.page.url = 'http://localhost:4000/paper%20reading/2017/11/01/PaperReading/';
+              this.page.identifier = '/paper%20reading/2017/11/01/PaperReading/';
+              this.page.title = 'Distributed Representations of Sentences and Documents';
           };
           var d = document, s = d.createElement('script');
           s.src = 'https://.disqus.com/embed.js';

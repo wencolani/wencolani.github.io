@@ -83,7 +83,7 @@
 <link href="/assets/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="paper,incremental,KG embedding," />
+  <meta name="keywords" content="linux commond,cat," />
 
 
 
@@ -111,19 +111,17 @@
 
 
 
-<meta name="description" content="这篇文章提出了一个新的问题：关于out-of-knowledge-base(OOKB) entity的预测。以往的knowledge base embedding方法做链接预（link prediction）测和三元组分类(triple classification)时所用的测试数据集里都假设所有的实体的关系都已经在训练数据集里出现过，即每个实体和关系都有相关的向量表示，如果出现新的实体，那么模型需要进行重新训练。">
-<meta name="keywords" content="paper, incremental, KG embedding">
+<meta name="description" content="cat file1">
+<meta name="keywords" content="linux commond, cat">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Knowledge Transfer for Out-of-Knowledge-Base Entities, A Graph Neural Network Approach">
-<meta property="og:url" content="http://localhost:4000/paper%20reading/2017/09/26/PaperReading/">
+<meta property="og:title" content="cat">
+<meta property="og:url" content="http://localhost:4000/linux%20commond/2017/11/02/LinuxCommond/">
 <meta property="og:site_name" content="wencolani">
-<meta property="og:description" content="这篇文章提出了一个新的问题：关于out-of-knowledge-base(OOKB) entity的预测。以往的knowledge base embedding方法做链接预（link prediction）测和三元组分类(triple classification)时所用的测试数据集里都假设所有的实体的关系都已经在训练数据集里出现过，即每个实体和关系都有相关的向量表示，如果出现新的实体，那么模型需要进行重新训练。">
+<meta property="og:description" content="cat file1">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="/img/2017-09-26-result.png">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Knowledge Transfer for Out-of-Knowledge-Base Entities, A Graph Neural Network Approach">
-<meta name="twitter:description" content="这篇文章提出了一个新的问题：关于out-of-knowledge-base(OOKB) entity的预测。以往的knowledge base embedding方法做链接预（link prediction）测和三元组分类(triple classification)时所用的测试数据集里都假设所有的实体的关系都已经在训练数据集里出现过，即每个实体和关系都有相关的向量表示，如果出现新的实体，那么模型需要进行重新训练。">
-<meta name="twitter:image" content="/img/2017-09-26-result.png">
+<meta name="twitter:title" content="cat">
+<meta name="twitter:description" content="cat file1">
 
 
 <script type="text/javascript" id="hexo.configurations">
@@ -157,7 +155,7 @@
 
 
 
-  <title>Knowledge Transfer for Out-of-Knowledge-Base Entities, A Graph Neural Network Approach</title>
+  <title>cat</title>
   
 
 
@@ -318,7 +316,7 @@
   
 
   <article class="post post-type- " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://localhost:4000/paper%20reading/2017/09/26/PaperReading/">
+    <link itemprop="mainEntityOfPage" href="http://localhost:4000/linux%20commond/2017/11/02/LinuxCommond/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="wencolani">
@@ -338,7 +336,7 @@
           <h1 class="post-title" itemprop="name headline">
           
           
-            Knowledge Transfer for Out-of-Knowledge-Base Entities, A Graph Neural Network Approach
+            cat
           
         </h1>
         
@@ -352,8 +350,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-26T00:00:00+02:00">
-                2017-09-26
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-02T00:00:00+01:00">
+                2017-11-02
               </time>
             
 
@@ -376,8 +374,8 @@
               
                 
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/category/#/Paper%20reading" itemprop="url" rel="index">
-                    <span itemprop="name">Paper reading</span>
+                  <a href="/category/#/Linux%20commond" itemprop="url" rel="index">
+                    <span itemprop="name">Linux commond</span>
                   </a>
                 </span>
 
@@ -394,9 +392,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/paper%20reading/2017/09/26/PaperReading/#comments" itemprop="discussionUrl">
+                <a href="/linux%20commond/2017/11/02/LinuxCommond/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="/paper%20reading/2017/09/26/PaperReading/" itemprop="commentCount"></span>
+                        data-disqus-identifier="/linux%20commond/2017/11/02/LinuxCommond/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -427,80 +425,23 @@
       
 
       
-        <p>这篇文章提出了一个新的问题：关于out-of-knowledge-base(OOKB) entity的预测。以往的knowledge base embedding方法做链接预（link prediction）测和三元组分类(triple classification)时所用的测试数据集里都假设所有的实体的关系都已经在训练数据集里出现过，即每个实体和关系都有相关的向量表示，如果出现新的实体，那么模型需要进行重新训练。</p>
+        <p><code class="highlighter-rouge">cat file1</code></p>
 
-<p>out-of-knowlege-base entity 的问题如下：</p>
+<p><code class="highlighter-rouge">cat file1 &gt; file2</code></p>
 
-<blockquote>
-  <p>out-of-knowledge-base entity problem arises when new entity(OOKB entities) occur in the relation triplets that are given to the system after training.</p>
-</blockquote>
+<p><code class="highlighter-rouge">cat file1 | less</code></p>
 
-<p>解决OOKB的问题主要在于如何从已有的实体和关系的向量表示里获得OOKB实体的向量表示，本文主要利用了OOKB实体和知识库中已有的实体的链接关系得到其向量表示。</p>
+<p><code class="highlighter-rouge">cat &gt; file1</code>: use <code class="highlighter-rouge">Ctrl + d</code> to end input</p>
 
-<h2 id="proposed-model">Proposed Model</h2>
+<p><code class="highlighter-rouge">cat &gt;&gt; file1</code></p>
 
-<p>本文借鉴了[Graph-NN]的方法, 将生成OOKB entity的向量表示的过程分为propagation model 和 output model.</p>
+<p><code class="highlighter-rouge">cat file1 file2 file3</code></p>
 
-<h3 id="propagation-model">Propagation model</h3>
+<p><code class="highlighter-rouge">cat file1 file2 file3 &gt; file4</code></p>
 
-<p>Propagation model 分为两个部分： trandition function 和 pooling function.</p>
+<p><code class="highlighter-rouge">cat file1 file2 file3 | sort &gt; file4</code></p>
 
-<h4 id="transition-function">transition function</h4>
-
-<p>transition function 的主要目标是通过每个与OOKB实体具有链接关系的三元组中已有的实体和关系推测出当前OOKB实体的向量表示。具体定义如下：</p>
-<ul>
-  <li>$ T(\textbf{v}) = \textbf{v} $ — (identity)</li>
-  <li>$ T(\textbf{v}) = tanh(\textbf{Av}) $ — (single tanh layer)</li>
-  <li>$ T(\textbf{v}) = ReLU(\textbf{Av}) $ — (single ReLU layer)
-这里的transition function 也可以换成其他的神经网络，比如batch-normalization、residual connection 和 LSTM等。</li>
-</ul>
-
-<p>注意参数A的定义可以不是一个固定的全局的参数，而是与当前OOKB实体参与的三元组中的关系相关的 (注：这样肯定能提高效果的). 在single ReLU layer 中本文也添加了batch normalization.</p>
-
-<h4 id="pooling-function">pooling function</h4>
-
-<p>pooling function 主要目的是通过多个OOKB entity的表示结果生成一个向量表示，pooling的方法主要有以下三种：</p>
-
-<ul>
-  <li>sum pooling: <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"> \\( P(S) = \sum_{i=1}^N x_i \\)</script></li>
-  <li>acerage pooling:</li>
-  <li>max pooling</li>
-</ul>
-
-<p>(文中也使用了stacking and unrolling，不过不太了解)</p>
-
-<h3 id="output-model">output model</h3>
-<p>output model借用了TransE的方法，使用|h + r -t| 作为score function，并且采用margin-based objective function. 相对于之前TrasnE的pairwise-margin，本文提出了absolute-margin，这样的定义同样可以使得可以生成更多的负样本，可以提高最终embedding的效果。</p>
-
-<h2 id="experiment">Experiment</h2>
-<p>本文也进行了常规的knowledge base embedding的三元组分类的实验，即没有OOKB实体存在，在WN11和FB13上的实验均比TransE要好一些。但是我更关注OOKB实体的问题，所以主要介绍关于OOKB实体的实验。</p>
-<h3 id="数据集的构造">数据集的构造</h3>
-<p>本文实验数据集的构造过程非常值得借鉴。以WordNet11s数据集为例， 构造过程如下：</p>
-
-<ol>
-  <li>选取OOKBentity：从WN11的test数据集中选取N=1000, 3000, 5000三元组。然后有三种策略选取OOKB entity：
-    <ol>
-      <li>将选取出的三元组中的所有head entity当作是OOKB实体</li>
-      <li>将选取出的三元组中的所有tail entity当作是OOKB实体</li>
-      <li>将选取出的三元组中的所有head entity 和 tail entity均当作OOKB实体
-然后去掉候选OOKB实体中与任何非OOKB实体都没有链接的实体。</li>
-    </ol>
-  </li>
-  <li>将原来训练数据集中的三元组划分入两个类别：将不含有选出的OOKB实体的三元组留在训练数据集中，将含有选出的OOKB实体的三元组放入auxiliary set中。</li>
-</ol>
-
-<p>由于OOKB entity是新提出的问题，没有baseline， 本文自己构造了baseline： 通过对TransE在训练数据集上的训练结果，直接选取和OOKB相连接的实体的向量表示并进行三种不同方式的pooling。</p>
-
-<p><img src="/img/2017-09-26-result.png" alt="" /></p>
-
-<h1 id="paper-information">Paper information</h1>
-<ul>
-  <li>Knowledge Transfer for Out-of-Knowledge-Base Entities: A Graph Neural Network Approach</li>
-  <li>Takuo Hamaguchi, Hidekazu Oiwa, Masashi Shimbo, and Yuji Matsumoto</li>
-  <li>IJCAI 2017</li>
-  <li><a href="https://www.ijcai.org/proceedings/2017/0250.pdf">article link</a></li>
-  <li><a href="https://github.com/takuo-h/GNN-for-OOKB">code link</a></li>
-</ul>
+<p><code class="highlighter-rouge">cat - file1 &gt; file2</code>: first copy file1 to file2, then add input something to file2</p>
 
       
     </div>
@@ -531,13 +472,10 @@
         <div class="post-tags">
           
             
-            <a href="/tag/#/paper" rel="tag"># paper</a>
+            <a href="/tag/#/linux%20commond" rel="tag"># linux commond</a>
           
             
-            <a href="/tag/#/incremental" rel="tag"># incremental</a>
-          
-            
-            <a href="/tag/#/KG%20embedding" rel="tag"># KG embedding</a>
+            <a href="/tag/#/cat" rel="tag"># cat</a>
           
         </div>
       
@@ -553,8 +491,8 @@
         <div class="post-nav" id="post-nav-id">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/%E9%9A%8F%E7%AC%94/2017/10/07/suibi/" rel="next" title="新的演员">
-                <i class="fa fa-chevron-left"></i> 新的演员
+              <a href="/paper%20reading/2017/11/02/PaperReading/" rel="next" title="Towards Holistic Concept Representations, Embedding Relational Knowledge, Visual Attributes, and Distributional Word Semantics">
+                <i class="fa fa-chevron-left"></i> Towards Holistic Concept Representations, Embedding Relational Knowledge, Visual Attributes, and Distributional Word Semantics
               </a>
             
           </div>
@@ -563,8 +501,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/command%20learning/2017/09/24/VimCommand/" rel="prev" title="Vim command">
-                Vim command <i class="fa fa-chevron-right"></i>
+              <a href="/paper%20reading/2017/11/01/PaperReading/" rel="prev" title="Distributed Representations of Sentences and Documents">
+                Distributed Representations of Sentences and Documents <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -625,17 +563,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel">
+      <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/assets/images/avatar.jpg"
@@ -721,31 +650,6 @@
 
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-            
-            
-            
-
-
-
-
-
-            
-              <div class="post-toc-content">
-    <ol class=nav>
-      <li class="nav-item nav-level-1"> <a class="nav-link" href="#paper-information"> <span class="nav-number">1</span> <span class="nav-text">Paper information</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child">
-    </ol>
-  </div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
@@ -906,9 +810,9 @@
       
       <script type="text/javascript">
           var disqus_config = function () {
-              this.page.url = 'http://localhost:4000/paper%20reading/2017/09/26/PaperReading/';
-              this.page.identifier = '/paper%20reading/2017/09/26/PaperReading/';
-              this.page.title = 'Knowledge Transfer for Out-of-Knowledge-Base Entities, A Graph Neural Network Approach';
+              this.page.url = 'http://localhost:4000/linux%20commond/2017/11/02/LinuxCommond/';
+              this.page.identifier = '/linux%20commond/2017/11/02/LinuxCommond/';
+              this.page.title = 'cat';
           };
           var d = document, s = d.createElement('script');
           s.src = 'https://.disqus.com/embed.js';

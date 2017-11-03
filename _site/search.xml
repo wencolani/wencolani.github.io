@@ -100,6 +100,42 @@
     </entry>
   
     <entry>
+      <title><![CDATA[cat]]></title>
+      <url>/linux%20commond/2017/11/02/LinuxCommond/</url>
+      <content type="html"><![CDATA[<p><code class="highlighter-rouge">cat file1</code></p>
+
+<p><code class="highlighter-rouge">cat file1 &gt; file2</code></p>
+
+<p><code class="highlighter-rouge">cat file1 | less</code></p>
+
+<p><code class="highlighter-rouge">cat &gt; file1</code>: use <code class="highlighter-rouge">Ctrl + d</code> to end input</p>
+
+<p><code class="highlighter-rouge">cat &gt;&gt; file1</code></p>
+
+<p><code class="highlighter-rouge">cat file1 file2 file3</code></p>
+
+<p><code class="highlighter-rouge">cat file1 file2 file3 &gt; file4</code></p>
+
+<p><code class="highlighter-rouge">cat file1 file2 file3 | sort &gt; file4</code></p>
+
+<p><code class="highlighter-rouge">cat - file1 &gt; file2</code>: first copy file1 to file2, then add input something to file2</p>
+]]></content>
+      <categories>
+        
+          <category> Linux commond </category>
+        
+      </categories>
+      <tags>
+        
+          <tag> linux commond </tag>
+        
+          <tag> cat </tag>
+        
+      </tags>
+      <tags></tags>
+    </entry>
+  
+    <entry>
       <title><![CDATA[Distributed Representations of Sentences and Documents]]></title>
       <url>/paper%20reading/2017/11/01/PaperReading/</url>
       <content type="html"><![CDATA[<p>这篇文章提出了一个非监督学习方法Paragraph Vectore，从文本中学习句子，段落，和文本的向量表示。</p>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.5.2">Jekyll</generator><link href="http://localhost:4000/atom.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2017-11-03T22:36:16+01:00</updated><id>http://localhost:4000/</id><title type="html">wencolani</title><subtitle>a CS Phd candidate in Zhejiang University</subtitle><author><name>wencolani</name></author><entry><title type="html">Towards Holistic Concept Representations, Embedding Relational Knowledge, Visual Attributes, and Distributional Word Semantics</title><link href="http://localhost:4000/paper%20reading/2017/11/02/PaperReading/" rel="alternate" type="text/html" title="Towards Holistic Concept Representations, Embedding Relational Knowledge, Visual Attributes, and Distributional Word Semantics" /><published>2017-11-02T00:00:00+01:00</published><updated>2017-11-02T00:00:00+01:00</updated><id>http://localhost:4000/paper%20reading/2017/11/02/PaperReading</id><content type="html" xml:base="http://localhost:4000/paper%20reading/2017/11/02/PaperReading/">&lt;p&gt;这篇文章提出了一个融合kg embedding，image embedding 和 word embedding的方法。能够融合更多的信息。&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.5.2">Jekyll</generator><link href="http://localhost:4000/atom.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2017-11-03T23:23:44+01:00</updated><id>http://localhost:4000/</id><title type="html">wencolani</title><subtitle>a CS Phd candidate in Zhejiang University</subtitle><author><name>wencolani</name></author><entry><title type="html">Towards Holistic Concept Representations, Embedding Relational Knowledge, Visual Attributes, and Distributional Word Semantics</title><link href="http://localhost:4000/paper%20reading/2017/11/02/PaperReading/" rel="alternate" type="text/html" title="Towards Holistic Concept Representations, Embedding Relational Knowledge, Visual Attributes, and Distributional Word Semantics" /><published>2017-11-02T00:00:00+01:00</published><updated>2017-11-02T00:00:00+01:00</updated><id>http://localhost:4000/paper%20reading/2017/11/02/PaperReading</id><content type="html" xml:base="http://localhost:4000/paper%20reading/2017/11/02/PaperReading/">&lt;p&gt;这篇文章提出了一个融合kg embedding，image embedding 和 word embedding的方法。能够融合更多的信息。&lt;/p&gt;
 
 &lt;h1 id=&quot;motivation&quot;&gt;Motivation&lt;/h1&gt;
 &lt;p&gt;知识库，图像和文字这三种方式分别记录了事物不同方面的信息。
@@ -64,7 +64,23 @@
   &lt;li&gt;ISWC 2017&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://iswc2017.semanticweb.org/wp-content/uploads/papers/MainProceedings/260.pdf&quot;&gt;article link&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;&quot;&gt;code link&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>wencolani</name></author><category term="Paper reading" /><category term="paper" /><category term="kg embedding" /><category term="word2vec" /><category term="image embedding" /><category term="embedding" /><category term="image" /><category term="text" /><category term="NLP" /><summary type="html">这篇文章提出了一个融合kg embedding，image embedding 和 word embedding的方法。能够融合更多的信息。</summary></entry><entry><title type="html">Distributed Representations of Sentences and Documents</title><link href="http://localhost:4000/paper%20reading/2017/11/01/PaperReading/" rel="alternate" type="text/html" title="Distributed Representations of Sentences and Documents" /><published>2017-11-01T00:00:00+01:00</published><updated>2017-11-01T00:00:00+01:00</updated><id>http://localhost:4000/paper%20reading/2017/11/01/PaperReading</id><content type="html" xml:base="http://localhost:4000/paper%20reading/2017/11/01/PaperReading/">&lt;p&gt;这篇文章提出了一个非监督学习方法Paragraph Vectore，从文本中学习句子，段落，和文本的向量表示。&lt;/p&gt;
+&lt;/ul&gt;</content><author><name>wencolani</name></author><category term="Paper reading" /><category term="paper" /><category term="kg embedding" /><category term="word2vec" /><category term="image embedding" /><category term="embedding" /><category term="image" /><category term="text" /><category term="NLP" /><summary type="html">这篇文章提出了一个融合kg embedding，image embedding 和 word embedding的方法。能够融合更多的信息。</summary></entry><entry><title type="html">cat</title><link href="http://localhost:4000/linux%20commond/2017/11/02/LinuxCommond/" rel="alternate" type="text/html" title="cat" /><published>2017-11-02T00:00:00+01:00</published><updated>2017-11-02T00:00:00+01:00</updated><id>http://localhost:4000/linux%20commond/2017/11/02/LinuxCommond</id><content type="html" xml:base="http://localhost:4000/linux%20commond/2017/11/02/LinuxCommond/">&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cat file1&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cat file1 &amp;gt; file2&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cat file1 | less&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cat &amp;gt; file1&lt;/code&gt;: use &lt;code class=&quot;highlighter-rouge&quot;&gt;Ctrl + d&lt;/code&gt; to end input&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cat &amp;gt;&amp;gt; file1&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cat file1 file2 file3&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cat file1 file2 file3 &amp;gt; file4&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cat file1 file2 file3 | sort &amp;gt; file4&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cat - file1 &amp;gt; file2&lt;/code&gt;: first copy file1 to file2, then add input something to file2&lt;/p&gt;</content><author><name>wencolani</name></author><category term="Linux commond" /><category term="linux commond" /><category term="cat" /><summary type="html">cat file1</summary></entry><entry><title type="html">Distributed Representations of Sentences and Documents</title><link href="http://localhost:4000/paper%20reading/2017/11/01/PaperReading/" rel="alternate" type="text/html" title="Distributed Representations of Sentences and Documents" /><published>2017-11-01T00:00:00+01:00</published><updated>2017-11-01T00:00:00+01:00</updated><id>http://localhost:4000/paper%20reading/2017/11/01/PaperReading</id><content type="html" xml:base="http://localhost:4000/paper%20reading/2017/11/01/PaperReading/">&lt;p&gt;这篇文章提出了一个非监督学习方法Paragraph Vectore，从文本中学习句子，段落，和文本的向量表示。&lt;/p&gt;
 
 &lt;h1 id=&quot;motivation&quot;&gt;Motivation:&lt;/h1&gt;
 &lt;p&gt;很多机器学习方法要求输入是固定长度的特征向量，词袋(bag-of-word)是最常用的方法，但词袋有两个最重要的缺点：&lt;/p&gt;
@@ -398,12 +414,4 @@ Very Positive}&lt;/li&gt;
 
 &lt;p&gt;“不为无益之事，何以遣有涯之生”。&lt;/p&gt;
 
-&lt;p&gt;向季老致敬。&lt;/p&gt;</content><author><name>wencolani</name></author><category term="Book reading" /><category term="book reading" /><summary type="html">开始看这本书怀着嬉笑怒骂的心态，尽看季老讽刺调戏那个年代的记忆，对于自杀的考究尤值得叫好，在生死边缘走过的人才有那份戏谑的底气。</summary></entry><entry><title type="html">《我的前半生》</title><link href="http://localhost:4000/book%20reading/2017/02/25/WoDeQianBanShen/" rel="alternate" type="text/html" title="《我的前半生》" /><published>2017-02-25T00:00:00+01:00</published><updated>2017-02-25T00:00:00+01:00</updated><id>http://localhost:4000/book%20reading/2017/02/25/WoDeQianBanShen</id><content type="html" xml:base="http://localhost:4000/book%20reading/2017/02/25/WoDeQianBanShen/">&lt;p&gt;首先这本书本身可能写得并不算精彩，文学造诣并不深，但难得的是它从某个角度还原了那段历史和真正的皇帝的生活。之前买书看评论很多人对书中满满的自责和检讨感到失望和厌倦，也许这不是他们期待的那个样子，但是它却是真实的。&lt;/p&gt;
-
-&lt;p&gt;读完的感受主要有两个：&lt;/p&gt;
-
-&lt;p&gt;第一，对现在绝大多数宫廷电视局种的皇帝角色嗤之以鼻，现在流行的套路是塑造一个爱江山更爱美人的轰轰烈烈，荡气回肠的爱情故事，可实际上这样的事情发生的几率微乎其微，很多事情都因稀少而珍贵，但女性皇帝来说太唾手可得，所以并不会有及其重要的位置。但江山却是一件非常刺激的事，因为可以拥有超越个体本身的力量，即便是在略受挫的情况下。治理和拥有江山的新鲜感满足感也会更持久一些。而且皇帝从小成长的环境就是紫禁城内，他们感受这个世界的方式与百姓不同，甚至对世界的认知也完全不同，所以现在的演员如果没有深刻的历史积淀和对历史中皇帝这个角色的认知是不可能演好这个角色的。所以这类剧只能当笑剧或者闹剧看而已。&lt;/p&gt;
-
-&lt;p&gt;第二，我很感谢自己现在所处的时代，对于平凡出生的我，时代给我的最大的礼物是机会和道路，让我明白有怎样的可能性，而不是蒙着眼睛往前走。&lt;/p&gt;
-
-&lt;p&gt;溥仪能完成从清朝皇帝到新中国平民角色的转换中间所经历的挣扎也许只有他自己清楚，作为读者的我们只能在字里行间体会一二。在两种完全不同的制度下，国人的形态都是不同的，所以，如果在一个稳定的社会中，请明白时下的潮流；如果在一个动荡的年代中，请当那个激流勇进的冒险家。&lt;/p&gt;</content><author><name>wencolani</name></author><category term="Book reading" /><category term="book reading" /><summary type="html">首先这本书本身可能写得并不算精彩，文学造诣并不深，但难得的是它从某个角度还原了那段历史和真正的皇帝的生活。之前买书看评论很多人对书中满满的自责和检讨感到失望和厌倦，也许这不是他们期待的那个样子，但是它却是真实的。</summary></entry></feed>
+&lt;p&gt;向季老致敬。&lt;/p&gt;</content><author><name>wencolani</name></author><category term="Book reading" /><category term="book reading" /><summary type="html">开始看这本书怀着嬉笑怒骂的心态，尽看季老讽刺调戏那个年代的记忆，对于自杀的考究尤值得叫好，在生死边缘走过的人才有那份戏谑的底气。</summary></entry></feed>

@@ -111,13 +111,13 @@
 
 
 
-<meta name="description" content="本文提出了一个非监督学习方法Paragraph Vectore，从文本中学习句子，段落，和文本的向量表示。">
+<meta name="description" content="这篇文章提出了一个非监督学习方法Paragraph Vectore，从文本中学习句子，段落，和文本的向量表示。">
 <meta name="keywords" content="paper, paragraph embedding, word2vec, NLP">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Distributed Representations of Sentences and Documents">
 <meta property="og:url" content="http://localhost:4000/paper%20reading/2017/11/01/PaperReading/">
 <meta property="og:site_name" content="wencolani">
-<meta property="og:description" content="本文提出了一个非监督学习方法Paragraph Vectore，从文本中学习句子，段落，和文本的向量表示。">
+<meta property="og:description" content="这篇文章提出了一个非监督学习方法Paragraph Vectore，从文本中学习句子，段落，和文本的向量表示。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="/img/2017-11-02-PargraphVector1.png">
 <meta property="og:image" content="/img/2017-11-02-PargraphVector2.png">
@@ -126,7 +126,7 @@
 <meta property="og:image" content="/img/2017-11-02-result3.png">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Distributed Representations of Sentences and Documents">
-<meta name="twitter:description" content="本文提出了一个非监督学习方法Paragraph Vectore，从文本中学习句子，段落，和文本的向量表示。">
+<meta name="twitter:description" content="这篇文章提出了一个非监督学习方法Paragraph Vectore，从文本中学习句子，段落，和文本的向量表示。">
 <meta name="twitter:image" content="/img/2017-11-02-PargraphVector1.png">
 
 
@@ -421,7 +421,7 @@
       
 
       
-        <p>本文提出了一个非监督学习方法Paragraph Vectore，从文本中学习句子，段落，和文本的向量表示。</p>
+        <p>这篇文章提出了一个非监督学习方法Paragraph Vectore，从文本中学习句子，段落，和文本的向量表示。</p>
 
 <h1 id="motivation">Motivation:</h1>
 <p>很多机器学习方法要求输入是固定长度的特征向量，词袋(bag-of-word)是最常用的方法，但词袋有两个最重要的缺点：</p>
@@ -507,6 +507,7 @@ Very Positive}</li>
 <p>paragraph vector是很直观的想法。
 本文的实验设计很值得借鉴，对于非监督方法而言实验设计尤其中重要。</p>
 
+<h1 id="paper-information">Paper information</h1>
 <ul>
   <li>Distributed Representations of Sentences and Documents</li>
   <li>Quoc Le, Tomas Mikolov</li>
@@ -568,6 +569,10 @@ Very Positive}</li>
       
         <div class="post-nav" id="post-nav-id">
           <div class="post-nav-next post-nav-item">
+            
+              <a href="/paper%20reading/2017/11/02/PaperReading/" rel="next" title="Towards Holistic Concept Representations, Embedding Relational Knowledge, Visual Attributes, and Distributional Word Semantics">
+                <i class="fa fa-chevron-left"></i> Towards Holistic Concept Representations, Embedding Relational Knowledge, Visual Attributes, and Distributional Word Semantics
+              </a>
             
           </div>
 
@@ -662,7 +667,7 @@ Very Positive}</li>
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-count">13</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -750,7 +755,7 @@ Very Positive}</li>
             
               <div class="post-toc-content">
     <ol class=nav>
-      <li class="nav-item nav-level-1"> <a class="nav-link" href="#motivation"> <span class="nav-number">1</span> <span class="nav-text">Motivation:</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-1"> <a class="nav-link" href="#adavantages-of-paragraph-vectore"> <span class="nav-number">2</span> <span class="nav-text">Adavantages of Paragraph Vectore</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-1"> <a class="nav-link" href="#method"> <span class="nav-number">3</span> <span class="nav-text">Method:</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-2"> <a class="nav-link" href="#paragraph-vector-a-distributed-memory-modelpv-dm"> <span class="nav-number">3.1</span> <span class="nav-text">Paragraph Vector: a distributed memory model(PV-DM)</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#paragraph-vector-without-word-ordering-distributed-bag-of-wordspv-dbow"> <span class="nav-number">3.2</span> <span class="nav-text">Paragraph Vector without word ordering: Distributed bag of words(PV-DBOW)</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#final-paragraph-vector"> <span class="nav-number">3.3</span> <span class="nav-text">final paragraph vector</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-1"> <a class="nav-link" href="#experiments"> <span class="nav-number">4</span> <span class="nav-text">Experiments</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-2"> <a class="nav-link" href="#sentiment-analysis"> <span class="nav-number">4.1</span> <span class="nav-text">Sentiment Analysis</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#information-retrieval"> <span class="nav-number">4.2</span> <span class="nav-text">Information Retrieval</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-1"> <a class="nav-link" href="#thinking"> <span class="nav-number">5</span> <span class="nav-text">Thinking</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child">
+      <li class="nav-item nav-level-1"> <a class="nav-link" href="#motivation"> <span class="nav-number">1</span> <span class="nav-text">Motivation:</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-1"> <a class="nav-link" href="#adavantages-of-paragraph-vectore"> <span class="nav-number">2</span> <span class="nav-text">Adavantages of Paragraph Vectore</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-1"> <a class="nav-link" href="#method"> <span class="nav-number">3</span> <span class="nav-text">Method:</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-2"> <a class="nav-link" href="#paragraph-vector-a-distributed-memory-modelpv-dm"> <span class="nav-number">3.1</span> <span class="nav-text">Paragraph Vector: a distributed memory model(PV-DM)</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#paragraph-vector-without-word-ordering-distributed-bag-of-wordspv-dbow"> <span class="nav-number">3.2</span> <span class="nav-text">Paragraph Vector without word ordering: Distributed bag of words(PV-DBOW)</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#final-paragraph-vector"> <span class="nav-number">3.3</span> <span class="nav-text">final paragraph vector</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-1"> <a class="nav-link" href="#experiments"> <span class="nav-number">4</span> <span class="nav-text">Experiments</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-2"> <a class="nav-link" href="#sentiment-analysis"> <span class="nav-number">4.1</span> <span class="nav-text">Sentiment Analysis</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#information-retrieval"> <span class="nav-number">4.2</span> <span class="nav-text">Information Retrieval</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-1"> <a class="nav-link" href="#thinking"> <span class="nav-number">5</span> <span class="nav-text">Thinking</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-1"> <a class="nav-link" href="#paper-information"> <span class="nav-number">6</span> <span class="nav-text">Paper information</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child">
     </ol>
   </div>
             

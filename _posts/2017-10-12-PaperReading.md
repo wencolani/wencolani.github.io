@@ -51,7 +51,7 @@ Memory 表示成一个N\*W的矩阵M。
 # Thinking
 个人认为这篇文章最精彩的地方在于整体框架的设计，尤其是对memory的利用，比如如何进行读写操作，读写操作各自都有怎样不同的策略，整个memory的使用有什么上层的策略比如usage等。仔细看论文后面Method部分会体会更深刻。
 
-
+# Paper information
 * Hybrid computing using a neural network with dynamic external memory 
 * Google Deepmind
 * Nature October 2016

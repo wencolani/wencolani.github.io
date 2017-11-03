@@ -6,7 +6,7 @@ tagline: by wencolani
 tags: [paper, paragraph embedding, word2vec, NLP]
 ---
 
-本文提出了一个非监督学习方法Paragraph Vectore，从文本中学习句子，段落，和文本的向量表示。
+这篇文章提出了一个非监督学习方法Paragraph Vectore，从文本中学习句子，段落，和文本的向量表示。
 
 # Motivation:
 很多机器学习方法要求输入是固定长度的特征向量，词袋(bag-of-word)是最常用的方法，但词袋有两个最重要的缺点：
@@ -73,6 +73,8 @@ Very Positive}
 paragraph vector是很直观的想法。
 本文的实验设计很值得借鉴，对于非监督方法而言实验设计尤其中重要。
 
+
+# Paper information
 * Distributed Representations of Sentences and Documents
 * Quoc Le, Tomas Mikolov 
 * Proceedings of the 31st International Conference on Machine Learning, PMLR 32(2):1188-1196, 2014.

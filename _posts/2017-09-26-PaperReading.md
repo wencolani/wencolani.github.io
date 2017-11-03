@@ -63,6 +63,7 @@ output model借用了TransE的方法，使用|h + r -t| 作为score function，�
 
 ![](/img/2017-09-26-result.png)
 
+# Paper information
 * Knowledge Transfer for Out-of-Knowledge-Base Entities: A Graph Neural Network Approach
 * Takuo Hamaguchi, Hidekazu Oiwa, Masashi Shimbo, and Yuji Matsumoto
 * IJCAI 2017

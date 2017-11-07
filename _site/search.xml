@@ -2,8 +2,62 @@
 <search>
   
     <entry>
+      <title><![CDATA[Global RDF Vector Space Embeddings]]></title>
+      <url>/paper%20reading/2017/11/04/PaperReading/</url>
+      <content type="html"><![CDATA[<p>这篇文章提出了一个结合GloVe想法的RDF2Vec新方法。</p>
+
+<h1 id="motivation">Motivation</h1>
+<p>RDF2Vec 方法只用了local pattern。</p>
+
+<p>新提出的方法可以有效利用global patterns。</p>
+
+<h1 id="method">Method</h1>
+
+<h2 id="building-a-co-occurrence-matrix-for-graph-data">building a co-occurrence matrix for graph data</h2>
+
+<p>在GloVe首先构造了word co-occurrence matrix, 本文的新方法首先对RDF数据构造了co-occurrence matrix。</p>
+
+<p>最直观的构造方法：从任意节点出发，进行固定步数的深度搜索，将所有限定步数以内可达的节点均当作出发节点的context，并且对越远的节点赋予越低的权重。但是这样的方法主要有以下问题：</p>
+
+<ul>
+  <li>同一个节点可能通过不同长度的路径被达到</li>
+  <li>路径中可能存在环状结构</li>
+  <li>各个不同长度的可达节点数分布不均</li>
+</ul>
+
+<p>所以本文采取了Personalized PageRank 来衡量其他节点作为某一节点的context的重要性。</p>
+
+<h1 id="paper-information">Paper information</h1>
+<ul>
+  <li>Global RDF Vector Space Embeddings</li>
+  <li>Michael Cochez, Petar Ristoski, Simone Paolo Ponzetto, Heiko Paulheim2</li>
+  <li>ISWC 2017</li>
+  <li><a href="https://iswc2017.semanticweb.org/wp-content/uploads/papers/MainProceedings/164.pdf">article link</a></li>
+  <li><a href="https://github.com/miselico/globalRDFEmbeddingsISWC">code link</a></li>
+</ul>
+]]></content>
+      <categories>
+        
+          <category> Paper reading </category>
+        
+      </categories>
+      <tags>
+        
+          <tag> paper </tag>
+        
+          <tag> kg embedding </tag>
+        
+          <tag> rdf2vec </tag>
+        
+          <tag> glove </tag>
+        
+      </tags>
+      <tags></tags>
+    </entry>
+  
+    <entry>
       <title><![CDATA[Towards Holistic Concept Representations, Embedding Relational Knowledge, Visual Attributes, and Distributional Word Semantics]]></title>
-      <url>/paper%20reading/2017/11/02/PaperReading/</url>
+      <url>/paper%20reading/2017/11/03/PaperReading/</url>
       <content type="html"><![CDATA[<p>这篇文章提出了一个融合kg embedding，image embedding 和 word embedding的方法。能够融合更多的信息。</p>
 
 <h1 id="motivation">Motivation</h1>
@@ -101,24 +155,34 @@
   
     <entry>
       <title><![CDATA[cat]]></title>
-      <url>/linux%20commond/2017/11/02/LinuxCommond/</url>
-      <content type="html"><![CDATA[<p><code class="highlighter-rouge">cat file1</code></p>
+      <url>/linux%20commond/2017/11/03/LinuxCommond/</url>
+      <content type="html"><![CDATA[<h2 id="main-commond">main commond</h2>
+<p><code class="highlighter-rouge">cat file1</code>: output the content in file1</p>
 
-<p><code class="highlighter-rouge">cat file1 &gt; file2</code></p>
+<p><code class="highlighter-rouge">cat file1 &gt; file2</code>: rewrite file1 to file2</p>
 
-<p><code class="highlighter-rouge">cat file1 | less</code></p>
+<p><code class="highlighter-rouge">cat file1 | less</code>: output the content in file1 in less way</p>
 
-<p><code class="highlighter-rouge">cat &gt; file1</code>: use <code class="highlighter-rouge">Ctrl + d</code> to end input</p>
+<p><code class="highlighter-rouge">cat &gt; file1</code>: write to file1, if file1 exists, the content will be covered. Use <code class="highlighter-rouge">Ctrl + d</code> to end input</p>
 
-<p><code class="highlighter-rouge">cat &gt;&gt; file1</code></p>
+<p><code class="highlighter-rouge">cat &gt;&gt; file1</code>: append new written content to file1</p>
 
-<p><code class="highlighter-rouge">cat file1 file2 file3</code></p>
+<p><code class="highlighter-rouge">cat file1 file2 file3</code>: output file1, file2 and file3</p>
 
-<p><code class="highlighter-rouge">cat file1 file2 file3 &gt; file4</code></p>
+<p><code class="highlighter-rouge">cat file1 file2 file3 &gt; file4</code>: write file1, file2 and file to file4</p>
 
-<p><code class="highlighter-rouge">cat file1 file2 file3 | sort &gt; file4</code></p>
+<p><code class="highlighter-rouge">cat file1 file2 file3 | sort &gt; file4</code>: sort all the content in file1, file2 and file3, then write them to file4</p>
 
 <p><code class="highlighter-rouge">cat - file1 &gt; file2</code>: first copy file1 to file2, then add input something to file2</p>
+
+<h2 id="option">option</h2>
+<p><code class="highlighter-rouge">-n</code> or <code class="highlighter-rouge">--number</code>: 从0开始对每一行编号</p>
+
+<p><code class="highlighter-rouge">-b</code> or <code class="highlighter-rouge">--number-nonblank</code>: 对空白行不编号</p>
+
+<p><code class="highlighter-rouge">-s</code> or <code class="highlighter-rouge">--squeeze-blank</code>: 当有连续两行空白行时换成一行</p>
+
+<p>…</p>
 ]]></content>
       <categories>
         
@@ -137,7 +201,7 @@
   
     <entry>
       <title><![CDATA[Distributed Representations of Sentences and Documents]]></title>
-      <url>/paper%20reading/2017/11/01/PaperReading/</url>
+      <url>/paper%20reading/2017/11/02/PaperReading/</url>
       <content type="html"><![CDATA[<p>这篇文章提出了一个非监督学习方法Paragraph Vectore，从文本中学习句子，段落，和文本的向量表示。</p>
 
 <h1 id="motivation">Motivation:</h1>

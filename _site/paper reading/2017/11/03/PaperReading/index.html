@@ -83,7 +83,7 @@
 <link href="/assets/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="linux commond,cat," />
+  <meta name="keywords" content="paper,kg embedding,word2vec,image embedding,embedding,image,text,NLP," />
 
 
 
@@ -111,17 +111,22 @@
 
 
 
-<meta name="description" content="cat file1">
-<meta name="keywords" content="linux commond, cat">
+<meta name="description" content="这篇文章提出了一个融合kg embedding，image embedding 和 word embedding的方法。能够融合更多的信息。">
+<meta name="keywords" content="paper, kg embedding, word2vec, image embedding, embedding, image, text, NLP">
 <meta property="og:type" content="article">
-<meta property="og:title" content="cat">
-<meta property="og:url" content="http://localhost:4000/linux%20commond/2017/11/02/LinuxCommond/">
+<meta property="og:title" content="Towards Holistic Concept Representations, Embedding Relational Knowledge, Visual Attributes, and Distributional Word Semantics">
+<meta property="og:url" content="http://localhost:4000/paper%20reading/2017/11/03/PaperReading/">
 <meta property="og:site_name" content="wencolani">
-<meta property="og:description" content="cat file1">
+<meta property="og:description" content="这篇文章提出了一个融合kg embedding，image embedding 和 word embedding的方法。能够融合更多的信息。">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="/img/2017-11-03-method.png">
+<meta property="og:image" content="/img/2017-11-03-result1.png">
+<meta property="og:image" content="/img/2017-11-03-result2.png">
+<meta property="og:image" content="/img/2017-11-03-result3.png">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="cat">
-<meta name="twitter:description" content="cat file1">
+<meta name="twitter:title" content="Towards Holistic Concept Representations, Embedding Relational Knowledge, Visual Attributes, and Distributional Word Semantics">
+<meta name="twitter:description" content="这篇文章提出了一个融合kg embedding，image embedding 和 word embedding的方法。能够融合更多的信息。">
+<meta name="twitter:image" content="/img/2017-11-03-method.png">
 
 
 <script type="text/javascript" id="hexo.configurations">
@@ -155,7 +160,7 @@
 
 
 
-  <title>cat</title>
+  <title>Towards Holistic Concept Representations, Embedding Relational Knowledge, Visual Attributes, and Distributional Word Semantics</title>
   
 
 
@@ -316,7 +321,7 @@
   
 
   <article class="post post-type- " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://localhost:4000/linux%20commond/2017/11/02/LinuxCommond/">
+    <link itemprop="mainEntityOfPage" href="http://localhost:4000/paper%20reading/2017/11/03/PaperReading/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="wencolani">
@@ -336,7 +341,7 @@
           <h1 class="post-title" itemprop="name headline">
           
           
-            cat
+            Towards Holistic Concept Representations, Embedding Relational Knowledge, Visual Attributes, and Distributional Word Semantics
           
         </h1>
         
@@ -350,8 +355,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-02T00:00:00+01:00">
-                2017-11-02
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-03T00:00:00+01:00">
+                2017-11-03
               </time>
             
 
@@ -374,8 +379,8 @@
               
                 
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/category/#/Linux%20commond" itemprop="url" rel="index">
-                    <span itemprop="name">Linux commond</span>
+                  <a href="/category/#/Paper%20reading" itemprop="url" rel="index">
+                    <span itemprop="name">Paper reading</span>
                   </a>
                 </span>
 
@@ -392,9 +397,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/linux%20commond/2017/11/02/LinuxCommond/#comments" itemprop="discussionUrl">
+                <a href="/paper%20reading/2017/11/03/PaperReading/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="/linux%20commond/2017/11/02/LinuxCommond/" itemprop="commentCount"></span>
+                        data-disqus-identifier="/paper%20reading/2017/11/03/PaperReading/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -425,23 +430,73 @@
       
 
       
-        <p><code class="highlighter-rouge">cat file1</code></p>
+        <p>这篇文章提出了一个融合kg embedding，image embedding 和 word embedding的方法。能够融合更多的信息。</p>
 
-<p><code class="highlighter-rouge">cat file1 &gt; file2</code></p>
+<h1 id="motivation">Motivation</h1>
+<p>知识库，图像和文字这三种方式分别记录了事物不同方面的信息。
+其中知识库主要包含了这个世界上跨领域的、通用的知识，侧重于记录实体之间的关系信息。
+图片记录了视觉信息，例如颜色和形状等。
+而文字记录了一些知识库中不包含的信息，知识库中记录的都是相对稳定的关系信息。</p>
 
-<p><code class="highlighter-rouge">cat file1 | less</code></p>
+<p>这篇文章的目的是提出一种tri-modal的embedding学习方法，能够有效融合和利用三种不同的信息。</p>
 
-<p><code class="highlighter-rouge">cat &gt; file1</code>: use <code class="highlighter-rouge">Ctrl + d</code> to end input</p>
+<h1 id="method">Method</h1>
+<p>方法的整体思路如下：
+<img src="/img/2017-11-03-method.png" alt="" /></p>
 
-<p><code class="highlighter-rouge">cat &gt;&gt; file1</code></p>
+<h2 id="word-embedding">Word Embedding:</h2>
+<ul>
+  <li>method: word2vec.</li>
+</ul>
 
-<p><code class="highlighter-rouge">cat file1 file2 file3</code></p>
+<h2 id="kg-embedding">KG Embedding：</h2>
+<ul>
+  <li>data: DBpedia</li>
+  <li>method: TransE</li>
+</ul>
 
-<p><code class="highlighter-rouge">cat file1 file2 file3 &gt; file4</code></p>
+<h2 id="visual-object">Visual Object：</h2>
+<ul>
+  <li>data: ImageNet 1k (1000 categories, each with &gt; 1300 images), 这些图片是和WordNet中的synset对应的。</li>
+  <li>method：Inception-V3</li>
+</ul>
 
-<p><code class="highlighter-rouge">cat file1 file2 file3 | sort &gt; file4</code></p>
+<h2 id="shared-concept-spacefusion">Shared concept space(fusion):</h2>
+<p>每一个concept都有来自KG， 文本，图片的向量表示。融合三个表示的方法主要有以下几种：</p>
+<ul>
+  <li>AVG：在计算相似度的场景下，分别计算和三个不同向量表示的相似度然后平均值。</li>
+  <li>CONC：先concatinate三个向量表示，然后在计算相似度。</li>
+  <li>SVD</li>
+  <li>PCA</li>
+  <li>AUTO：autoencoder</li>
+</ul>
 
-<p><code class="highlighter-rouge">cat - file1 &gt; file2</code>: first copy file1 to file2, then add input something to file2</p>
+<h1 id="experiments">Experiments</h1>
+
+<h2 id="word-siilarity">word siilarity</h2>
+<p><img src="/img/2017-11-03-result1.png" alt="" /></p>
+
+<h2 id="entity-segmentation">entity segmentation</h2>
+<p><img src="/img/2017-11-03-result2.png" alt="" /></p>
+
+<h2 id="entity-type-prediction">entity-type prediction</h2>
+
+<p><img src="/img/2017-11-03-result3.png" alt="" /></p>
+
+<h1 id="thinking">Thinking</h1>
+<ol>
+  <li>多源融合的embedding是值得研究的方向。</li>
+  <li>如何将多源的信息在同一个向量空间中表示也是可以研究的点。</li>
+</ol>
+
+<h1 id="paper-information">Paper information</h1>
+<ul>
+  <li>Towards Holistic Concept Representations: Embedding Relational Knowledge, Visual Attributes, and Distributional Word Semantics</li>
+  <li>Steffen Thoma, Achim Rettinger, and Fabian Both</li>
+  <li>ISWC 2017</li>
+  <li><a href="https://iswc2017.semanticweb.org/wp-content/uploads/papers/MainProceedings/260.pdf">article link</a></li>
+  <li><a href="">code link</a></li>
+</ul>
 
       
     </div>
@@ -472,10 +527,28 @@
         <div class="post-tags">
           
             
-            <a href="/tag/#/linux%20commond" rel="tag"># linux commond</a>
+            <a href="/tag/#/paper" rel="tag"># paper</a>
           
             
-            <a href="/tag/#/cat" rel="tag"># cat</a>
+            <a href="/tag/#/kg%20embedding" rel="tag"># kg embedding</a>
+          
+            
+            <a href="/tag/#/word2vec" rel="tag"># word2vec</a>
+          
+            
+            <a href="/tag/#/image%20embedding" rel="tag"># image embedding</a>
+          
+            
+            <a href="/tag/#/embedding" rel="tag"># embedding</a>
+          
+            
+            <a href="/tag/#/image" rel="tag"># image</a>
+          
+            
+            <a href="/tag/#/text" rel="tag"># text</a>
+          
+            
+            <a href="/tag/#/NLP" rel="tag"># NLP</a>
           
         </div>
       
@@ -491,8 +564,8 @@
         <div class="post-nav" id="post-nav-id">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/paper%20reading/2017/11/02/PaperReading/" rel="next" title="Towards Holistic Concept Representations, Embedding Relational Knowledge, Visual Attributes, and Distributional Word Semantics">
-                <i class="fa fa-chevron-left"></i> Towards Holistic Concept Representations, Embedding Relational Knowledge, Visual Attributes, and Distributional Word Semantics
+              <a href="/paper%20reading/2017/11/04/PaperReading/" rel="next" title="Global RDF Vector Space Embeddings">
+                <i class="fa fa-chevron-left"></i> Global RDF Vector Space Embeddings
               </a>
             
           </div>
@@ -501,8 +574,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/paper%20reading/2017/11/01/PaperReading/" rel="prev" title="Distributed Representations of Sentences and Documents">
-                Distributed Representations of Sentences and Documents <i class="fa fa-chevron-right"></i>
+              <a href="/linux%20commond/2017/11/03/LinuxCommond/" rel="prev" title="cat">
+                cat <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -563,8 +636,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/assets/images/avatar.jpg"
@@ -579,7 +661,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-count">15</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -650,6 +732,31 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+
+
+
+
+            
+              <div class="post-toc-content">
+    <ol class=nav>
+      <li class="nav-item nav-level-1"> <a class="nav-link" href="#motivation"> <span class="nav-number">1</span> <span class="nav-text">Motivation</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-1"> <a class="nav-link" href="#method"> <span class="nav-number">2</span> <span class="nav-text">Method</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-2"> <a class="nav-link" href="#word-embedding"> <span class="nav-number">2.1</span> <span class="nav-text">Word Embedding:</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#kg-embedding"> <span class="nav-number">2.2</span> <span class="nav-text">KG Embedding：</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#visual-object"> <span class="nav-number">2.3</span> <span class="nav-text">Visual Object：</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#shared-concept-spacefusion"> <span class="nav-number">2.4</span> <span class="nav-text">Shared concept space(fusion):</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-1"> <a class="nav-link" href="#experiments"> <span class="nav-number">3</span> <span class="nav-text">Experiments</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-2"> <a class="nav-link" href="#word-siilarity"> <span class="nav-number">3.1</span> <span class="nav-text">word siilarity</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#entity-segmentation"> <span class="nav-number">3.2</span> <span class="nav-text">entity segmentation</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#entity-type-prediction"> <span class="nav-number">3.3</span> <span class="nav-text">entity-type prediction</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-1"> <a class="nav-link" href="#thinking"> <span class="nav-number">4</span> <span class="nav-text">Thinking</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-1"> <a class="nav-link" href="#paper-information"> <span class="nav-number">5</span> <span class="nav-text">Paper information</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child">
+    </ol>
+  </div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -810,9 +917,9 @@
       
       <script type="text/javascript">
           var disqus_config = function () {
-              this.page.url = 'http://localhost:4000/linux%20commond/2017/11/02/LinuxCommond/';
-              this.page.identifier = '/linux%20commond/2017/11/02/LinuxCommond/';
-              this.page.title = 'cat';
+              this.page.url = 'http://localhost:4000/paper%20reading/2017/11/03/PaperReading/';
+              this.page.identifier = '/paper%20reading/2017/11/03/PaperReading/';
+              this.page.title = 'Towards Holistic Concept Representations, Embedding Relational Knowledge, Visual Attributes, and Distributional Word Semantics';
           };
           var d = document, s = d.createElement('script');
           s.src = 'https://.disqus.com/embed.js';

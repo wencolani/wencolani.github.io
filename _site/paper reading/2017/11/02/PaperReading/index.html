@@ -83,7 +83,7 @@
 <link href="/assets/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="paper,kg embedding,word2vec,image embedding,embedding,image,text,NLP," />
+  <meta name="keywords" content="paper,paragraph embedding,word2vec,NLP," />
 
 
 
@@ -111,22 +111,23 @@
 
 
 
-<meta name="description" content="这篇文章提出了一个融合kg embedding，image embedding 和 word embedding的方法。能够融合更多的信息。">
-<meta name="keywords" content="paper, kg embedding, word2vec, image embedding, embedding, image, text, NLP">
+<meta name="description" content="这篇文章提出了一个非监督学习方法Paragraph Vectore，从文本中学习句子，段落，和文本的向量表示。">
+<meta name="keywords" content="paper, paragraph embedding, word2vec, NLP">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Towards Holistic Concept Representations, Embedding Relational Knowledge, Visual Attributes, and Distributional Word Semantics">
+<meta property="og:title" content="Distributed Representations of Sentences and Documents">
 <meta property="og:url" content="http://localhost:4000/paper%20reading/2017/11/02/PaperReading/">
 <meta property="og:site_name" content="wencolani">
-<meta property="og:description" content="这篇文章提出了一个融合kg embedding，image embedding 和 word embedding的方法。能够融合更多的信息。">
+<meta property="og:description" content="这篇文章提出了一个非监督学习方法Paragraph Vectore，从文本中学习句子，段落，和文本的向量表示。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="/img/2017-11-03-method.png">
-<meta property="og:image" content="/img/2017-11-03-result1.png">
-<meta property="og:image" content="/img/2017-11-03-result2.png">
-<meta property="og:image" content="/img/2017-11-03-result3.png">
+<meta property="og:image" content="/img/2017-11-02-PargraphVector1.png">
+<meta property="og:image" content="/img/2017-11-02-PargraphVector2.png">
+<meta property="og:image" content="/img/2017-11-02-result2.png">
+<meta property="og:image" content="/img/2017-11-02-result2.png">
+<meta property="og:image" content="/img/2017-11-02-result3.png">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Towards Holistic Concept Representations, Embedding Relational Knowledge, Visual Attributes, and Distributional Word Semantics">
-<meta name="twitter:description" content="这篇文章提出了一个融合kg embedding，image embedding 和 word embedding的方法。能够融合更多的信息。">
-<meta name="twitter:image" content="/img/2017-11-03-method.png">
+<meta name="twitter:title" content="Distributed Representations of Sentences and Documents">
+<meta name="twitter:description" content="这篇文章提出了一个非监督学习方法Paragraph Vectore，从文本中学习句子，段落，和文本的向量表示。">
+<meta name="twitter:image" content="/img/2017-11-02-PargraphVector1.png">
 
 
 <script type="text/javascript" id="hexo.configurations">
@@ -160,7 +161,7 @@
 
 
 
-  <title>Towards Holistic Concept Representations, Embedding Relational Knowledge, Visual Attributes, and Distributional Word Semantics</title>
+  <title>Distributed Representations of Sentences and Documents</title>
   
 
 
@@ -341,7 +342,7 @@
           <h1 class="post-title" itemprop="name headline">
           
           
-            Towards Holistic Concept Representations, Embedding Relational Knowledge, Visual Attributes, and Distributional Word Semantics
+            Distributed Representations of Sentences and Documents
           
         </h1>
         
@@ -430,71 +431,98 @@
       
 
       
-        <p>这篇文章提出了一个融合kg embedding，image embedding 和 word embedding的方法。能够融合更多的信息。</p>
+        <p>这篇文章提出了一个非监督学习方法Paragraph Vectore，从文本中学习句子，段落，和文本的向量表示。</p>
 
-<h1 id="motivation">Motivation</h1>
-<p>知识库，图像和文字这三种方式分别记录了事物不同方面的信息。
-其中知识库主要包含了这个世界上跨领域的、通用的知识，侧重于记录实体之间的关系信息。
-图片记录了视觉信息，例如颜色和形状等。
-而文字记录了一些知识库中不包含的信息，知识库中记录的都是相对稳定的关系信息。</p>
+<h1 id="motivation">Motivation:</h1>
+<p>很多机器学习方法要求输入是固定长度的特征向量，词袋(bag-of-word)是最常用的方法，但词袋有两个最重要的缺点：</p>
 
-<p>这篇文章的目的是提出一种tri-modal的embedding学习方法，能够有效融合和利用三种不同的信息。</p>
-
-<h1 id="method">Method</h1>
-<p>方法的整体思路如下：
-<img src="/img/2017-11-03-method.png" alt="" /></p>
-
-<h2 id="word-embedding">Word Embedding:</h2>
 <ul>
-  <li>method: word2vec.</li>
+  <li>失去了词序信息。虽然bag-of-n-gram考虑了词序的信息，但是会面临新的问题：data-sparsity和 high-dimensionality。</li>
+  <li>忽略了词的语义信息(semantics of words)。比如“苹果”和“梨”。</li>
 </ul>
 
-<h2 id="kg-embedding">KG Embedding：</h2>
+<h1 id="adavantages-of-paragraph-vectore">Adavantages of Paragraph Vectore</h1>
 <ul>
-  <li>data: DBpedia</li>
-  <li>method: TransE</li>
+  <li>
+    <p>Pagraph vector 是一个非监督的模型。可以应用于标注不足的数据。</p>
+  </li>
+  <li>
+    <p>Paragraph Vectore 是固定长度的向量，它表示的文本长度是可变的，可以从sentence到paragraph到text。</p>
+  </li>
+  <li>
+    <p>Paragraph vector acts a memory that remembers that is missing from the current context – or the topic of the paragraph. 我的理解是在预测文本中的下一个词时，通常会取这个词前后的固定长度的词(context)，虽然多数情况下, context是非常有效的信息，但有时候这些词对于预测所需要的信息的覆盖是补全的，这就是paragraph vector存在的意义，它可以捕捉并记住文本的主题信息，并辅助预测。</p>
+  </li>
 </ul>
 
-<h2 id="visual-object">Visual Object：</h2>
+<h1 id="method">Method:</h1>
+
+<h2 id="paragraph-vector-a-distributed-memory-modelpv-dm">Paragraph Vector: a distributed memory model(PV-DM)</h2>
+
+<p><img src="/img/2017-11-02-PargraphVector1.png" alt="" /></p>
+
 <ul>
-  <li>data: ImageNet 1k (1000 categories, each with &gt; 1300 images), 这些图片是和WordNet中的synset对应的。</li>
-  <li>method：Inception-V3</li>
+  <li>任务目标：给定一个段落中固定长度的文本内容context，结合当前所处段落一个预测下一个词是什么。</li>
+  <li>方法： 和word2vec相似，每个词用一个向量表示，每个段落也用一个向量表示。连接(concatinate)paragraph vector和所有context的word vector作为输入，预测下一个词。</li>
 </ul>
 
-<h2 id="shared-concept-spacefusion">Shared concept space(fusion):</h2>
-<p>每一个concept都有来自KG， 文本，图片的向量表示。融合三个表示的方法主要有以下几种：</p>
+<h2 id="paragraph-vector-without-word-ordering-distributed-bag-of-wordspv-dbow">Paragraph Vector without word ordering: Distributed bag of words(PV-DBOW)</h2>
+<p><img src="/img/2017-11-02-PargraphVector2.png" alt="" /></p>
+
 <ul>
-  <li>AVG：在计算相似度的场景下，分别计算和三个不同向量表示的相似度然后平均值。</li>
-  <li>CONC：先concatinate三个向量表示，然后在计算相似度。</li>
-  <li>SVD</li>
-  <li>PCA</li>
-  <li>AUTO：autoencoder</li>
+  <li>任务目标：用paragraph vector预测从当前文本中随机生成的词。</li>
+  <li>方法：每次随机梯度下降的迭代中，选取当前段落中一个固定窗口的文本，从这个窗口的文本中随机选取一个词，then form a classifi-
+cation task given the Paragraph Vector.</li>
 </ul>
 
+<h2 id="final-paragraph-vector">final paragraph vector</h2>
+<p>combiantion of PV-DM and PV-DBOW.</p>
 <h1 id="experiments">Experiments</h1>
 
-<h2 id="word-siilarity">word siilarity</h2>
-<p><img src="/img/2017-11-03-result1.png" alt="" /></p>
+<h2 id="sentiment-analysis">Sentiment Analysis</h2>
+<ul>
+  <li>
+    <p>数据集： Standford sentiment treebank dataset with 8544 training sentences, 2210 testsentence and 1101 calidation sentences. 每个句子标有0.0到1.0的极性(由人生成的)。</p>
+  </li>
+  <li>Evaluation:
+    <ul>
+      <li>5-way fine-grained classification: {Very Negative, Negative, Neutral, Positive,
+Very Positive}</li>
+      <li>2-way coarse-grained classification: {Negative, Positive}</li>
+    </ul>
+  </li>
+  <li>方法：
+    <ul>
+      <li>training: 先学习训练样本中的sentence和subphrases的向量表示，然后用这些学习得的向量表示学习逻辑回归分类器。</li>
+      <li>testing: 固定所有的词向量，对每个test的句子学习词向量，然后讲句子向量表示输入之前学习得的分类器，对句子做情绪分类。</li>
+      <li>notice: 选词窗口大小为8，向量维度为400。</li>
+    </ul>
+  </li>
+  <li>结果：
+<img src="/img/2017-11-02-result2.png" alt="" /></li>
+</ul>
 
-<h2 id="entity-segmentation">entity segmentation</h2>
-<p><img src="/img/2017-11-03-result2.png" alt="" /></p>
+<p>在多句子数据集IMDB dataset上情绪分析的结果如下：
+<img src="/img/2017-11-02-result2.png" alt="" /></p>
 
-<h2 id="entity-type-prediction">entity-type prediction</h2>
+<h2 id="information-retrieval">Information Retrieval</h2>
+<ul>
+  <li>数据构造：首先对于每个查询，记录下搜索引擎返回的top10的结果，然后在这些结果数据集上构造数据集如下：对一个查询构造结果三元组，其中前两个是这个查询的答案，另一个不是。 构造的查询结果三元组80% for training, 10% for validation, 10% for testing.</li>
+  <li>测试方法：计算结果三元组中三个paragraph vector之间的距离。测试error是指，在测试三元组中，前两个来自相同查询的结果之间的距离比来第一和第三个来自不同查询结果之间的距离大。</li>
+  <li>结果如下：</li>
+</ul>
 
-<p><img src="/img/2017-11-03-result3.png" alt="" /></p>
+<p><img src="/img/2017-11-02-result3.png" alt="img-w1" /></p>
 
 <h1 id="thinking">Thinking</h1>
-<ol>
-  <li>多源融合的embedding是值得研究的方向。</li>
-  <li>如何将多源的信息在同一个向量空间中表示也是可以研究的点。</li>
-</ol>
+<p>paragraph vector是很直观的想法。
+本文的实验设计很值得借鉴，对于非监督方法而言实验设计尤其中重要。</p>
 
 <h1 id="paper-information">Paper information</h1>
 <ul>
-  <li>Towards Holistic Concept Representations: Embedding Relational Knowledge, Visual Attributes, and Distributional Word Semantics</li>
-  <li>Steffen Thoma, Achim Rettinger, and Fabian Both</li>
-  <li>ISWC 2017</li>
-  <li><a href="https://iswc2017.semanticweb.org/wp-content/uploads/papers/MainProceedings/260.pdf">article link</a></li>
+  <li>Distributed Representations of Sentences and Documents</li>
+  <li>Quoc Le, Tomas Mikolov</li>
+  <li>Proceedings of the 31st International Conference on Machine Learning, PMLR 32(2):1188-1196, 2014.</li>
+  <li><a href="https://arxiv.org/pdf/1405.4053.pdf">article link</a></li>
   <li><a href="">code link</a></li>
 </ul>
 
@@ -530,22 +558,10 @@
             <a href="/tag/#/paper" rel="tag"># paper</a>
           
             
-            <a href="/tag/#/kg%20embedding" rel="tag"># kg embedding</a>
+            <a href="/tag/#/paragraph%20embedding" rel="tag"># paragraph embedding</a>
           
             
             <a href="/tag/#/word2vec" rel="tag"># word2vec</a>
-          
-            
-            <a href="/tag/#/image%20embedding" rel="tag"># image embedding</a>
-          
-            
-            <a href="/tag/#/embedding" rel="tag"># embedding</a>
-          
-            
-            <a href="/tag/#/image" rel="tag"># image</a>
-          
-            
-            <a href="/tag/#/text" rel="tag"># text</a>
           
             
             <a href="/tag/#/NLP" rel="tag"># NLP</a>
@@ -564,14 +580,18 @@
         <div class="post-nav" id="post-nav-id">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/linux%20commond/2017/11/03/LinuxCommond/" rel="next" title="cat">
+                <i class="fa fa-chevron-left"></i> cat
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/linux%20commond/2017/11/02/LinuxCommond/" rel="prev" title="cat">
-                cat <i class="fa fa-chevron-right"></i>
+              <a href="/english%20writing/2017/10/24/EnglishWriting/" rel="prev" title="Some useful meterials for English writing">
+                Some useful meterials for English writing <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -657,7 +677,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-count">15</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -745,7 +765,7 @@
             
               <div class="post-toc-content">
     <ol class=nav>
-      <li class="nav-item nav-level-1"> <a class="nav-link" href="#motivation"> <span class="nav-number">1</span> <span class="nav-text">Motivation</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-1"> <a class="nav-link" href="#method"> <span class="nav-number">2</span> <span class="nav-text">Method</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-2"> <a class="nav-link" href="#word-embedding"> <span class="nav-number">2.1</span> <span class="nav-text">Word Embedding:</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#kg-embedding"> <span class="nav-number">2.2</span> <span class="nav-text">KG Embedding：</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#visual-object"> <span class="nav-number">2.3</span> <span class="nav-text">Visual Object：</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#shared-concept-spacefusion"> <span class="nav-number">2.4</span> <span class="nav-text">Shared concept space(fusion):</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-1"> <a class="nav-link" href="#experiments"> <span class="nav-number">3</span> <span class="nav-text">Experiments</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-2"> <a class="nav-link" href="#word-siilarity"> <span class="nav-number">3.1</span> <span class="nav-text">word siilarity</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#entity-segmentation"> <span class="nav-number">3.2</span> <span class="nav-text">entity segmentation</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#entity-type-prediction"> <span class="nav-number">3.3</span> <span class="nav-text">entity-type prediction</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-1"> <a class="nav-link" href="#thinking"> <span class="nav-number">4</span> <span class="nav-text">Thinking</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-1"> <a class="nav-link" href="#paper-information"> <span class="nav-number">5</span> <span class="nav-text">Paper information</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child">
+      <li class="nav-item nav-level-1"> <a class="nav-link" href="#motivation"> <span class="nav-number">1</span> <span class="nav-text">Motivation:</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-1"> <a class="nav-link" href="#adavantages-of-paragraph-vectore"> <span class="nav-number">2</span> <span class="nav-text">Adavantages of Paragraph Vectore</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-1"> <a class="nav-link" href="#method"> <span class="nav-number">3</span> <span class="nav-text">Method:</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-2"> <a class="nav-link" href="#paragraph-vector-a-distributed-memory-modelpv-dm"> <span class="nav-number">3.1</span> <span class="nav-text">Paragraph Vector: a distributed memory model(PV-DM)</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#paragraph-vector-without-word-ordering-distributed-bag-of-wordspv-dbow"> <span class="nav-number">3.2</span> <span class="nav-text">Paragraph Vector without word ordering: Distributed bag of words(PV-DBOW)</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#final-paragraph-vector"> <span class="nav-number">3.3</span> <span class="nav-text">final paragraph vector</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-1"> <a class="nav-link" href="#experiments"> <span class="nav-number">4</span> <span class="nav-text">Experiments</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-2"> <a class="nav-link" href="#sentiment-analysis"> <span class="nav-number">4.1</span> <span class="nav-text">Sentiment Analysis</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#information-retrieval"> <span class="nav-number">4.2</span> <span class="nav-text">Information Retrieval</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-1"> <a class="nav-link" href="#thinking"> <span class="nav-number">5</span> <span class="nav-text">Thinking</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-1"> <a class="nav-link" href="#paper-information"> <span class="nav-number">6</span> <span class="nav-text">Paper information</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child">
     </ol>
   </div>
             
@@ -915,7 +935,7 @@
           var disqus_config = function () {
               this.page.url = 'http://localhost:4000/paper%20reading/2017/11/02/PaperReading/';
               this.page.identifier = '/paper%20reading/2017/11/02/PaperReading/';
-              this.page.title = 'Towards Holistic Concept Representations, Embedding Relational Knowledge, Visual Attributes, and Distributional Word Semantics';
+              this.page.title = 'Distributed Representations of Sentences and Documents';
           };
           var d = document, s = d.createElement('script');
           s.src = 'https://.disqus.com/embed.js';

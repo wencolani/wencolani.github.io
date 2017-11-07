@@ -1,4 +1,34 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.5.2">Jekyll</generator><link href="http://localhost:4000/atom.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2017-11-03T23:23:44+01:00</updated><id>http://localhost:4000/</id><title type="html">wencolani</title><subtitle>a CS Phd candidate in Zhejiang University</subtitle><author><name>wencolani</name></author><entry><title type="html">Towards Holistic Concept Representations, Embedding Relational Knowledge, Visual Attributes, and Distributional Word Semantics</title><link href="http://localhost:4000/paper%20reading/2017/11/02/PaperReading/" rel="alternate" type="text/html" title="Towards Holistic Concept Representations, Embedding Relational Knowledge, Visual Attributes, and Distributional Word Semantics" /><published>2017-11-02T00:00:00+01:00</published><updated>2017-11-02T00:00:00+01:00</updated><id>http://localhost:4000/paper%20reading/2017/11/02/PaperReading</id><content type="html" xml:base="http://localhost:4000/paper%20reading/2017/11/02/PaperReading/">&lt;p&gt;这篇文章提出了一个融合kg embedding，image embedding 和 word embedding的方法。能够融合更多的信息。&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.5.2">Jekyll</generator><link href="http://localhost:4000/atom.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2017-11-07T18:19:20+01:00</updated><id>http://localhost:4000/</id><title type="html">wencolani</title><subtitle>a CS Phd candidate in Zhejiang University</subtitle><author><name>wencolani</name></author><entry><title type="html">Global RDF Vector Space Embeddings</title><link href="http://localhost:4000/paper%20reading/2017/11/04/PaperReading/" rel="alternate" type="text/html" title="Global RDF Vector Space Embeddings" /><published>2017-11-04T00:00:00+01:00</published><updated>2017-11-04T00:00:00+01:00</updated><id>http://localhost:4000/paper%20reading/2017/11/04/PaperReading</id><content type="html" xml:base="http://localhost:4000/paper%20reading/2017/11/04/PaperReading/">&lt;p&gt;这篇文章提出了一个结合GloVe想法的RDF2Vec新方法。&lt;/p&gt;
+
+&lt;h1 id=&quot;motivation&quot;&gt;Motivation&lt;/h1&gt;
+&lt;p&gt;RDF2Vec 方法只用了local pattern。&lt;/p&gt;
+
+&lt;p&gt;新提出的方法可以有效利用global patterns。&lt;/p&gt;
+
+&lt;h1 id=&quot;method&quot;&gt;Method&lt;/h1&gt;
+
+&lt;h2 id=&quot;building-a-co-occurrence-matrix-for-graph-data&quot;&gt;building a co-occurrence matrix for graph data&lt;/h2&gt;
+
+&lt;p&gt;在GloVe首先构造了word co-occurrence matrix, 本文的新方法首先对RDF数据构造了co-occurrence matrix。&lt;/p&gt;
+
+&lt;p&gt;最直观的构造方法：从任意节点出发，进行固定步数的深度搜索，将所有限定步数以内可达的节点均当作出发节点的context，并且对越远的节点赋予越低的权重。但是这样的方法主要有以下问题：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;同一个节点可能通过不同长度的路径被达到&lt;/li&gt;
+  &lt;li&gt;路径中可能存在环状结构&lt;/li&gt;
+  &lt;li&gt;各个不同长度的可达节点数分布不均&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;所以本文采取了Personalized PageRank 来衡量其他节点作为某一节点的context的重要性。&lt;/p&gt;
+
+&lt;h1 id=&quot;paper-information&quot;&gt;Paper information&lt;/h1&gt;
+&lt;ul&gt;
+  &lt;li&gt;Global RDF Vector Space Embeddings&lt;/li&gt;
+  &lt;li&gt;Michael Cochez, Petar Ristoski, Simone Paolo Ponzetto, Heiko Paulheim2&lt;/li&gt;
+  &lt;li&gt;ISWC 2017&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://iswc2017.semanticweb.org/wp-content/uploads/papers/MainProceedings/164.pdf&quot;&gt;article link&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/miselico/globalRDFEmbeddingsISWC&quot;&gt;code link&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>wencolani</name></author><category term="Paper reading" /><category term="paper" /><category term="kg embedding" /><category term="rdf2vec" /><category term="glove" /><summary type="html">这篇文章提出了一个结合GloVe想法的RDF2Vec新方法。</summary></entry><entry><title type="html">Towards Holistic Concept Representations, Embedding Relational Knowledge, Visual Attributes, and Distributional Word Semantics</title><link href="http://localhost:4000/paper%20reading/2017/11/03/PaperReading/" rel="alternate" type="text/html" title="Towards Holistic Concept Representations, Embedding Relational Knowledge, Visual Attributes, and Distributional Word Semantics" /><published>2017-11-03T00:00:00+01:00</published><updated>2017-11-03T00:00:00+01:00</updated><id>http://localhost:4000/paper%20reading/2017/11/03/PaperReading</id><content type="html" xml:base="http://localhost:4000/paper%20reading/2017/11/03/PaperReading/">&lt;p&gt;这篇文章提出了一个融合kg embedding，image embedding 和 word embedding的方法。能够融合更多的信息。&lt;/p&gt;
 
 &lt;h1 id=&quot;motivation&quot;&gt;Motivation&lt;/h1&gt;
 &lt;p&gt;知识库，图像和文字这三种方式分别记录了事物不同方面的信息。
@@ -64,23 +94,33 @@
   &lt;li&gt;ISWC 2017&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://iswc2017.semanticweb.org/wp-content/uploads/papers/MainProceedings/260.pdf&quot;&gt;article link&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;&quot;&gt;code link&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>wencolani</name></author><category term="Paper reading" /><category term="paper" /><category term="kg embedding" /><category term="word2vec" /><category term="image embedding" /><category term="embedding" /><category term="image" /><category term="text" /><category term="NLP" /><summary type="html">这篇文章提出了一个融合kg embedding，image embedding 和 word embedding的方法。能够融合更多的信息。</summary></entry><entry><title type="html">cat</title><link href="http://localhost:4000/linux%20commond/2017/11/02/LinuxCommond/" rel="alternate" type="text/html" title="cat" /><published>2017-11-02T00:00:00+01:00</published><updated>2017-11-02T00:00:00+01:00</updated><id>http://localhost:4000/linux%20commond/2017/11/02/LinuxCommond</id><content type="html" xml:base="http://localhost:4000/linux%20commond/2017/11/02/LinuxCommond/">&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cat file1&lt;/code&gt;&lt;/p&gt;
+&lt;/ul&gt;</content><author><name>wencolani</name></author><category term="Paper reading" /><category term="paper" /><category term="kg embedding" /><category term="word2vec" /><category term="image embedding" /><category term="embedding" /><category term="image" /><category term="text" /><category term="NLP" /><summary type="html">这篇文章提出了一个融合kg embedding，image embedding 和 word embedding的方法。能够融合更多的信息。</summary></entry><entry><title type="html">cat</title><link href="http://localhost:4000/linux%20commond/2017/11/03/LinuxCommond/" rel="alternate" type="text/html" title="cat" /><published>2017-11-03T00:00:00+01:00</published><updated>2017-11-03T00:00:00+01:00</updated><id>http://localhost:4000/linux%20commond/2017/11/03/LinuxCommond</id><content type="html" xml:base="http://localhost:4000/linux%20commond/2017/11/03/LinuxCommond/">&lt;h2 id=&quot;main-commond&quot;&gt;main commond&lt;/h2&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cat file1&lt;/code&gt;: output the content in file1&lt;/p&gt;
 
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cat file1 &amp;gt; file2&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cat file1 &amp;gt; file2&lt;/code&gt;: rewrite file1 to file2&lt;/p&gt;
 
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cat file1 | less&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cat file1 | less&lt;/code&gt;: output the content in file1 in less way&lt;/p&gt;
 
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cat &amp;gt; file1&lt;/code&gt;: use &lt;code class=&quot;highlighter-rouge&quot;&gt;Ctrl + d&lt;/code&gt; to end input&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cat &amp;gt; file1&lt;/code&gt;: write to file1, if file1 exists, the content will be covered. Use &lt;code class=&quot;highlighter-rouge&quot;&gt;Ctrl + d&lt;/code&gt; to end input&lt;/p&gt;
 
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cat &amp;gt;&amp;gt; file1&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cat &amp;gt;&amp;gt; file1&lt;/code&gt;: append new written content to file1&lt;/p&gt;
 
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cat file1 file2 file3&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cat file1 file2 file3&lt;/code&gt;: output file1, file2 and file3&lt;/p&gt;
 
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cat file1 file2 file3 &amp;gt; file4&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cat file1 file2 file3 &amp;gt; file4&lt;/code&gt;: write file1, file2 and file to file4&lt;/p&gt;
 
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cat file1 file2 file3 | sort &amp;gt; file4&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cat file1 file2 file3 | sort &amp;gt; file4&lt;/code&gt;: sort all the content in file1, file2 and file3, then write them to file4&lt;/p&gt;
 
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cat - file1 &amp;gt; file2&lt;/code&gt;: first copy file1 to file2, then add input something to file2&lt;/p&gt;</content><author><name>wencolani</name></author><category term="Linux commond" /><category term="linux commond" /><category term="cat" /><summary type="html">cat file1</summary></entry><entry><title type="html">Distributed Representations of Sentences and Documents</title><link href="http://localhost:4000/paper%20reading/2017/11/01/PaperReading/" rel="alternate" type="text/html" title="Distributed Representations of Sentences and Documents" /><published>2017-11-01T00:00:00+01:00</published><updated>2017-11-01T00:00:00+01:00</updated><id>http://localhost:4000/paper%20reading/2017/11/01/PaperReading</id><content type="html" xml:base="http://localhost:4000/paper%20reading/2017/11/01/PaperReading/">&lt;p&gt;这篇文章提出了一个非监督学习方法Paragraph Vectore，从文本中学习句子，段落，和文本的向量表示。&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cat - file1 &amp;gt; file2&lt;/code&gt;: first copy file1 to file2, then add input something to file2&lt;/p&gt;
+
+&lt;h2 id=&quot;option&quot;&gt;option&lt;/h2&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;-n&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;--number&lt;/code&gt;: 从0开始对每一行编号&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;-b&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;--number-nonblank&lt;/code&gt;: 对空白行不编号&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;-s&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;--squeeze-blank&lt;/code&gt;: 当有连续两行空白行时换成一行&lt;/p&gt;
+
+&lt;p&gt;…&lt;/p&gt;</content><author><name>wencolani</name></author><category term="Linux commond" /><category term="linux commond" /><category term="cat" /><summary type="html">main commond cat file1: output the content in file1</summary></entry><entry><title type="html">Distributed Representations of Sentences and Documents</title><link href="http://localhost:4000/paper%20reading/2017/11/02/PaperReading/" rel="alternate" type="text/html" title="Distributed Representations of Sentences and Documents" /><published>2017-11-02T00:00:00+01:00</published><updated>2017-11-02T00:00:00+01:00</updated><id>http://localhost:4000/paper%20reading/2017/11/02/PaperReading</id><content type="html" xml:base="http://localhost:4000/paper%20reading/2017/11/02/PaperReading/">&lt;p&gt;这篇文章提出了一个非监督学习方法Paragraph Vectore，从文本中学习句子，段落，和文本的向量表示。&lt;/p&gt;
 
 &lt;h1 id=&quot;motivation&quot;&gt;Motivation:&lt;/h1&gt;
 &lt;p&gt;很多机器学习方法要求输入是固定长度的特征向量，词袋(bag-of-word)是最常用的方法，但词袋有两个最重要的缺点：&lt;/p&gt;
@@ -404,14 +444,4 @@ Very Positive}&lt;/li&gt;
 
 &lt;p&gt;还有对战争的认识，由于太平天国起义，国家有十几年(1851-1864)处于战乱年代，借用书信中的说法就是“乱世”，当战争来临，很多事都将化为泡影，那些美好的事情重见天日必等战争结束之时，呜呼，哀哉。我曾经幻想过自己生在战火纷飞的年代，一定是一条铮铮铁骨，但此刻起，再无心之往向。战争太过粗暴，摧毁了太多脆弱的美好，因为美好，即便是脆弱的，我们也应该去守护，心存敬畏，不是吗？&lt;/p&gt;
 
-&lt;p&gt;历史的一手书籍值得被品读。&lt;/p&gt;</content><author><name>wencolani</name></author><category term="Book reading" /><category term="book reading" /><summary type="html">初读此书觉得有几分枯燥，书中所记不过是琐碎的日常。但慢慢看着看着逐渐感受到了鲜活的形象，感受到了何为“长兄如父”“君君臣臣，父父子子”。历史中再伟岸的形象都是由鲜明及琐碎的生活构成的，伟人不是不食人间烟火，横空出世的圣人。他们也有自己所生活的时代的温度和生活的烙印。这是自己读的第一本历史一手书籍，值得。</summary></entry><entry><title type="html">《牛棚杂忆》——不为无益之事，何以遣有涯之生</title><link href="http://localhost:4000/book%20reading/2017/05/01/NiuPengZaYi/" rel="alternate" type="text/html" title="《牛棚杂忆》——不为无益之事，何以遣有涯之生" /><published>2017-05-01T00:00:00+02:00</published><updated>2017-05-01T00:00:00+02:00</updated><id>http://localhost:4000/book%20reading/2017/05/01/NiuPengZaYi</id><content type="html" xml:base="http://localhost:4000/book%20reading/2017/05/01/NiuPengZaYi/">&lt;p&gt;开始看这本书怀着嬉笑怒骂的心态，尽看季老讽刺调戏那个年代的记忆，对于自杀的考究尤值得叫好，在生死边缘走过的人才有那份戏谑的底气。&lt;/p&gt;
-
-&lt;p&gt;季老在最后写到经历过文革的老辈知识分子对此都闭口不谈，虽心中郁气难舒，而青年人（比如我）对文革的认识也知识道听途说，没有真实而深刻的认识，其实是莫大的悲哀。我想虽然季老写下了这本关于文革的书，但仍有很多敏感的部分是没有涉及的吧，这只是真实历史的一部分。&lt;/p&gt;
-
-&lt;p&gt;通过这本书我对文革的细节有一点印象，在审讯和劳动改造过程中那些“黑帮”知识份子所受的待遇非人也非鬼，人有人权，鬼有自由，他们却什么都没有。其实“改造”活动对于他们这些老辈知识份子而言改造的是体魄，并没有能改造他们的灵魂，“冥顽不灵”者依旧“冥顽不灵”，但可怕的是那些围观的群众，他们的思想确是被改造了，当看到描述小孩子对季老的态度，这是一件多么细思极恐的事，就像《上帝之城》中的小霸王，就像《湄公河行动》中的童子兵，对孩子们的影响和洗脑才是真正地抹灭了希望，那种寒心和震慑不仅仅是黑暗降临，看不到希望，还一丝温度都没有。社会的形成和素质的约束让我们告别了野蛮和原始，但我们也是那么容易就回到野蛮和原始。恻隐之心人皆有之，但它太脆弱，一用力触碰就会破碎还很难复原。关于人性本善性本恶，大概我还是会选择性本恶，毕竟如此以来多数的我们克服了恶的都是英雄。&lt;/p&gt;
-
-&lt;p&gt;另外让我佩服的是季老的治学态度，严谨别无二致。“学问不问有用没用，只问精不精”。&lt;/p&gt;
-
-&lt;p&gt;“不为无益之事，何以遣有涯之生”。&lt;/p&gt;
-
-&lt;p&gt;向季老致敬。&lt;/p&gt;</content><author><name>wencolani</name></author><category term="Book reading" /><category term="book reading" /><summary type="html">开始看这本书怀着嬉笑怒骂的心态，尽看季老讽刺调戏那个年代的记忆，对于自杀的考究尤值得叫好，在生死边缘走过的人才有那份戏谑的底气。</summary></entry></feed>
+&lt;p&gt;历史的一手书籍值得被品读。&lt;/p&gt;</content><author><name>wencolani</name></author><category term="Book reading" /><category term="book reading" /><summary type="html">初读此书觉得有几分枯燥，书中所记不过是琐碎的日常。但慢慢看着看着逐渐感受到了鲜活的形象，感受到了何为“长兄如父”“君君臣臣，父父子子”。历史中再伟岸的形象都是由鲜明及琐碎的生活构成的，伟人不是不食人间烟火，横空出世的圣人。他们也有自己所生活的时代的温度和生活的烙印。这是自己读的第一本历史一手书籍，值得。</summary></entry></feed>
